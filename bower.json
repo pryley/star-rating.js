@@ -1,0 +1,30 @@
+{
+  "name": "star-rating.js",
+  "version": "1.0.0",
+  "description": "This plugin transforms a select into a dynamic star rating element.",
+  "homepage": "https://github.com/geminilabs/star-rating.js",
+  "authors": [
+    "Paul Ryley <paul@geminilabs.io>"
+  ],
+  "main": [
+    "dist/star-rating.js",
+    "dist/star-rating.css"
+  ],
+  "keywords": [
+    "jquery",
+    "starrating",
+    "star-rating",
+    "StarRating"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": ">=1.8"
+  }
+}

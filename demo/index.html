@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Star Rating</title>
+
+	<link href="normalize.min.css" rel="stylesheet">
+	<link href="../dist/star-rating.css" rel="stylesheet">
+
+	<style>
+		body {
+			background: #1a1a1a;
+			padding: 2em;
+		}
+		pre {
+			line-height: 1.5;
+			font-size: 0.8em;
+			hyphens: none;
+			tab-size: 4;
+			white-space: pre;
+			word-break: normal;
+			word-spacing: normal;
+			word-wrap: normal;
+			background: #f9f9f9;
+			border: 1px solid #eee;
+			border-radius: 3px;
+			padding: 0 1em;
+			overflow: auto;
+		}
+
+		section {
+			display: block;
+			max-width: 800px;
+			background: #fff;
+			padding: 1em;
+			margin: 0 auto 1em;
+		}
+
+		section:last-child {
+			margin-bottom: 0;
+		}
+	</style>
+
+	<script src="jquery.slim.min.js"></script>
+	<script src="../dist/star-rating.js"></script>
+
+</head>
+<body>
+
+	<section>
+		<select id="star-rating-1">
+			<option value="">Select a rating</option>
+			<option value="10">10</option>
+			<option value="9">9</option>
+			<option value="8">8</option>
+			<option value="7">7</option>
+			<option value="6">6</option>
+			<option value="5">5</option>
+			<option value="4">4</option>
+			<option value="3">3</option>
+			<option value="2">2</option>
+			<option value="1">1</option>
+		</select>
+
+		<h3>Setting custom options</h3>
+
+		<pre><code>
+$( '#star-rating-1' ).starrating({
+	clearable: false,
+	clickFn: function( selected ) {
+		console.log( 'I clicked star #' + selected );
+	},
+});
+		</code></pre>
+
+		<script>
+			$( '#star-rating-1' ).starrating({
+				clearable: false,
+				clickFn: function( selected ) {
+					console.log( 'I clicked star #' + selected );
+				},
+			});
+		</script>
+	</section>
+
+	<section>
+		<select id="star-rating-2">
+			<option value="">Select a rating</option>
+			<option value="5">Excellent</option>
+			<option value="4" selected>Very Good</option>
+			<option value="3">Average</option>
+			<option value="2">Poor</option>
+			<option value="1">Terrible</option>
+		</select>
+
+		<h3>Using a select with a pre-selected value</h3>
+
+		<pre><code>
+$( '#star-rating-2' ).starrating();
+		</code></pre>
+
+		<script>
+			$( '#star-rating-2' ).starrating();
+		</script>
+	</section>
+
+	<section>
+		<select id="star-rating-3" data-options='{"initialText":"Rate Your Mood"}'>
+			<option value="">Select a mood</option>
+			<option value="5">Ecstatic</option>
+			<option value="4">Happy</option>
+			<option value="3">Indifferent</option>
+			<option value="2">Sad</option>
+			<option value="1">Depressed</option>
+		</select>
+
+		<h3>Using the <code>data-option</code> attribute to set the options</h3>
+
+		<pre><code>
+// initialText is set on the select element using the "data-options" attribute.
+// e.g. data-options='{"initialText":"Rate Your Mood"}'
+
+$( '#star-rating-3' ).starrating();
+		</code></pre>
+
+		<script>
+			$( '#star-rating-3' ).starrating();
+		</script>
+	</section>
+
+	<section>
+		<select id="star-rating-4">
+			<option value="">Select a rating</option>
+			<option value="5">5 Stars</option>
+			<option value="4">4 Stars</option>
+			<option value="3">3 Stars</option>
+			<option value="2">2 Stars</option>
+			<option value="1">1 Star</option>
+		</select>
+
+		<h3>Changing the global plugin defaults</h3>
+
+		<pre><code>
+StarRating.defaults.initialText = "Choose Your Stars";
+
+$( '#star-rating-4' ).starrating();
+		</code></pre>
+
+		<script>
+			StarRating.defaults.initialText = "Choose Your Stars";
+			$( '#star-rating-4' ).starrating();
+		</script>
+	</section>
+
+	<section>
+		<select id="star-rating-5">
+			<option value="">Select a rating</option>
+			<option value="5">5 Stars</option>
+			<option value="4">4 Stars</option>
+			<option value="3">3 Stars</option>
+			<option value="2">2 Stars</option>
+			<option value="1">1 Star</option>
+		</select>
+
+		<h3>Alternative way of creating a new plugin instance</h3>
+
+		<pre><code>
+var starrating = new StarRating( document.getElementById( 'star-rating-5' ), {
+	clearable: "reset",
+	initialText: "Select a Rating",
+}).init();
+		</code></pre>
+
+		<script>
+			var starrating = new StarRating( document.getElementById( 'star-rating-5' ), {
+				clearable: "reset",
+				initialText: "Select a Rating",
+			}).init();
+		</script>
+	</section>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+/*!
+ * Star Rating
+ *
+ * Version: 1.0.0
+ * Author: Paul Ryley (http://geminilabs.io)
+ * URL: https://github.com/geminilabs/star-rating.js
+ * License: MIT
+ */
+
+//
+// Variables
+//
+
+$gl-sr-star-empty       : "../img/star-empty.svg" !default;
+$gl-sr-star-half        : "../img/star-half.svg" !default;
+$gl-sr-star-filled      : "../img/star-filled.svg" !default;
+
+$gl-sr-star-size        : 24px !default;
+$gl-sr-base-height      : 26px !default;
+
+$gl-sr-text-color       : #fff !default;
+$gl-sr-text-background  : #1a1a1a !default;
+$gl-sr-text-font-size   : 0.8em !default;
+$gl-sr-text-font-weight : 600 !default;
+
+//
+// Styles
+//
+
+.gl-star-rating[data-star-rating] {
+
+	> select {
+		display: none;
+	}
+
+	.gl-star-rating-stars {
+		display: inline-block;
+		height: $gl-sr-base-height;
+		vertical-align: middle;
+		cursor: pointer;
+
+		> span {
+			display: inline-block;
+			width: $gl-sr-star-size;
+			height: $gl-sr-star-size;
+			background-size: $gl-sr-star-size;
+			background-repeat: no-repeat;
+			background-image: url( $gl-sr-star-empty );
+			margin-right: ($gl-sr-star-size/6);
+		}
+
+		&.s10 > span:nth-child(1),
+		&.s20 > span:nth-child(-1n+2),
+		&.s30 > span:nth-child(-1n+3),
+		&.s40 > span:nth-child(-1n+4),
+		&.s50 > span:nth-child(-1n+5),
+		&.s60 > span:nth-child(-1n+6),
+		&.s70 > span:nth-child(-1n+7),
+		&.s80 > span:nth-child(-1n+8),
+		&.s90 > span:nth-child(-1n+9),
+		&.s100 > span {
+			background-image: url( $gl-sr-star-filled );
+		}
+	}
+
+	.gl-star-rating-text {
+		display: inline-block;
+		position: relative;
+		height: $gl-sr-base-height;
+		line-height: $gl-sr-base-height;
+		font-size: $gl-sr-text-font-size;
+		font-weight: $gl-sr-text-font-weight;
+		color: $gl-sr-text-color;
+		background-color: $gl-sr-text-background;
+		white-space: nowrap;
+		vertical-align: middle;
+		padding: 0 ($gl-sr-star-size/2) 0 ($gl-sr-star-size/4);
+		margin: 0 0 0 ($gl-sr-star-size/2);
+
+		&:before {
+			position: absolute;
+			top: 0;
+			left: -($gl-sr-star-size/2);
+			width: 0;
+			height: 0;
+			content: "";
+			border-style: solid;
+			border-width: ($gl-sr-base-height/2) ($gl-sr-star-size/2) ($gl-sr-base-height/2) 0;
+			border-color: transparent $gl-sr-text-background transparent transparent;
+		}
+	}
+}
+
