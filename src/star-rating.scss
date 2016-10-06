@@ -29,6 +29,8 @@ $gl-sr-text-font-weight : 600 !default;
 
 .gl-star-rating[data-star-rating] {
 
+	display: inline-block;
+
 	> select {
 		display: none;
 	}
