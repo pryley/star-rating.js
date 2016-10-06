@@ -1,4 +1,4 @@
-# star-rating.js v1.0.0
+# star-rating.js v1.0.1
 
 This plugin transforms a select with numerical-range values (i.e. 1-5) into a dynamic star rating element.
 
@@ -71,6 +71,10 @@ The compiled files will be saved in the `dist/` folder.
 All changes should be committed to the files in `src/`.
 
 ## Changelog
+
+`v1.0.1 - [06/10/2016]`
+
+- [fix] get the correct offsetLeft
 
 `v1.0.0 - [06/10/2016]`
 

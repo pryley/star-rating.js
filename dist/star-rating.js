@@ -1,7 +1,7 @@
 /**!
  * Star Rating
  *
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/star-rating.js
  * License: MIT
@@ -103,8 +103,10 @@
 
 		enter: function()
 		{
+			var rect = this.wrap.getBoundingClientRect();
+
 			this.$wrap.on( "mousemove", this.move.bind( this ) );
-			this.offsetLeft = this.wrap.offsetLeft;
+			this.offsetLeft = rect.left + document.body.scrollLeft;
 		},
 
 		getIndexFromPosition: function( pageX )
