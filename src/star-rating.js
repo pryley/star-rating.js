@@ -92,14 +92,11 @@
 			this.show( this.el.options[ this.el.selectedIndex ].value );
 		},
 
-		clear: function()
+		clear: function( reset )
 		{
 			if( this.config.clearable ) {
 				this.el.value = "";
 				this.selected = "";
-			}
-
-			if( this.config.clearable === 'reset' ) {
 				this.show(0);
 			}
 		},
@@ -135,7 +132,6 @@
 
 			if( ev !== undefined ) {
 				index = this.getIndexFromPosition( ev.pageX );
-
 				if( this.current !== '' && parseFloat( this.selected ) === index ) {
 					this.clear();
 					return;

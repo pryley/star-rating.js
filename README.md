@@ -43,9 +43,7 @@ Here are the default options
 
 ### clearable:
 
-This value determines whether the star rating can be cleared by clicking on the preselected star.
-
-Acceptable values are: `false`, `true`, `"reset"`.
+This boolean value determines whether the star rating can be cleared by clicking on the preselected star.
 
 Default: `true`
 
@@ -57,7 +55,7 @@ Default: `null`
 
 ### initialText:
 
-This value determines the initial text when no value is selected.
+This string value determines the initial text when no value is selected.
 
 Default: `"Click to Rate"`
 

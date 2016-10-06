@@ -85,6 +85,30 @@ $( '#star-rating-1' ).starrating({
 		<select id="star-rating-2">
 			<option value="">Select a rating</option>
 			<option value="5">5</option>
+			<option value="4">4</option>
+			<option value="3">3</option>
+			<option value="2">2</option>
+			<option value="1">1</option>
+		</select>
+
+		<h3>Changing the global plugin defaults</h3>
+
+		<pre><code>
+StarRating.defaults.initialText = "Rate me";
+
+$( '#star-rating-2' ).starrating();
+		</code></pre>
+
+		<script>
+			StarRating.defaults.initialText = "Rate me";
+			$( '#star-rating-2' ).starrating();
+		</script>
+	</section>
+
+	<section>
+		<select id="star-rating-3">
+			<option value="">Select a rating</option>
+			<option value="5">5</option>
 			<option value="4" selected>4</option>
 			<option value="3">3</option>
 			<option value="2">2</option>
@@ -94,16 +118,16 @@ $( '#star-rating-1' ).starrating({
 		<h3>Using a select with a pre-selected value</h3>
 
 		<pre><code>
-$( '#star-rating-2' ).starrating();
+$( '#star-rating-3' ).starrating();
 		</code></pre>
 
 		<script>
-			$( '#star-rating-2' ).starrating();
+			$( '#star-rating-3' ).starrating();
 		</script>
 	</section>
 
 	<section>
-		<select id="star-rating-3" data-options='{"initialText":"Rate Your Mood"}'>
+		<select id="star-rating-4" data-options='{"initialText":"Rate this"}'>
 			<option value="">Select a rating</option>
 			<option value="5">5</option>
 			<option value="4">4</option>
@@ -116,36 +140,12 @@ $( '#star-rating-2' ).starrating();
 
 		<pre><code>
 // initialText is set on the select element using the "data-options" attribute.
-// e.g. data-options='{"initialText":"Rate Your Mood"}'
-
-$( '#star-rating-3' ).starrating();
-		</code></pre>
-
-		<script>
-			$( '#star-rating-3' ).starrating();
-		</script>
-	</section>
-
-	<section>
-		<select id="star-rating-4">
-			<option value="">Select a rating</option>
-			<option value="5">5</option>
-			<option value="4">4</option>
-			<option value="3">3</option>
-			<option value="2">2</option>
-			<option value="1">1</option>
-		</select>
-
-		<h3>Changing the global plugin defaults</h3>
-
-		<pre><code>
-StarRating.defaults.initialText = "Choose Your Stars";
+// e.g. data-options='{"initialText":"Rate this"}'
 
 $( '#star-rating-4' ).starrating();
 		</code></pre>
 
 		<script>
-			StarRating.defaults.initialText = "Choose Your Stars";
 			$( '#star-rating-4' ).starrating();
 		</script>
 	</section>
@@ -164,15 +164,13 @@ $( '#star-rating-4' ).starrating();
 
 		<pre><code>
 var starrating = new StarRating( document.getElementById( 'star-rating-5' ), {
-	clearable: "reset",
-	initialText: "?",
+	clearable: false,
 }).init();
 		</code></pre>
 
 		<script>
 			var starrating = new StarRating( document.getElementById( 'star-rating-5' ), {
-				clearable: "reset",
-				initialText: "Select a Rating",
+				clearable: false,
 			}).init();
 		</script>
 	</section>
