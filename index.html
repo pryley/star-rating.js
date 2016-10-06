@@ -3,56 +3,82 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="chrome=1">
-	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
 	<title>star-rating.js by geminilabs</title>
 
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" rel="stylesheet">
+	<link href="demo/styles.css" rel="stylesheet">
 	<link href="dist/star-rating.css" rel="stylesheet">
 
 	<style>
-		body {
-			background: #1a1a1a;
-			padding: 1em;
+		.gl-star-rating {
+			margin-bottom: 1em;
 		}
+
 		pre {
-			line-height: 1.5;
-			font-size: 0.8em;
 			hyphens: none;
 			tab-size: 4;
 			white-space: pre;
 			word-break: normal;
 			word-spacing: normal;
 			word-wrap: normal;
-			background: #f9f9f9;
-			border: 1px solid #eee;
-			border-radius: 3px;
-			padding: 0 1em;
-			overflow: auto;
 		}
 
-		section {
-			display: block;
-			max-width: 800px;
-			background: #fff;
-			padding: 1em;
-			margin: 0 auto 1em;
-		}
-
-		section:last-child {
-			margin-bottom: 0;
+		header ul a {
+			line-height: 1.2;
+			padding-top: 5px;
 		}
 	</style>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js"></script>
-	<script src="dist/star-rating.min.js"></script>
 </head>
 <body>
 
+<div class="wrapper">
+
+	<header>
+
+		<h1>star-rating.js</h1>
+		<p>This plugin transforms a select with numerical-range values (i.e. 1-5) into a dynamic star rating element.</p>
+		<p>For production, use the files from the <code>dist/</code> folder.</p>
+
+		<p class="view"><a href="https://github.com/geminilabs/star-rating.js">View the Project on GitHub</a></p>
+
+		<ul>
+			<li><a href="https://github.com/geminilabs/star-rating.js/zipball/master">Download <strong>ZIP File</strong></a></li>
+			<li><a href="https://github.com/geminilabs/star-rating.js/tarball/master">Download <strong>TAR Ball</strong></a></li>
+			<li><a href="https://github.com/geminilabs/star-rating.js">View On <strong>GitHub</strong></a></li>
+		</ul>
+
+	</header>
+
 	<section>
+
+		<h2>Example Usage</h2>
+
+		<pre><code>&lt;link href="css/star-rating.css" rel="stylesheet"&gt;
+
+&lt;select id="star-rating"&gt;
+	&lt;option value=""&gt;Select a rating&lt;/option&gt;
+	&lt;option value="5"&gt;Excellent&lt;/option&gt;
+	&lt;option value="4"&gt;Very Good&lt;/option&gt;
+	&lt;option value="3"&gt;Average&lt;/option&gt;
+	&lt;option value="2"&gt;Poor&lt;/option&gt;
+	&lt;option value="1"&gt;Terrible&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;script src="js/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="js/star-rating.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+	$( '#star-rating' ).starrating();
+&lt;/script&gt;</code></pre>
+
+		<h2>Live Examples</h2>
+
+		<h3>Setting a custom click function</h3>
+
 		<select id="star-rating-1">
 			<option value="">Select a rating</option>
 			<option value="3">3</option>
@@ -60,28 +86,14 @@
 			<option value="1">1</option>
 		</select>
 
-		<h3>Setting custom options</h3>
-
-		<pre><code>
-$( '#star-rating-1' ).starrating({
-	clearable: false,
+		<pre><code>$( '#star-rating-1' ).starrating({
 	clickFn: function( selected ) {
 		console.log( 'I clicked star #' + selected );
 	},
-});
-		</code></pre>
+});</code></pre>
 
-		<script>
-			$( '#star-rating-1' ).starrating({
-				clearable: false,
-				clickFn: function( selected ) {
-					console.log( 'I clicked star #' + selected );
-				},
-			});
-		</script>
-	</section>
+		<h3>Changing the global plugin defaults</h3>
 
-	<section>
 		<select id="star-rating-2">
 			<option value="">Select a rating</option>
 			<option value="5">5</option>
@@ -91,21 +103,12 @@ $( '#star-rating-1' ).starrating({
 			<option value="1">1</option>
 		</select>
 
-		<h3>Changing the global plugin defaults</h3>
+		<pre><code>StarRating.defaults.initialText = "Rate me";
 
-		<pre><code>
-StarRating.defaults.initialText = "Rate me";
+$( '#star-rating-2' ).starrating();</code></pre>
 
-$( '#star-rating-2' ).starrating();
-		</code></pre>
+		<h3>Using a select with a pre-selected value</h3>
 
-		<script>
-			StarRating.defaults.initialText = "Rate me";
-			$( '#star-rating-2' ).starrating();
-		</script>
-	</section>
-
-	<section>
 		<select id="star-rating-3">
 			<option value="">Select a rating</option>
 			<option value="5">5</option>
@@ -115,18 +118,10 @@ $( '#star-rating-2' ).starrating();
 			<option value="1">1</option>
 		</select>
 
-		<h3>Using a select with a pre-selected value</h3>
+		<pre><code>$( '#star-rating-3' ).starrating();</code></pre>
 
-		<pre><code>
-$( '#star-rating-3' ).starrating();
-		</code></pre>
+		<h3>Using the "data-option" attribute to set the options</h3>
 
-		<script>
-			$( '#star-rating-3' ).starrating();
-		</script>
-	</section>
-
-	<section>
 		<select id="star-rating-4" data-options='{"initialText":"Rate this"}'>
 			<option value="">Select a rating</option>
 			<option value="5">5</option>
@@ -136,21 +131,13 @@ $( '#star-rating-3' ).starrating();
 			<option value="1">1</option>
 		</select>
 
-		<h3>Using the <code>data-option</code> attribute to set the options</h3>
-
-		<pre><code>
-// initialText is set on the select element using the "data-options" attribute.
+		<pre><code>// initialText is set on the select element using the "data-options" attribute.
 // e.g. data-options='{"initialText":"Rate this"}'
 
-$( '#star-rating-4' ).starrating();
-		</code></pre>
+$( '#star-rating-4' ).starrating();</code></pre>
 
-		<script>
-			$( '#star-rating-4' ).starrating();
-		</script>
-	</section>
+		<h3>Alternate way to create a new plugin instance</h3>
 
-	<section>
 		<select id="star-rating-5">
 			<option value="">Select a rating</option>
 			<option value="5">5</option>
@@ -160,20 +147,77 @@ $( '#star-rating-4' ).starrating();
 			<option value="1">1</option>
 		</select>
 
-		<h3>Alternative way of creating a new plugin instance</h3>
-
-		<pre><code>
-var starrating = new StarRating( document.getElementById( 'star-rating-5' ), {
+		<pre><code>var starrating = new StarRating( document.getElementById( 'star-rating-5' ), {
 	clearable: false,
-}).init();
-		</code></pre>
+}).init();</code></pre>
 
-		<script>
-			var starrating = new StarRating( document.getElementById( 'star-rating-5' ), {
-				clearable: false,
-			}).init();
-		</script>
+		<h2>Options</h2>
+
+		<p>Here are the default options</p>
+
+		<pre><code>{
+    clearable  : true,
+    clickFn    : null,
+    initialText: "Click to Rate",
+}</code></pre>
+
+		<h3>clearable</h3>
+
+		<p>This boolean value determines whether the star rating can be cleared by clicking on the preselected star.</p>
+
+		<h3>clickFn</h3>
+
+		<p>This value determines the custom function that is triggered after you click on a star.</p>
+
+		<h3>initialText</h3>
+
+		<p>This string value determines the initial text when no value is selected.</p>
+
+		<h2>Build</h2>
+
+		<p>star-rating.js uses gulp to build from src.</p>
+
+		<pre><code>$ npm install
+$ gulp</code></pre>
+
+		<p>The compiled files will be saved in the <code>dist/</code> folder.</p>
+
+		<h2>License</h2>
+
+		<p><a href="https://github.com/geminilabs/star-rating.js/blob/master/LICENSE">MIT</a></p>
+
 	</section>
+
+	<footer>
+		<p>This project is maintained by <a href="https://github.com/geminilabs">geminilabs</a></p>
+	</footer>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js"></script>
+	<script src="demo/scale.fix.js"></script>
+	<script src="dist/star-rating.min.js"></script>
+
+	<script>
+
+		$( '#star-rating-1' ).starrating({
+			clickFn: function( selected ) {
+				console.log( 'I clicked star #' + selected );
+			},
+		});
+
+		StarRating.defaults.initialText = "Rate me";
+
+		$( '#star-rating-2' ).starrating();
+
+		$( '#star-rating-3' ).starrating();
+
+		$( '#star-rating-4' ).starrating();
+
+		var starrating = new StarRating( document.getElementById( 'star-rating-5' ), {
+			clearable: false,
+		}).init();
+
+	</script>
+</div>
 
 </body>
 </html>
