@@ -1,4 +1,4 @@
-# Star Rating v1.0.0
+# star-rating.js v1.0.0
 
 This plugin transforms a select with numerical-range values (i.e. 1-5) into a dynamic star rating element.
 
@@ -9,17 +9,7 @@ For production, use the files from the `dist/` folder.
 ```html
 <link href="css/star-rating.css" rel="stylesheet">
 
-<script src="js/jquery.min.js"></script>
-<script src="js/star-rating.min.js"></script>
-<script>
-	jQuery( 'select.star-rating' ).starrating({
-		clickFn: function( selected ) {
-			console.log( 'I clicked star #' + selected );
-		},
-	});
-</script>
-
-<select class="star-rating">
+<select id="star-rating">
 	<option value="">Select a rating</option>
 	<option value="5">Excellent</option>
 	<option value="4">Very Good</option>
@@ -27,7 +17,19 @@ For production, use the files from the `dist/` folder.
 	<option value="2">Poor</option>
 	<option value="1">Terrible</option>
 </select>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/star-rating.min.js"></script>
+<script>
+	jQuery( '#star-rating' ).starrating({
+		clickFn: function( selected ) {
+			console.log( 'I clicked star #' + selected );
+		},
+	});
+</script>
 ```
+
+by default, the images are located in the following relative path from the stylesheet: <code>../img/star-*.svg</code>. To change this location, either import the SCSS file into your project and change the default SCSS variables, or override the CSS directly in your stylesheet.
 
 ## Options
 
@@ -43,21 +45,15 @@ Here are the default options
 
 ### clearable:
 
-This boolean value determines whether the star rating can be cleared by clicking on the preselected star.
-
-Default: `true`
+This boolean value determines whether the star rating can be cleared by clicking on an already pre-selected star.
 
 ### clickFn:
 
 This value determines the custom function that is triggered after you click on a star.
 
-Default: `null`
-
 ### initialText:
 
 This string value determines the initial text when no value is selected.
-
-Default: `"Click to Rate"`
 
 ## Build
 

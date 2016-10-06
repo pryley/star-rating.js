@@ -7,7 +7,7 @@
 
 	<title>star-rating.js by geminilabs</title>
 
-	<link href="demo/styles.css" rel="stylesheet">
+	<link href="demo/css/styles.css" rel="stylesheet">
 	<link href="dist/star-rating.css" rel="stylesheet">
 
 	<style>
@@ -56,7 +56,7 @@
 
 	<section>
 
-		<h2>Example Usage</h2>
+		<h2>Usage Example</h2>
 
 		<pre><code>&lt;link href="css/star-rating.css" rel="stylesheet"&gt;
 
@@ -74,6 +74,8 @@
 &lt;script&gt;
 	$( '#star-rating' ).starrating();
 &lt;/script&gt;</code></pre>
+
+		<p>by default, the images are located in the following relative path from the stylesheet: <code>../img/star-*.svg</code>. To change this location, either import the SCSS file into your project and change the default SCSS variables, or override the CSS directly in your stylesheet.</p>
 
 		<h2>Live Examples</h2>
 
@@ -163,7 +165,7 @@ $( '#star-rating-4' ).starrating();</code></pre>
 
 		<h3>clearable</h3>
 
-		<p>This boolean value determines whether the star rating can be cleared by clicking on the preselected star.</p>
+		<p>This boolean value determines whether the star rating can be cleared by clicking on the an already pre-selected star.</p>
 
 		<h3>clickFn</h3>
 
@@ -193,7 +195,7 @@ $ gulp</code></pre>
 	</footer>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js"></script>
-	<script src="demo/scale.fix.js"></script>
+	<script src="demo/js/scale.fix.js"></script>
 	<script src="dist/star-rating.min.js"></script>
 
 	<script>
