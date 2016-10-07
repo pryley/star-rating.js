@@ -1,7 +1,7 @@
 /**!
  * Star Rating
  *
- * Version: 1.0.1
+ * Version: 1.1.0
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/star-rating.js
  * License: MIT
@@ -26,6 +26,7 @@
 			clearable  : true,
 			clickFn    : null,
 			initialText: "Click to Rate",
+			showText   : true,
 		},
 
 		init: function()
@@ -66,11 +67,15 @@
 			var ordered = {};
 			var unordered = {};
 
-			this.$el.wrap( '<span class="gl-star-rating" data-star-rating/>' ).after( '<span class="gl-star-rating-stars"/><span class="gl-star-rating-text"/>');
+			this.$el.wrap( '<span class="gl-star-rating" data-star-rating/>' ).after( '<span class="gl-star-rating-stars"/>' );
 
 			this.wrap = this.el.nextSibling;
 			this.$wrap = $( this.wrap );
-			this.text = this.wrap.nextSibling;
+
+			if( this.config.showText ) {
+				this.$wrap.after( '<span class="gl-star-rating-text"/>' );
+				this.text = this.wrap.nextSibling;
+			}
 
 			for( var i = 0; i < this.el.length; i++ ) {
 				if( this.el[i].value !== '' ) {
@@ -160,7 +165,11 @@
 			}
 
 			this.$wrap.removeClass( 's' + ( 10 * this.current )).addClass( 's' + ( 10 * index ));
-			this.text.textContent = index < 1 ? this.config.initialText : this.wrap.childNodes[ index - 1 ].dataset.text;
+
+			if( this.config.showText ) {
+				this.text.textContent = index < 1 ? this.config.initialText : this.wrap.childNodes[ index - 1 ].dataset.text;
+			}
+
 			this.current = index;
 		},
 	};

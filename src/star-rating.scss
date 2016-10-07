@@ -1,7 +1,7 @@
 /*!
  * Star Rating
  *
- * Version: 1.0.1
+ * Version: 1.1.0
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/star-rating.js
  * License: MIT
@@ -11,15 +11,16 @@
 // Variables
 //
 
-$gl-sr-star-empty       : "../img/star-empty.svg" !default;
-$gl-sr-star-half        : "../img/star-half.svg" !default;
-$gl-sr-star-filled      : "../img/star-filled.svg" !default;
-
-$gl-sr-star-size        : 24px !default;
+$gl-sr-base-display     : block !default;
 $gl-sr-base-height      : 26px !default;
 
-$gl-sr-text-color       : #fff !default;
+$gl-sr-star-empty       : "../img/star-empty.svg" !default;
+$gl-sr-star-filled      : "../img/star-filled.svg" !default;
+$gl-sr-star-half        : "../img/star-half.svg" !default;
+$gl-sr-star-size        : 24px !default;
+
 $gl-sr-text-background  : #1a1a1a !default;
+$gl-sr-text-color       : #fff !default;
 $gl-sr-text-font-size   : 0.8em !default;
 $gl-sr-text-font-weight : 600 !default;
 
@@ -29,7 +30,7 @@ $gl-sr-text-font-weight : 600 !default;
 
 .gl-star-rating[data-star-rating] {
 
-	display: inline-block;
+	display: $gl-sr-base-display;
 
 	> select {
 		display: none;

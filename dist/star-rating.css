@@ -1,13 +1,13 @@
 /*!
  * Star Rating
  *
- * Version: 1.0.1
+ * Version: 1.1.0
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/star-rating.js
  * License: MIT
  */
 .gl-star-rating[data-star-rating] {
-  display: inline-block;
+  display: block;
 }
 
 .gl-star-rating[data-star-rating] > select {

@@ -1,4 +1,4 @@
-# star-rating.js v1.0.1
+# star-rating.js v1.0.2
 
 This plugin transforms a select with numerical-range values (i.e. 1-5) into a dynamic star rating element.
 
@@ -40,6 +40,7 @@ Here are the default options
     clearable  : true,
     clickFn    : null,
     initialText: "Click to Rate",
+    showText   : true,
 }
 ```
 
@@ -53,7 +54,11 @@ This value determines the custom function that is triggered after you click on a
 
 ### initialText:
 
-This string value determines the initial text when no value is selected.
+This string value determines the initial text when no value is selected. This has no effect if `showText` is set to false.
+
+### showText:
+
+This boolean value determines whether or not the rating text is shown.
 
 ## Build
 
@@ -71,6 +76,10 @@ The compiled files will be saved in the `dist/` folder.
 All changes should be committed to the files in `src/`.
 
 ## Changelog
+
+`v1.0.2 - [06/10/2016]`
+
+- [feature] showText option
 
 `v1.0.1 - [06/10/2016]`
 
