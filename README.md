@@ -1,4 +1,4 @@
-# star-rating.js v1.0.2
+# star-rating.js
 
 This plugin transforms a select with numerical-range values (i.e. 1-5) into a dynamic star rating element.
 
@@ -64,7 +64,7 @@ This boolean value determines whether or not the rating text is shown.
 
 Star Rating uses `gulp` to build from src.
 
-```bash
+```sh
 $ npm install
 $ gulp
 ```
@@ -77,17 +77,7 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
-`v1.0.2 - [06/10/2016]`
-
-- [feature] showText option
-
-`v1.0.1 - [06/10/2016]`
-
-- [fix] get the correct offsetLeft
-
-`v1.0.0 - [06/10/2016]`
-
-- Initial release
+[Full changelog](/CHANGELOG.md)
 
 ## License
 
