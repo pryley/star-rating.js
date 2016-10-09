@@ -211,6 +211,9 @@
 			return el;
 		},
 
+		/**
+		 * https://github.com/angus-c/just#just-extend
+		 */
 		_extend: function()
 		{
 			var args = [].slice.call( arguments );
