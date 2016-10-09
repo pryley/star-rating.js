@@ -41,7 +41,8 @@
 	<header>
 
 		<h1>star-rating.js</h1>
-		<p>This plugin transforms a select with numerical-range values (i.e. 1-5) into a dynamic star rating element.</p>
+		<p>This zero-dependency plugin transforms a select with numerical-range values (i.e. 1-5) into a dynamic star rating element.</p>
+		<p>For convenience, this plugin can also be used as a jQuery plugin (see examples below). </p>
 		<p>For production, use the files from the <code>dist/</code> folder.</p>
 
 		<p class="view"><a href="https://github.com/geminilabs/star-rating.js">View the Project on GitHub</a></p>
@@ -69,32 +70,29 @@
 	&lt;option value="1"&gt;Terrible&lt;/option&gt;
 &lt;/select&gt;
 
-&lt;script src="js/jquery.min.js"&gt;&lt;/script&gt;
 &lt;script src="js/star-rating.min.js"&gt;&lt;/script&gt;
 &lt;script&gt;
-	$( '#star-rating' ).starrating();
+	var starrating = new StarRating( document.getElementById( 'star-rating' ));
 &lt;/script&gt;</code></pre>
 
 		<p>by default, the images are located in the following relative path from the stylesheet: <code>../img/star-*.svg</code>. To change this location, either import the SCSS file into your project and change the default SCSS variables, or override the CSS directly in your stylesheet.</p>
 
 		<h2>Live Examples</h2>
 
-		<h3>Setting a custom click function</h3>
+		<h3>Using vanilla javascript</h3>
 
 		<select id="star-rating-1">
 			<option value="">Select a rating</option>
+			<option value="5">5</option>
+			<option value="4">4</option>
 			<option value="3">3</option>
 			<option value="2">2</option>
 			<option value="1">1</option>
 		</select>
 
-		<pre><code>$( '#star-rating-1' ).starrating({
-	clickFn: function( selected ) {
-		console.log( 'I clicked star #' + selected );
-	},
-});</code></pre>
+		<pre><code>var starrating1 = new StarRating( document.getElementById( 'star-rating-1' ));</code></pre>
 
-		<h3>Changing the global plugin defaults</h3>
+		<h3>Using jQuery</h3>
 
 		<select id="star-rating-2">
 			<option value="">Select a rating</option>
@@ -105,24 +103,24 @@
 			<option value="1">1</option>
 		</select>
 
-		<pre><code>StarRating.defaults.initialText = "Rate me";
+		<pre><code>$( '#star-rating-2' ).starrating();</code></pre>
 
-$( '#star-rating-2' ).starrating();</code></pre>
-
-		<h3>Using a select with a pre-selected value</h3>
+		<h3>Changing the global plugin defaults</h3>
 
 		<select id="star-rating-3">
 			<option value="">Select a rating</option>
 			<option value="5">5</option>
-			<option value="4" selected>4</option>
+			<option value="4">4</option>
 			<option value="3">3</option>
 			<option value="2">2</option>
 			<option value="1">1</option>
 		</select>
 
-		<pre><code>$( '#star-rating-3' ).starrating();</code></pre>
+		<pre><code>StarRating.defaults.initialText = "Rate me";
 
-		<h3>Using the "data-option" attribute to set the options</h3>
+var starrating3 = new StarRating( document.getElementById( 'star-rating-3' ));</code></pre>
+
+		<h3>Using the "data-option" attribute on the &lt;select&gt; to set the options</h3>
 
 		<select id="star-rating-4" data-options='{"initialText":"Rate this"}'>
 			<option value="">Select a rating</option>
@@ -133,26 +131,34 @@ $( '#star-rating-2' ).starrating();</code></pre>
 			<option value="1">1</option>
 		</select>
 
-		<pre><code>// initialText is set on the select element using the "data-options" attribute.
-// e.g. data-options='{"initialText":"Rate this"}'
+		<pre><code>&lt;select id="star-rating-4" data-options='{"initialText":"Rate this"}'&gt;
+	...
+&lt;select&gt;
 
-$( '#star-rating-4' ).starrating();</code></pre>
+&lt;script&gt;
+	var starrating4 = new StarRating( document.getElementById( 'star-rating-4' ));
+&lt;/script&gt;</code></pre>
 
-		<h3>Alternate way to create a new plugin instance</h3>
+		<h3>Changing all available options in a 7-star rating with a pre-selected &lt;option&gt;</h3>
 
 		<select id="star-rating-5">
 			<option value="">Select a rating</option>
+			<option value="7">7</option>
+			<option value="6">6</option>
 			<option value="5">5</option>
-			<option value="4">4</option>
+			<option value="4" selected>4</option>
 			<option value="3">3</option>
 			<option value="2">2</option>
 			<option value="1">1</option>
 		</select>
 
-		<pre><code>var starrating = new StarRating( document.getElementById( 'star-rating-5' ), {
+		<pre><code>var starrating5 = new StarRating( document.getElementById( 'star-rating-5' ), {
 	clearable: false,
 	showText: false,
-}).init();</code></pre>
+	clickFn: function( selected ) {
+		console.log( 'I clicked star #' + selected );
+	},
+});</code></pre>
 
 		<h2>Options</h2>
 
@@ -206,24 +212,21 @@ $ gulp</code></pre>
 
 	<script>
 
-		$( '#star-rating-1' ).starrating({
+		var starrating1 = new StarRating( document.getElementById( 'star-rating-1' ));
+
+		$( '#star-rating-2' ).starrating();
+
+		StarRating.defaults.initialText = "Rate me";
+
+		var starrating3 = new StarRating( document.getElementById( 'star-rating-3' ));
+		var starrating4 = new StarRating( document.getElementById( 'star-rating-4' ));
+		var starrating5 = new StarRating( document.getElementById( 'star-rating-5' ), {
+			clearable: false,
+			showText: false,
 			clickFn: function( selected ) {
 				console.log( 'I clicked star #' + selected );
 			},
 		});
-
-		StarRating.defaults.initialText = "Rate me";
-
-		$( '#star-rating-2' ).starrating();
-
-		$( '#star-rating-3' ).starrating();
-
-		$( '#star-rating-4' ).starrating();
-
-		var starrating = new StarRating( document.getElementById( 'star-rating-5' ), {
-			clearable: false,
-			showText: false,
-		}).init();
 
 	</script>
 </div>

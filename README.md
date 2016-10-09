@@ -1,6 +1,8 @@
 # star-rating.js
 
-This plugin transforms a select with numerical-range values (i.e. 1-5) into a dynamic star rating element.
+This zero-dependency plugin transforms a select with numerical-range values (i.e. 1-5) into a dynamic star rating element.
+
+For convenience, this plugin can also be used as a jQuery plugin (see examples below).
 
 For production, use the files from the `dist/` folder.
 
@@ -18,14 +20,12 @@ For production, use the files from the `dist/` folder.
 	<option value="1">Terrible</option>
 </select>
 
-<script src="js/jquery.min.js"></script>
 <script src="js/star-rating.min.js"></script>
 <script>
-	jQuery( '#star-rating' ).starrating({
-		clickFn: function( selected ) {
-			console.log( 'I clicked star #' + selected );
-		},
-	});
+	// Using vanilla javascript:
+	var starrating = new StarRating( document.getElementById( 'star-rating' ));
+	// OR - Using jQuery:
+	$( '#star-rating' ).starrating();
 </script>
 ```
 

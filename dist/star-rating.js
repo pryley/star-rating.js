@@ -1,23 +1,24 @@
 /**!
  * Star Rating
  *
- * Version: 1.1.0
+ * Version: 1.2.0
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/star-rating.js
  * License: MIT
  */
 
-;(function( $, window, document, undefined )
+;(function( window, document, undefined )
 {
 	"use strict";
 
 	var Plugin = function( el, options )
 	{
 		this.el = el;
-		this.$el = $( el );
 		this.options = options;
-		this.metadata = this.$el.data( "options" );
+		this.metadata = this.el.getAttribute( 'data-options' );
 		this.stars = 0;
+
+		this.init();
 	};
 
 	Plugin.prototype = {
@@ -36,21 +37,21 @@
 			for( var i = 0; i < this.el.length; i++ ) {
 				if( this.el[i].value === '' )continue;
 				// abort if any value is not numerical
-				if( isNaN( parseFloat( this.el[i].value ) ) || !isFinite( this.el[i].value ) )return;
+				if( isNaN( parseFloat( this.el[i].value )) || !isFinite( this.el[i].value ))return;
 				this.stars++;
 			}
 
 			// abort if number of stars is outside the 1-10 range
 			if( this.stars < 1 || this.stars > 10 )return;
 
-			this.config = $.extend( {}, this.defaults, this.options, this.metadata );
+			this.config = this._extend( {}, this.defaults, this.options, this.metadata );
 
 			this.build();
 
-			this.$el.on( "change", this.change.bind( this ) );
-			this.$wrap.on( "mouseenter", this.enter.bind( this ) );
-			this.$wrap.on( "mouseleave", this.leave.bind( this ) );
-			this.$wrap.on( "click", this.select.bind( this ) );
+			this._on( "change", this.el, this.change.bind( this ));
+			this._on( "mouseenter", this.wrap, this.enter.bind( this ));
+			this._on( "mouseleave", this.wrap, this.leave.bind( this ));
+			this._on( "click", this.wrap, this.select.bind( this ));
 
 			this.current = this.el.options[ this.el.selectedIndex ].value;
 			this.selected = this.current;
@@ -67,14 +68,22 @@
 			var ordered = {};
 			var unordered = {};
 
-			this.$el.wrap( '<span class="gl-star-rating" data-star-rating/>' ).after( '<span class="gl-star-rating-stars"/>' );
+			var wrapper = this._createEl( "span", {
+				"class": "gl-star-rating",
+				"data-star-rating": "",
+			});
 
-			this.wrap = this.el.nextSibling;
-			this.$wrap = $( this.wrap );
+			this.el.parentNode.insertBefore( wrapper, this.el );
+			wrapper.appendChild( this.el );
+
+			this.wrap = this._insertAfterEl( this.el, "span", {
+				"class": "gl-star-rating-stars",
+			});
 
 			if( this.config.showText ) {
-				this.$wrap.after( '<span class="gl-star-rating-text"/>' );
-				this.text = this.wrap.nextSibling;
+				this.text = this._insertAfterEl( this.wrap, "span", {
+					"class": "gl-star-rating-text",
+				});
 			}
 
 			for( var i = 0; i < this.el.length; i++ ) {
@@ -88,7 +97,10 @@
 			});
 
 			for( var key in ordered ) {
-				this.$wrap.append( '<span data-value="' + key + '" data-text="' + ordered[ key ] + '"/>' );
+				this._appendTo( this.wrap, 'span', {
+					"data-value": key,
+					"data-text": ordered[ key ],
+				});
 			}
 		},
 
@@ -110,7 +122,7 @@
 		{
 			var rect = this.wrap.getBoundingClientRect();
 
-			this.$wrap.on( "mousemove", this.move.bind( this ) );
+			this._on( "mousemove", this.wrap, this.move.bind( this ));
 			this.offsetLeft = rect.left + document.body.scrollLeft;
 		},
 
@@ -124,13 +136,13 @@
 
 		leave: function()
 		{
-			this.$wrap.off( "mousemove" );
+			this._off( "mousemove", this.wrap, this.move );
 			this.show( this.selected );
 		},
 
 		move: function( ev )
 		{
-			this.show( this.getIndexFromPosition( ev.pageX ) );
+			this.show( this.getIndexFromPosition( ev.pageX ));
 		},
 
 		select: function( ev )
@@ -164,7 +176,8 @@
 				index = this.stars;
 			}
 
-			this.$wrap.removeClass( 's' + ( 10 * this.current )).addClass( 's' + ( 10 * index ));
+			this._removeClass( this.wrap, 's' + ( 10 * this.current ));
+			this._addClass( this.wrap, 's' + ( 10 * index ));
 
 			if( this.config.showText ) {
 				this.text.textContent = index < 1 ? this.config.initialText : this.wrap.childNodes[ index - 1 ].dataset.text;
@@ -172,18 +185,103 @@
 
 			this.current = index;
 		},
+
+		_addClass: function( el, className )
+		{
+			if( el.classList ) el.classList.add( className );
+			else if( !this._hasClass( el, className )) el.className += ' ' + className;
+		},
+
+		_appendTo: function( el, tag, attributes )
+		{
+			var newEl = this._createEl( tag, attributes );
+			el.innerHTML += newEl.outerHTML;
+		},
+
+		_createEl: function( tag, attributes )
+		{
+			var el = ( typeof tag === 'string' ) ? document.createElement( tag ) : tag;
+
+			attributes = attributes || {};
+
+			for( var key in attributes ) {
+				el.setAttribute( key, attributes[ key ] );
+			}
+
+			return el;
+		},
+
+		_extend: function()
+		{
+			var args = [].slice.call( arguments );
+			var deep = false;
+			if( typeof args[0] === 'boolean' ) {
+				deep = args.shift();
+			}
+			var result = args[0];
+			var extenders = args.slice(1);
+			var len = extenders.length;
+			for( var i = 0; i < len; i++ ) {
+				var extender = extenders[i];
+				for( var key in extender ) {
+					var value = extender[ key ];
+					if( deep && value && ( typeof value == 'object' )) {
+						var base = Array.isArray( value ) ? [] : {};
+						result[ key ] = this._extend( true, base, value );
+					}
+					else {
+						result[ key ] = value;
+					}
+				}
+			}
+			return result;
+		},
+
+		_hasClass: function( el, className )
+		{
+			if( el.classList ) return el.classList.contains( className );
+			else return new RegExp( '\\b' + className + '\\b' ).test( el.className );
+		},
+
+		_insertAfterEl: function( el, tag, attributes )
+		{
+			var newEl = this._createEl( tag, attributes );
+			el.parentNode.insertBefore( newEl, el.nextSibling );
+
+			return newEl;
+		},
+
+		_off: function( type, el, handler )
+		{
+			if( el.detachEvent ) el.detachEvent( 'on' + type, handler );
+			else el.removeEventListener( type, handler );
+		},
+
+		_on: function( type, el, handler )
+		{
+			if( el.attachEvent ) el.attachEvent( 'on' + type, handler );
+			else el.addEventListener( type, handler );
+		},
+
+		_removeClass: function( el, className )
+		{
+			if( el.classList ) el.classList.remove( className );
+			else el.className = el.className.replace( new RegExp( '\\b' + className + '\\b', 'g' ), '' );
+		},
 	};
 
 	Plugin.defaults = Plugin.prototype.defaults;
 
-	$.fn.starrating = function( options ) {
-		return this.each( function() {
-			if( !$.data( this, "plugin_starrating" )) {
-				$.data( this, "plugin_starrating", new Plugin( this, options ).init());
-			}
-		});
-	};
+	if( window.jQuery ) {
+		jQuery.fn.starrating = function( options ) {
+			return this.each( function() {
+				if( !jQuery.data( this, "plugin_starrating" )) {
+					jQuery.data( this, "plugin_starrating", new Plugin( this, options ));
+				}
+			});
+		};
+	}
 
 	window.StarRating = Plugin;
 
-})( jQuery, window, document );
+})( window, document );
