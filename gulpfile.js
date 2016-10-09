@@ -1,6 +1,7 @@
 
 var gulp         = require( 'gulp' );
 var autoprefixer = require( 'gulp-autoprefixer' );
+var bump         = require( 'gulp-bump' );
 var cssnano      = require( 'gulp-cssnano' );
 var jshint       = require( 'gulp-jshint' );
 var notify       = require( 'gulp-notify' );
@@ -50,6 +51,21 @@ gulp.task( 'js', function ()
 			message: 'JS Task complete!',
 			onLast : true
 		}) );
+});
+
+/* Version Bump Task
+ -------------------------------------------------- */
+gulp.task( 'bump', function ()
+{
+	return gulp
+		.src([
+			'bower.json',
+			'package.json',
+			'src/star-rating.js',
+			'src/star-rating.scss',
+		], { base: './' })
+		.pipe( bump())
+		.pipe( gulp.dest( './' ));
 });
 
 /* Watch Task
