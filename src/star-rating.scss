@@ -30,10 +30,16 @@ $gl-sr-text-font-weight : 600 !default;
 
 .gl-star-rating[data-star-rating] {
 
+	position: relative;
 	display: $gl-sr-base-display;
 
 	> select {
-		display: none;
+		position: absolute !important;
+		top: 0;
+		left: 0;
+		clip: rect(1px 1px 1px 1px); // IE6, IE7
+		clip: rect(1px, 1px, 1px, 1px);
+		clip-path: circle(1px at 0 0);
 	}
 
 	.gl-star-rating-stars {

@@ -7,11 +7,18 @@
  * License: MIT
  */
 .gl-star-rating[data-star-rating] {
+  position: relative;
   display: block;
 }
 
 .gl-star-rating[data-star-rating] > select {
-  display: none;
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  -webkit-clip-path: circle(1px at 0 0);
+          clip-path: circle(1px at 0 0);
 }
 
 .gl-star-rating[data-star-rating] .gl-star-rating-stars {
