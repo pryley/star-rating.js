@@ -155,8 +155,8 @@ var starrating3 = new StarRating( document.getElementById( 'star-rating-3' ));</
 		<pre><code>var starrating5 = new StarRating( document.getElementById( 'star-rating-5' ), {
 	clearable: false,
 	showText: false,
-	clickFn: function( selected ) {
-		console.log( 'I clicked star #' + selected );
+	onClick: function( el ) {
+		console.log( 'I selected: ' + el[ el.selectedIndex ].text );
 	},
 });</code></pre>
 
@@ -166,7 +166,7 @@ var starrating3 = new StarRating( document.getElementById( 'star-rating-3' ));</
 
 		<pre><code>{
     clearable  : true,
-    clickFn    : null,
+    onClick    : null,
     initialText: "Click to Rate",
     showText   : true,
 }</code></pre>
@@ -175,9 +175,9 @@ var starrating3 = new StarRating( document.getElementById( 'star-rating-3' ));</
 
 		<p>This boolean value determines whether the star rating can be cleared by clicking on the an already pre-selected star.</p>
 
-		<h3>clickFn</h3>
+		<h3>onClick</h3>
 
-		<p>This value determines the custom function that is triggered after you click on a star.</p>
+		<p>This value determines the custom function that is triggered after you click on a star. The custom function argument is the select HTMLElement.</p>
 
 		<h3>initialText</h3>
 
@@ -223,8 +223,8 @@ $ gulp</code></pre>
 		var starrating5 = new StarRating( document.getElementById( 'star-rating-5' ), {
 			clearable: false,
 			showText: false,
-			clickFn: function( selected ) {
-				console.log( 'I clicked star #' + selected );
+			onClick: function( el ) {
+				console.log( 'I selected: ' + el[ el.selectedIndex ].text );
 			},
 		});
 

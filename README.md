@@ -38,8 +38,8 @@ Here are the default options
 ```js
 {
     clearable  : true,
-    clickFn    : null,
     initialText: "Click to Rate",
+    onClick    : null,
     showText   : true,
 }
 ```
@@ -48,9 +48,9 @@ Here are the default options
 
 This boolean value determines whether the star rating can be cleared by clicking on an already pre-selected star.
 
-### clickFn:
+### onClick:
 
-This value determines the custom function that is triggered after you click on a star.
+This value determines the custom function that is triggered after you click on a star. The custom function argument is the select HTMLElement.
 
 ### initialText:
 

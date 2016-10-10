@@ -1,3 +1,7 @@
+## v1.3.0 [10-10-2016]
+
+- [Modified]: Renamed `clickFn` to `onClick` which now passes the select HTMLElement as the argument.
+
 ## v1.2.2 [10-10-2016]
 
 - [Bugfix]: Reset star rating when the parent form is reset, even if the `clearable` option is false.
@@ -8,12 +12,12 @@
 
 ## v1.2.0 [09-10-2016]
 
-- [Bugfix]: Use "clip-path" instead of hiding select (fixes HTML5 “required” attribute validation).
 - [Feature]: Zero-dependencies.
+- [Bugfix]: Use "clip-path" instead of hiding select (fixes HTML5 “required” attribute validation).
 
 ## v1.1.0 [06-10-2016]
 
-- [Feature]: Add a `showText` option.
+- [Added]: `showText` option.
 
 ## v1.0.1 [06-10-2016]
 

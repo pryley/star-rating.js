@@ -1,7 +1,7 @@
 /**!
  * Star Rating
  *
- * Version: 1.2.2
+ * Version: 1.3.0
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/star-rating.js
  * License: MIT
@@ -25,8 +25,8 @@
 
 		defaults: {
 			clearable  : true,
-			clickFn    : null,
 			initialText: "Click to Rate",
+			onClick    : null,
 			showText   : true,
 		},
 
@@ -163,8 +163,8 @@
 
 			this.show( index );
 
-			if( ev !== undefined && typeof this.config.clickFn === 'function' ) {
-				this.config.clickFn( this.selected );
+			if( ev !== undefined && typeof this.config.onClick === 'function' ) {
+				this.config.onClick( this.el );
 			}
 		},
 

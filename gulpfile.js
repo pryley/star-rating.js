@@ -55,16 +55,34 @@ gulp.task( 'js', function ()
 
 /* Version Bump Task
  -------------------------------------------------- */
-gulp.task( 'bump', function ()
+var bumpPaths = [
+	'bower.json',
+	'package.json',
+	'src/star-rating.js',
+	'src/star-rating.scss',
+];
+
+gulp.task( 'bump:patch', function ()
 {
 	return gulp
-		.src([
-			'bower.json',
-			'package.json',
-			'src/star-rating.js',
-			'src/star-rating.scss',
-		], { base: './' })
+		.src( bumpPaths, { base: './' })
 		.pipe( bump())
+		.pipe( gulp.dest( './' ));
+});
+
+gulp.task( 'bump:minor', function ()
+{
+	return gulp
+		.src( bumpPaths, { base: './' })
+		.pipe( bump({ type: 'minor' }))
+		.pipe( gulp.dest( './' ));
+});
+
+gulp.task( 'bump:major', function ()
+{
+	return gulp
+		.src( bumpPaths, { base: './' })
+		.pipe( bump({ type: 'major' }))
 		.pipe( gulp.dest( './' ));
 });
 
