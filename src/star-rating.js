@@ -1,7 +1,7 @@
 /**!
  * Star Rating
  *
- * Version: 1.2.0
+ * Version: 1.2.1
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/star-rating.js
  * License: MIT
@@ -52,6 +52,7 @@
 			this._on( "mouseenter", this.wrap, this.enter.bind( this ));
 			this._on( "mouseleave", this.wrap, this.leave.bind( this ));
 			this._on( "click", this.wrap, this.select.bind( this ));
+			this._on( "reset", this.el.closest( 'form' ), this.clear.bind( this ));
 
 			this.current = this.el.options[ this.el.selectedIndex ].value;
 			this.selected = this.current;
@@ -288,3 +289,31 @@
 	window.StarRating = Plugin;
 
 })( window, document );
+
+if( this.Element ) {
+	(function( ElementPrototype )
+	{
+		// matches polyfill
+		ElementPrototype.matches = ElementPrototype.matches ||
+		ElementPrototype.matchesSelector ||
+		ElementPrototype.webkitMatchesSelector ||
+		ElementPrototype.msMatchesSelector ||
+		function( selector )
+		{
+			var node = this;
+			var nodes = ( node.parentNode || node.document ).querySelectorAll( selector );
+			var i = -1;
+			while( nodes[++i] && nodes[i] !== node );
+			return !!nodes[i];
+		};
+
+		// closest polyfill
+		ElementPrototype.closest = ElementPrototype.closest ||
+		function( selector )
+		{
+			var el = this;
+			while( el.matches && !el.matches( selector )) el = el.parentNode;
+			return el.matches ? el : null;
+		};
+	})( Element.prototype );
+}

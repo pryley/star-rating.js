@@ -1,5 +1,5 @@
 {
-  "version": "1.2.0",
+  "version": "1.2.1",
   "name": "star-rating.js",
   "description": "This plugin transforms a select into a dynamic star rating element.",
   "author": {

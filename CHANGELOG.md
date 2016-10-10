@@ -1,3 +1,7 @@
+## v1.2.1 [09-10-2016]
+
+- [Bugfix]: Reset star rating when the parent form is reset
+
 ## v1.2.0 [09-10-2016]
 
 - [Bugfix]: Use "clip-path" instead of hiding select (fixes HTML5 “required” attribute validation).
