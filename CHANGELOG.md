@@ -1,6 +1,10 @@
+## v1.2.2 [10-10-2016]
+
+- [Bugfix]: Reset star rating when the parent form is reset, even if the `clearable` option is false.
+
 ## v1.2.1 [09-10-2016]
 
-- [Bugfix]: Reset star rating when the parent form is reset
+- [Bugfix]: Reset star rating when the parent form is reset.
 
 ## v1.2.0 [09-10-2016]
 

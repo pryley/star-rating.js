@@ -1,7 +1,7 @@
 /**!
  * Star Rating
  *
- * Version: 1.2.0
+ * Version: 1.2.2
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/star-rating.js
  * License: MIT
@@ -110,9 +110,9 @@
 			this.show( this.el.options[ this.el.selectedIndex ].value );
 		},
 
-		clear: function( reset )
+		clear: function( ev )
 		{
-			if( this.config.clearable ) {
+			if( this.config.clearable || ev !== undefined ) {
 				this.el.value = "";
 				this.selected = "";
 				this.show(0);
