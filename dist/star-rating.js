@@ -1,7 +1,7 @@
 /**!
  * Star Rating
  *
- * Version: 1.3.0
+ * Version: 1.3.1
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/star-rating.js
  * License: MIT
@@ -17,6 +17,9 @@
 		this.options = options;
 		this.metadata = this.el.getAttribute( 'data-options' );
 		this.stars = 0;
+		this.events = {
+			'mousemove': this.move.bind( this ),
+		};
 
 		this.init();
 	};
@@ -46,13 +49,18 @@
 
 			this.config = this._extend( {}, this.defaults, this.options, this.metadata );
 
+			var form = this.el.closest( 'form' );
+
 			this.build();
 
 			this._on( "change", this.el, this.change.bind( this ));
 			this._on( "mouseenter", this.wrap, this.enter.bind( this ));
 			this._on( "mouseleave", this.wrap, this.leave.bind( this ));
 			this._on( "click", this.wrap, this.select.bind( this ));
-			this._on( "reset", this.el.closest( 'form' ), this.clear.bind( this ));
+
+			if( form ) {
+				this._on( "reset", this.el.closest( 'form' ), this.clear.bind( this ));
+			}
 
 			this.current = this.el.options[ this.el.selectedIndex ].value;
 			this.selected = this.current;
@@ -123,7 +131,7 @@
 		{
 			var rect = this.wrap.getBoundingClientRect();
 
-			this._on( "mousemove", this.wrap, this.move.bind( this ));
+			this._on( "mousemove", this.wrap, this.events.mousemove );
 			this.offsetLeft = rect.left + document.body.scrollLeft;
 		},
 
@@ -137,7 +145,7 @@
 
 		leave: function()
 		{
-			this._off( "mousemove", this.wrap, this.move );
+			this._off( "mousemove", this.wrap, this.events.mousemove );
 			this.show( this.selected );
 		},
 

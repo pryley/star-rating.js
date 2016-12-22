@@ -1,3 +1,8 @@
+## v1.3.1 [22-12-2016]
+
+- [Bugfix]: Check existence of parent form element before attaching an event to it.
+- [Bugfix]: Correctly unattach mousemove event.
+
 ## v1.3.0 [10-10-2016]
 
 - [Modified]: Renamed `clickFn` to `onClick` which now passes the select HTMLElement as the argument.
