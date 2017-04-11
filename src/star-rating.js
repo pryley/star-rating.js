@@ -1,7 +1,7 @@
 /**!
  * Star Rating
  *
- * Version: 1.3.1
+ * Version: 1.3.3
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/star-rating.js
  * License: MIT
@@ -64,8 +64,6 @@
 
 			this.current = this.el.options[ this.el.selectedIndex ].value;
 			this.selected = this.current;
-			this.width = this.wrap.offsetWidth;
-			this.star = Math.round( this.width / this.stars );
 
 			this.select();
 
@@ -137,6 +135,7 @@
 
 		getIndexFromPosition: function( pageX )
 		{
+			this.star = Math.round( this.wrap.offsetWidth / this.stars );
 			return Math.min(
 				Math.ceil( Math.max( pageX - this.offsetLeft, 1 ) / this.star ),
 				this.stars

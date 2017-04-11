@@ -1,3 +1,7 @@
+## v1.3.3 [11-04-2017]
+
+- [Bugfix]: JS race conditions sometimes prevent correct element.outerWidth calculation
+
 ## v1.3.1 [22-12-2016]
 
 - [Bugfix]: Check existence of parent form element before attaching an event to it.
