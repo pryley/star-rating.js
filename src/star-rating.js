@@ -286,17 +286,6 @@
 	};
 
 	Plugin.defaults = Plugin.prototype.defaults;
-
-	if( window.jQuery ) {
-		jQuery.fn.starrating = function( options ) {
-			return this.each( function() {
-				if( !jQuery.data( this, "plugin_starrating" )) {
-					jQuery.data( this, "plugin_starrating", new Plugin( this, options ));
-				}
-			});
-		};
-	}
-
 	window.StarRating = Plugin;
 
 })( window, document );

@@ -82,6 +82,7 @@ All changes should be committed to the files in `src/`.
 
 `v2.0.0 [02-05-2018]`
 
+- Removed jQuery plugin as it's unnecessary
 - Removed IE9 support
 
 `v1.3.3 [11-04-2017]`
