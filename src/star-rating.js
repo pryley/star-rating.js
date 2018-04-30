@@ -1,7 +1,7 @@
 /**!
  * Star Rating
  *
- * Version: 1.3.3
+ * Version: 2.0.0
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/star-rating.js
  * License: MIT
@@ -286,6 +286,15 @@
 	};
 
 	Plugin.defaults = Plugin.prototype.defaults;
-	window.StarRating = Plugin;
+
+	if( typeof define === "function" && define.amd ) {
+		define( [], function() { return Plugin; });
+	}
+	else if( typeof module === "object" && module.exports ) {
+		module.exports = Plugin;
+	}
+	else {
+		window.StarRating = Plugin;
+	}
 
 })( window, document );

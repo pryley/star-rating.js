@@ -1,7 +1,7 @@
 {
-  "version": "1.3.3",
   "name": "star-rating.js",
   "description": "This plugin transforms a select into a dynamic star rating element.",
+  "version": "2.0.0",
   "author": {
     "name": "Paul Ryley",
     "email": "paul@geminilabs.io",
@@ -16,7 +16,7 @@
     "url": "https://github.com/geminilabs/star-rating.js/issues"
   },
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "browser-sync": "^2.18.13",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
@@ -29,12 +29,14 @@
     "gulp-sass": "^4.0.1",
     "gulp-uglify": "^3.0.0",
     "gulp-watch": "^5.0.0",
+    "hoek": "^4.2.1",
     "jshint": "^2.9.5",
     "jshint-stylish": "^2.2.1",
     "pump": "^3.0.0",
     "yargs": "^11.1.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  }
+    "lint": "jshint src/star-rating.js"
+  },
+  "main": "src/star-rating.js"
 }
