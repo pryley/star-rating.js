@@ -130,11 +130,11 @@ var starrating3 = new StarRating( document.getElementById( 'star-rating-3' ));</
 
 		<select id="star-rating-4" data-options='{"initialText":"Rate this"}'>
 			<option value="">Select a rating</option>
-			<option value="5">5</option>
-			<option value="4">4</option>
-			<option value="3">3</option>
-			<option value="2">2</option>
-			<option value="1">1</option>
+			<option value="5">Fantastic</option>
+			<option value="4">Great</option>
+			<option value="3">Good</option>
+			<option value="2">Poor</option>
+			<option value="1">Terrible</option>
 		</select>
 
 		<pre><code>&lt;select id="star-rating-4" data-options='{"initialText":"Rate this"}'&gt;
@@ -218,19 +218,18 @@ $ gulp</code></pre>
 
 	<script>
 
-		var starrating1 = new StarRating( document.getElementById( 'star-rating-1' ));
-
-		$( '#star-rating-2' ).starrating();
+		var starrating1 = new StarRating( '#star-rating-1' );
+		var starrating2 = new StarRating( '#star-rating-2' );
 
 		StarRating.defaults.initialText = "Rate me";
 
-		var starrating3 = new StarRating( document.getElementById( 'star-rating-3' ));
-		var starrating4 = new StarRating( document.getElementById( 'star-rating-4' ));
-		var starrating5 = new StarRating( document.getElementById( 'star-rating-5' ), {
+		var starrating3 = new StarRating( '#star-rating-3' );
+		var starrating4 = new StarRating( '#star-rating-4' );
+		var starrating5 = new StarRating( '#star-rating-5', {
 			clearable: false,
 			showText: false,
 			onClick: function( el ) {
-				console.log( 'I selected: ' + el[ el.selectedIndex ].text );
+				console.log( 'Selected: ' + el[ el.selectedIndex ].text );
 			},
 		});
 

@@ -13,271 +13,275 @@
 
 	var Plugin = function( el, options )
 	{
-		this.el = el;
-		this.options = options;
-		this.metadata = this.el.getAttribute( 'data-options' );
-		this.stars = 0;
-		this.events = {
-			'mousemove': this.move.bind( this ),
-		};
-
+		this.el = this.isString( el ) ? document.querySelectorAll( el ) : [el];
+		this.options = options || {};
+		this.widgets = [];
 		this.init();
 	};
 
 	Plugin.prototype = {
 
 		defaults: {
-			clearable  : true,
-			initialText: "Click to Rate",
-			onClick    : null,
-			showText   : true,
+			clearable: true,
+			initialText: 'Click to Rate',
+			onClick: null,
+			showText: true,
 		},
 
-		init: function()
-		{
-			if( this.el.tagName !== 'SELECT' )return;
-
-			for( var i = 0; i < this.el.length; i++ ) {
-				if( this.el[i].value === '' )continue;
-				// abort if any value is not numerical
-				if( isNaN( parseFloat( this.el[i].value )) || !isFinite( this.el[i].value ))return;
-				this.stars++;
-			}
-
-			// abort if number of stars is outside the 1-10 range
-			if( this.stars < 1 || this.stars > 10 )return;
-
-			this.config = this._extend( {}, this.defaults, this.options, this.metadata );
-
-			var form = this.el.closest( 'form' );
-
-			this.build();
-
-			this._on( "change", this.el, this.change.bind( this ));
-			this._on( "mouseenter", this.wrap, this.enter.bind( this ));
-			this._on( "mouseleave", this.wrap, this.leave.bind( this ));
-			this._on( "click", this.wrap, this.select.bind( this ));
-
-			if( form ) {
-				this._on( "reset", this.el.closest( 'form' ), this.clear.bind( this ));
-			}
-
-			this.current = this.el.options[ this.el.selectedIndex ].value;
-			this.selected = this.current;
-
-			this.select();
-
-			return this;
+		/** @return void */
+		init: function() {
+			this.initEvents();
+			this.loopEl( function( el, i ) {
+				var stars = this.countStars( el );
+				if( stars < 1 || stars > 10 )return;
+				var selected = this.getSelected();
+				this.wrap( el );
+				this.widgets[i] = {
+					config: this.extend( {}, this.defaults, this.options, el.getAttribute( 'data-options' )),
+					current: selected,
+					el: el,
+					selected: selected,
+					stars: stars,
+					textEl: null,
+					widgetEl: this.buildWidgetEl(),
+				};
+				this.buildLabelEl();
+				this.handleEvents();
+				this.onClick();
+			});
 		},
 
-		build: function()
-		{
-			var ordered = {};
-			var unordered = {};
+		/** @return void */
+		initEvents: function() {
+			this.events = {
+				mousemove: this.onMousemove.bind( this ),
+			};
+		},
 
-			var wrapper = this._createEl( "span", {
-				"class": "gl-star-rating",
-				"data-star-rating": "",
-			});
-
-			this.el.parentNode.insertBefore( wrapper, this.el );
-			wrapper.appendChild( this.el );
-
-			this.wrap = this._insertAfterEl( this.el, "span", {
-				"class": "gl-star-rating-stars",
-			});
-
-			if( this.config.showText ) {
-				this.text = this._insertAfterEl( this.wrap, "span", {
-					"class": "gl-star-rating-text",
+		/** @return HTMLElement */
+		buildLabelEl: function() {
+			var current = this.current();
+			if( current.config.showText ) {
+				this.widgets[this.i].textEl = this.insertElAfter( current.widgetEl, 'span', {
+					class: 'gl-star-rating-text',
 				});
 			}
+		},
 
-			for( var i = 0; i < this.el.length; i++ ) {
-				if( this.el[i].value !== '' ) {
-					unordered[ this.el[i].value ] = this.el[i].text;
-				}
+		/** @return HTMLElement */
+		buildWidgetEl: function() {
+			var el = this.el[this.i];
+			var ordered = {};
+			var unordered = {};
+			var widgetEl = this.insertElAfter( el, 'span', {
+				class: 'gl-star-rating-stars',
+			});
+			for( var i = 0; i < el.length; i++ ) {
+				if( el[i].value === '' )continue;
+				unordered[el[i].value] = el[i].text;
 			}
-
 			Object.keys( unordered ).sort().forEach( function( key ) {
 				ordered[key] = unordered[key];
 			});
-
 			for( var key in ordered ) {
-				this._appendTo( this.wrap, 'span', {
-					"data-value": key,
-					"data-text": ordered[ key ],
+				if( !ordered.hasOwnProperty( key ))continue;
+				var newEl = this.createEl( 'span', {
+					'data-value': key,
+					'data-text': ordered[key],
 				});
+				widgetEl.innerHTML += newEl.outerHTML;
+			}
+			return widgetEl;
+		},
+
+		/** @return int */
+		countStars: function( el ) {
+			var stars = 0;
+			for( var i = 0; i < el.length; i++ ) {
+				if( el[i].value === '' )continue;
+				if( isNaN( parseFloat( el[i].value )) || !isFinite( el[i].value )) {
+					return 0;
+				}
+				stars++;
+			}
+			return stars;
+		},
+
+		/** @return HTMLElement */
+		createEl: function( tag, attributes ) {
+			var el = ( typeof tag === 'string' ) ? document.createElement( tag ) : tag;
+			attributes = attributes || {};
+			for( var key in attributes ) {
+				if( !attributes.hasOwnProperty( key ))continue;
+				el.setAttribute( key, attributes[key] );
+			}
+			return el;
+		},
+
+		/** @return mixed */
+		current: function( key ) {
+			var current = this.widgets[this.i];
+			return key ? current[key] : current;
+		},
+
+		/** @return object */
+		extend: function() {
+			var args = [].slice.call( arguments );
+			var result = args[0];
+			var extenders = args.slice(1);
+			Object.keys( extenders ).forEach( function( i ) {
+				for( var key in extenders[i] ) {
+					if( !extenders[i].hasOwnProperty( key ))continue;
+					result[key] = extenders[i][key];
+				}
+			});
+			return result;
+		},
+
+		/** @return int */
+		getIndexFromPosition: function( pageX ) {
+			var current = this.current();
+			var width = current.widgetEl.offsetWidth;
+			return Math.min(
+				Math.ceil( Math.max( pageX - this.offsetLeft, 1 ) / Math.round( width / current.stars )),
+				current.stars
+			);
+		},
+
+		/** @return int */
+		getSelected: function() {
+			var el = this.el[this.i];
+			return el.options[el.selectedIndex].value;
+		},
+
+		/** @return void */
+		handleEvents: function() {
+			var el = this.current( 'el' );
+			var formEl = el.closest( 'form' );
+			var widgetEl = this.current( 'widgetEl' );
+			el.addEventListener( 'change', this.onChange.bind( this ));
+			widgetEl.addEventListener( 'click', this.onClick.bind( this ));
+			widgetEl.addEventListener( 'mouseenter', this.onMouseenter.bind( this ));
+			widgetEl.addEventListener( 'mouseleave', this.onMouseleave.bind( this ));
+			if( formEl ) {
+				formEl.addEventListener( 'reset', this.onReset.bind( this ));
 			}
 		},
 
-		change: function()
-		{
-			this.show( this.el.options[ this.el.selectedIndex ].value );
+		/** @return HTMLElement */
+		insertEl: function( el, tag, attributes, after ) {
+			var newEl = this.createEl( tag, attributes );
+			el.parentNode.insertBefore( newEl, after === true ? el.nextSibling : el );
+			return newEl;
 		},
 
-		clear: function( ev )
-		{
-			if( this.config.clearable || ev !== undefined ) {
-				this.el.value = "";
-				this.selected = "";
+		/** @return HTMLElement */
+		insertElAfter: function( el, tag, attributes ) {
+			return this.insertEl( el, tag, attributes, true );
+		},
+
+		/** @return HTMLElement */
+		insertElBefore: function( el, tag, attributes ) {
+			return this.insertEl( el, tag, attributes );
+		},
+
+		/** @return bool */
+		isCloneable: function( obj ) {
+			return Array.isArray( obj ) || {}.toString.call( obj ) == '[object Object]';
+		},
+
+		/** @return bool */
+		isString: function( str ) {
+			return Object.prototype.toString.call( str ) === "[object String]";
+		},
+
+		/** @return void */
+		loopEl: function( callback ) {
+			for( var i = 0; i < this.el.length; ++i ) {
+				if( this.el[i].tagName !== 'SELECT' || typeof callback !== 'function' )continue;
+				this.i = i;
+				callback.call( this, this.el[i], i );
+			}
+		},
+
+		/** @return void */
+		onChange: function() {
+			this.show( this.getSelected() );
+		},
+
+		/** @return void */
+		onClick: function( ev ) {
+			var widget = this.current();
+			var index = widget.current;
+			if( ev !== undefined ) {
+				index = this.getIndexFromPosition( ev.pageX );
+				if( widget.current !== '' && parseFloat( widget.selected ) === index ) {
+					this.onReset();
+					return;
+				}
+			}
+			widget.el.value = index;
+			widget.selected = index;
+			this.show( index );
+			if( ev !== undefined && typeof widget.config.onClick === 'function' ) {
+				widget.config.onClick.call( this, widget.el );
+			}
+		},
+
+		/** @return void */
+		onMouseenter: function() {
+			var widget = this.current();
+			var rect = widget.widgetEl.getBoundingClientRect();
+			widget.widgetEl.addEventListener( 'mousemove', this.events.mousemove );
+			this.offsetLeft = rect.left + document.body.scrollLeft;
+		},
+
+		/** @return void */
+		onMouseleave: function() {
+			var widget = this.current();
+			widget.widgetEl.removeEventListener( 'mousemove', this.events.mousemove );
+			this.show( widget.selected );
+		},
+
+		/** @return void */
+		onMousemove: function( ev ) {
+			this.show( this.getIndexFromPosition( ev.pageX ));
+		},
+
+		/** @return void */
+		onReset: function( ev ) {
+			var widget = this.current();
+			if( widget.config.clearable || ev !== undefined ) {
+				widget.el.value = "";
+				widget.selected = "";
 				this.show(0);
 			}
 		},
 
-		enter: function()
-		{
-			var rect = this.wrap.getBoundingClientRect();
-
-			this._on( "mousemove", this.wrap, this.events.mousemove );
-			this.offsetLeft = rect.left + document.body.scrollLeft;
-		},
-
-		getIndexFromPosition: function( pageX )
-		{
-			this.star = Math.round( this.wrap.offsetWidth / this.stars );
-			return Math.min(
-				Math.ceil( Math.max( pageX - this.offsetLeft, 1 ) / this.star ),
-				this.stars
-			);
-		},
-
-		leave: function()
-		{
-			this._off( "mousemove", this.wrap, this.events.mousemove );
-			this.show( this.selected );
-		},
-
-		move: function( ev )
-		{
-			this.show( this.getIndexFromPosition( ev.pageX ));
-		},
-
-		select: function( ev )
-		{
-			var index = this.current;
-
-			if( ev !== undefined ) {
-				index = this.getIndexFromPosition( ev.pageX );
-				if( this.current !== '' && parseFloat( this.selected ) === index ) {
-					this.clear();
-					return;
-				}
-			}
-
-			this.el.value = index;
-			this.selected = index;
-
-			this.show( index );
-
-			if( ev !== undefined && typeof this.config.onClick === 'function' ) {
-				this.config.onClick( this.el );
-			}
-		},
-
-		show: function( index )
-		{
+		/** @return void */
+		show: function( index ) {
+			var widget = this.current();
 			if( index < 0 || index === "" ) {
 				index = 0;
 			}
-			if( index > this.stars ) {
-				index = this.stars;
+			if( index > widget.stars ) {
+				index = widget.stars;
 			}
-
-			this._removeClass( this.wrap, 's' + ( 10 * this.current ));
-			this._addClass( this.wrap, 's' + ( 10 * index ));
-
-			if( this.config.showText ) {
-				this.text.textContent = index < 1 ? this.config.initialText : this.wrap.childNodes[ index - 1 ].dataset.text;
+			widget.widgetEl.classList.remove( 's' + ( 10 * widget.current ));
+			widget.widgetEl.classList.add( 's' + ( 10 * index ));
+			if( widget.config.showText ) {
+				widget.textEl.textContent = index < 1 ? widget.config.initialText : widget.widgetEl.childNodes[index - 1].dataset.text;
 			}
-
-			this.current = index;
+			widget.current = index;
 		},
 
-		_addClass: function( el, className )
-		{
-			if( el.classList ) el.classList.add( className );
-			else if( !this._hasClass( el, className )) el.className += ' ' + className;
-		},
-
-		_appendTo: function( el, tag, attributes )
-		{
-			var newEl = this._createEl( tag, attributes );
-			el.innerHTML += newEl.outerHTML;
-		},
-
-		_createEl: function( tag, attributes )
-		{
-			var el = ( typeof tag === 'string' ) ? document.createElement( tag ) : tag;
-
-			attributes = attributes || {};
-
-			for( var key in attributes ) {
-				el.setAttribute( key, attributes[ key ] );
-			}
-
-			return el;
-		},
-
-		/**
-		 * https://github.com/angus-c/just#just-extend
-		 */
-		_extend: function()
-		{
-			var args = [].slice.call( arguments );
-			var deep = false;
-			if( typeof args[0] === 'boolean' ) {
-				deep = args.shift();
-			}
-			var result = args[0];
-			var extenders = args.slice(1);
-			var len = extenders.length;
-			for( var i = 0; i < len; i++ ) {
-				var extender = extenders[i];
-				for( var key in extender ) {
-					var value = extender[ key ];
-					if( deep && value && ( typeof value == 'object' )) {
-						var base = Array.isArray( value ) ? [] : {};
-						result[ key ] = this._extend( true, base, value );
-					}
-					else {
-						result[ key ] = value;
-					}
-				}
-			}
-			return result;
-		},
-
-		_hasClass: function( el, className )
-		{
-			if( el.classList ) return el.classList.contains( className );
-			else return new RegExp( '\\b' + className + '\\b' ).test( el.className );
-		},
-
-		_insertAfterEl: function( el, tag, attributes )
-		{
-			var newEl = this._createEl( tag, attributes );
-			el.parentNode.insertBefore( newEl, el.nextSibling );
-
-			return newEl;
-		},
-
-		_off: function( type, el, handler )
-		{
-			if( el.detachEvent ) el.detachEvent( 'on' + type, handler );
-			else el.removeEventListener( type, handler );
-		},
-
-		_on: function( type, el, handler )
-		{
-			if( el.attachEvent ) el.attachEvent( 'on' + type, handler );
-			else el.addEventListener( type, handler );
-		},
-
-		_removeClass: function( el, className )
-		{
-			if( el.classList ) el.classList.remove( className );
-			else el.className = el.className.replace( new RegExp( '\\b' + className + '\\b', 'g' ), '' );
+		/** @return void */
+		wrap: function( el ) {
+			var wrapEl = this.insertElBefore( el, 'span', {
+				'class': 'gl-star-rating',
+				'data-star-rating': '',
+			});
+			wrapEl.appendChild( el );
 		},
 	};
 
@@ -296,31 +300,3 @@
 	window.StarRating = Plugin;
 
 })( window, document );
-
-if( this.Element ) {
-	(function( ElementPrototype )
-	{
-		// matches polyfill
-		ElementPrototype.matches = ElementPrototype.matches ||
-		ElementPrototype.matchesSelector ||
-		ElementPrototype.webkitMatchesSelector ||
-		ElementPrototype.msMatchesSelector ||
-		function( selector )
-		{
-			var node = this;
-			var nodes = ( node.parentNode || node.document ).querySelectorAll( selector );
-			var i = -1;
-			while( nodes[++i] && nodes[i] !== node );
-			return !!nodes[i];
-		};
-
-		// closest polyfill
-		ElementPrototype.closest = ElementPrototype.closest ||
-		function( selector )
-		{
-			var el = this;
-			while( el.matches && !el.matches( selector )) el = el.parentNode;
-			return el.matches ? el : null;
-		};
-	})( Element.prototype );
-}
