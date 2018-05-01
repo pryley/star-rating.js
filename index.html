@@ -218,18 +218,16 @@ $ gulp</code></pre>
 
 	<script>
 
-		var starrating1 = new StarRating( '#star-rating-1' );
-		var starrating2 = new StarRating( '#star-rating-2' );
+		var starratings = new StarRating( '#star-rating-1, #star-rating-2' );
 
 		StarRating.defaults.initialText = "Rate me";
 
-		var starrating3 = new StarRating( '#star-rating-3' );
-		var starrating4 = new StarRating( '#star-rating-4' );
-		var starrating5 = new StarRating( '#star-rating-5', {
+		var starratings2 = new StarRating( '#star-rating-3, #star-rating-4' );
+		var starratings3 = new StarRating( '#star-rating-5', {
 			clearable: false,
 			showText: false,
 			onClick: function( el ) {
-				console.log( 'Selected: ' + el[ el.selectedIndex ].text );
+				console.log( 'Selected: ' + el[el.selectedIndex].text );
 			},
 		});
 

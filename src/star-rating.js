@@ -13,7 +13,7 @@
 
 	var Plugin = function( el, options )
 	{
-		this.el = this.isString( el ) ? document.querySelectorAll( el ) : [el];
+		this.el = this.isString( el ) ? document.querySelector( el ) : el;
 		this.options = options || {};
 		this.widgets = [];
 		this.init();
@@ -34,10 +34,10 @@
 			this.loopEl( function( el, i ) {
 				var stars = this.countStars( el );
 				if( stars < 1 || stars > 10 )return;
-				var selected = this.getSelected();
+				var selected = el.options[el.selectedIndex].value;
 				this.wrap( el );
 				this.widgets[i] = {
-					config: this.extend( {}, this.defaults, this.options, el.getAttribute( 'data-options' )),
+					config: this.extend( {}, this.defaults, this.options, JSON.parse( el.getAttribute( 'data-options' ))),
 					current: selected,
 					el: el,
 					selected: selected,
@@ -62,9 +62,9 @@
 		buildLabelEl: function() {
 			var current = this.current();
 			if( current.config.showText ) {
-				this.widgets[this.i].textEl = this.insertElAfter( current.widgetEl, 'span', {
+				this.widgets[this.i].textEl = this.insertEl( current.widgetEl, 'span', {
 					class: 'gl-star-rating-text',
-				});
+				}, true );
 			}
 		},
 
@@ -73,9 +73,9 @@
 			var el = this.el[this.i];
 			var ordered = {};
 			var unordered = {};
-			var widgetEl = this.insertElAfter( el, 'span', {
+			var widgetEl = this.insertEl( el, 'span', {
 				class: 'gl-star-rating-stars',
-			});
+			}, true );
 			for( var i = 0; i < el.length; i++ ) {
 				if( el[i].value === '' )continue;
 				unordered[el[i].value] = el[i].text;
@@ -92,6 +92,15 @@
 				widgetEl.innerHTML += newEl.outerHTML;
 			}
 			return widgetEl;
+		},
+
+		/** @return void */
+		clear: function( widget ) {
+			if( widget.config.clearable ) {
+				widget.el.value = "";
+				widget.selected = "";
+				this.show(0);
+			}
 		},
 
 		/** @return int */
@@ -138,6 +147,13 @@
 			return result;
 		},
 
+		/** @return void */
+		forEach: function( array, callback, scope ) {
+			for( var i = 0; i < array.length; i++ ) {
+				callback.call( scope, array[i], i );
+			}
+		},
+
 		/** @return int */
 		getIndexFromPosition: function( pageX ) {
 			var current = this.current();
@@ -146,12 +162,6 @@
 				Math.ceil( Math.max( pageX - this.offsetLeft, 1 ) / Math.round( width / current.stars )),
 				current.stars
 			);
-		},
-
-		/** @return int */
-		getSelected: function() {
-			var el = this.el[this.i];
-			return el.options[el.selectedIndex].value;
 		},
 
 		/** @return void */
@@ -175,16 +185,6 @@
 			return newEl;
 		},
 
-		/** @return HTMLElement */
-		insertElAfter: function( el, tag, attributes ) {
-			return this.insertEl( el, tag, attributes, true );
-		},
-
-		/** @return HTMLElement */
-		insertElBefore: function( el, tag, attributes ) {
-			return this.insertEl( el, tag, attributes );
-		},
-
 		/** @return bool */
 		isCloneable: function( obj ) {
 			return Array.isArray( obj ) || {}.toString.call( obj ) == '[object Object]';
@@ -205,8 +205,9 @@
 		},
 
 		/** @return void */
-		onChange: function() {
-			this.show( this.getSelected() );
+		onChange: function( ev ) {
+			var el = this.current( 'el' );
+			this.show( el.options[el.selectedIndex].value );
 		},
 
 		/** @return void */
@@ -216,7 +217,7 @@
 			if( ev !== undefined ) {
 				index = this.getIndexFromPosition( ev.pageX );
 				if( widget.current !== '' && parseFloat( widget.selected ) === index ) {
-					this.onReset();
+					this.clear( widget );
 					return;
 				}
 			}
@@ -229,7 +230,11 @@
 		},
 
 		/** @return void */
-		onMouseenter: function() {
+		onMouseenter: function( ev ) {
+			this.i = Object.keys( this.widgets ).filter( function( key ) {
+				return this.widgets[key].widgetEl == ev.target;
+			}.bind( this ));
+
 			var widget = this.current();
 			var rect = widget.widgetEl.getBoundingClientRect();
 			widget.widgetEl.addEventListener( 'mousemove', this.events.mousemove );
@@ -237,7 +242,7 @@
 		},
 
 		/** @return void */
-		onMouseleave: function() {
+		onMouseleave: function( ev ) {
 			var widget = this.current();
 			widget.widgetEl.removeEventListener( 'mousemove', this.events.mousemove );
 			this.show( widget.selected );
@@ -250,12 +255,20 @@
 
 		/** @return void */
 		onReset: function( ev ) {
-			var widget = this.current();
-			if( widget.config.clearable || ev !== undefined ) {
-				widget.el.value = "";
-				widget.selected = "";
-				this.show(0);
-			}
+			console.log( ev );
+			if( ev === undefined )return;
+			this.forEach( ev.target.querySelectorAll( 'select' ), function( el ) {
+				var index = this.searchIndex( el );
+				if( index === -1 )return;
+				this.clear( this.widgets[index] );
+			}, this );
+		},
+
+		/** @return int */
+		searchIndex: function( el ) {
+			return Object.keys( this.widgets ).filter( function( key ) {
+				return this.widgets[key].el == el;
+			}.bind( this ));
 		},
 
 		/** @return void */
@@ -277,7 +290,7 @@
 
 		/** @return void */
 		wrap: function( el ) {
-			var wrapEl = this.insertElBefore( el, 'span', {
+			var wrapEl = this.insertEl( el, 'span', {
 				'class': 'gl-star-rating',
 				'data-star-rating': '',
 			});
