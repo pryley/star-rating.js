@@ -21,9 +21,11 @@ $features: (
 	styled: false,
 );
 
-$gl-sr-star-empty       : "../../img/star-empty.svg";
-$gl-sr-star-filled      : "../../img/star-filled.svg";
-$gl-sr-star-half        : "../../img/star-half.svg";
+$star-rating: (
+	star-empty: '../../img/star-empty.svg',
+	star-filled: '../../img/star-filled.svg',
+	star-half: '../../img/star-half.svg',
+);
 
 @import "../../node_modules/nolie.css/src/1-functions/all";
 @import "../../node_modules/nolie.css/src/2-config/all";
@@ -157,6 +159,10 @@ pre {
 
 .project-name {
 	color: color(white);
+	max-width: 52rem;
+	margin-left: auto;
+	margin-right: auto;
+	@include margin-bottom(2);
 
 	@include medium {
 		@include font-size(h2);
@@ -169,6 +175,9 @@ pre {
 }
 
 .project-tagline {
+	max-width: 52rem;
+	margin-left: auto;
+	margin-right: auto;
 	color: rgba(color(white), 0.5);
 	font-weight: weight(normal);
 	@include font-size(m);

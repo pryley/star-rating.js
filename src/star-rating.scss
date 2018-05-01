@@ -1,118 +1,113 @@
 /*!
  * Star Rating
  *
- * Version: 2.0.0
- * Author: Paul Ryley (http://geminilabs.io)
- * URL: https://github.com/geminilabs/star-rating.js
- * License: MIT
+ * @version: 2.0.0
+ * @author: Paul Ryley (http://geminilabs.io)
+ * @url: https://github.com/geminilabs/star-rating.js
+ * @license: MIT
  */
 
-//
-// Variables
-//
+$star-rating: () !default;
 
-$gl-sr-base-display     : block !default;
-$gl-sr-base-height      : 26px !default;
+$star-rating-defaults: (
+    base-display   : block,
+    base-height    : 26px,
+    font-size      : 0.8em,
+    font-weight    : 600,
+    star-empty     : '../img/star-empty.svg',
+    star-filled    : '../img/star-filled.svg',
+    star-half      : '../img/star-half.svg',
+    star-size      : 24px,
+    text-background: #1a1a1a,
+    text-color     : #fff,
+);
 
-$gl-sr-star-empty       : "../img/star-empty.svg" !default;
-$gl-sr-star-filled      : "../img/star-filled.svg" !default;
-$gl-sr-star-half        : "../img/star-half.svg" !default;
-$gl-sr-star-size        : 24px !default;
-
-$gl-sr-text-background  : #1a1a1a !default;
-$gl-sr-text-color       : #fff !default;
-$gl-sr-text-font-size   : 0.8em !default;
-$gl-sr-text-font-weight : 600 !default;
-
-//
-// Styles
-//
+@function sr($value) {
+	@return map-get(map-merge($star-rating-defaults, $star-rating), $value);
+}
 
 .gl-star-rating[data-star-rating] {
-
 	position: relative;
-	display: $gl-sr-base-display;
+	display: sr(base-display);
+}
 
-	> select {
-		position: absolute !important;
+.gl-star-rating[data-star-rating] > select {
+	position: absolute !important;
+	top: 0;
+	left: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: circle(1px at 0 0);
+}
+
+.gl-star-rating-stars {
+	display: inline-block;
+	height: sr(base-height);
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.gl-star-rating-stars > span {
+	display: inline-block;
+	width: sr(star-size);
+	height: sr(star-size);
+	background-size: sr(star-size);
+	background-repeat: no-repeat;
+	background-image: url( sr(star-empty) );
+	margin: 0 sr(star-size)/6 0 0;
+}
+
+.gl-star-rating-rtl[data-star-rating] .gl-star-rating-stars > span {
+	margin: 0 0 0 sr(star-size)/6;
+}
+
+.gl-star-rating-stars.s10 > span:nth-child(1),
+.gl-star-rating-stars.s20 > span:nth-child(-1n+2),
+.gl-star-rating-stars.s30 > span:nth-child(-1n+3),
+.gl-star-rating-stars.s40 > span:nth-child(-1n+4),
+.gl-star-rating-stars.s50 > span:nth-child(-1n+5),
+.gl-star-rating-stars.s60 > span:nth-child(-1n+6),
+.gl-star-rating-stars.s70 > span:nth-child(-1n+7),
+.gl-star-rating-stars.s80 > span:nth-child(-1n+8),
+.gl-star-rating-stars.s90 > span:nth-child(-1n+9),
+.gl-star-rating-stars.s100 > span {
+	background-image: url( sr(star-filled) );
+}
+
+.gl-star-rating-text {
+	display: inline-block;
+	position: relative;
+	height: sr(base-height);
+	line-height: sr(base-height);
+	font-size: sr(font-size);
+	font-weight: sr(font-weight);
+	color: sr(text-color);
+	background-color: sr(text-background);
+	white-space: nowrap;
+	vertical-align: middle;
+	padding: 0 sr(star-size)/2 0 sr(star-size)/4;
+	margin: 0 0 0 sr(star-size)/2;
+
+	&::before {
+		position: absolute;
 		top: 0;
-		left: 0;
-		clip: rect(1px, 1px, 1px, 1px);
-		clip-path: circle(1px at 0 0);
-	}
-
-	.gl-star-rating-stars {
-		display: inline-block;
-		height: $gl-sr-base-height;
-		vertical-align: middle;
-		cursor: pointer;
-
-		> span {
-			display: inline-block;
-			width: $gl-sr-star-size;
-			height: $gl-sr-star-size;
-			background-size: $gl-sr-star-size;
-			background-repeat: no-repeat;
-			background-image: url( $gl-sr-star-empty );
-			margin-right: ($gl-sr-star-size/6);
-		}
-
-		&.s10 > span:nth-child(1),
-		&.s20 > span:nth-child(-1n+2),
-		&.s30 > span:nth-child(-1n+3),
-		&.s40 > span:nth-child(-1n+4),
-		&.s50 > span:nth-child(-1n+5),
-		&.s60 > span:nth-child(-1n+6),
-		&.s70 > span:nth-child(-1n+7),
-		&.s80 > span:nth-child(-1n+8),
-		&.s90 > span:nth-child(-1n+9),
-		&.s100 > span {
-			background-image: url( $gl-sr-star-filled );
-		}
-	}
-
-	&.gl-star-rating-rtl .gl-star-rating-stars > span {
-		margin-left: ($gl-sr-star-size/6);
-		margin-right: 0;
-	}
-
-	.gl-star-rating-text {
-		display: inline-block;
-		position: relative;
-		height: $gl-sr-base-height;
-		line-height: $gl-sr-base-height;
-		font-size: $gl-sr-text-font-size;
-		font-weight: $gl-sr-text-font-weight;
-		color: $gl-sr-text-color;
-		background-color: $gl-sr-text-background;
-		white-space: nowrap;
-		vertical-align: middle;
-		padding: 0 ($gl-sr-star-size/2) 0 ($gl-sr-star-size/4);
-		margin: 0 0 0 ($gl-sr-star-size/2);
-
-		&::before {
-			position: absolute;
-			top: 0;
-			left: -($gl-sr-star-size/2);
-			width: 0;
-			height: 0;
-			content: "";
-			border-style: solid;
-			border-width: ($gl-sr-base-height/2) ($gl-sr-star-size/2) ($gl-sr-base-height/2) 0;
-			border-color: transparent $gl-sr-text-background transparent transparent;
-		}
-	}
-
-	&.gl-star-rating-rtl .gl-star-rating-text {
-		padding: 0 ($gl-sr-star-size/4) 0 ($gl-sr-star-size/2);
-		margin: 0 ($gl-sr-star-size/2) 0 0;
-
-		&::before {
-			left: unset;
-			right: -($gl-sr-star-size/2);
-			border-width: ($gl-sr-base-height/2) 0 ($gl-sr-base-height/2) ($gl-sr-star-size/2);
-			border-color: transparent transparent transparent $gl-sr-text-background;
-		}
+		left: -(sr(star-size)/2);
+		width: 0;
+		height: 0;
+		content: "";
+		border-style: solid;
+		border-width: sr(base-height)/2 sr(star-size)/2 sr(base-height)/2 0;
+		border-color: transparent sr(text-background) transparent transparent;
 	}
 }
 
+.gl-star-rating-rtl[data-star-rating] .gl-star-rating-text {
+	padding: 0 sr(star-size)/4 0 sr(star-size)/2;
+	margin: 0 sr(star-size)/2 0 0;
+
+	&::before {
+		left: unset;
+		right: -(sr(star-size)/2);
+		border-width: sr(base-height)/2 0 sr(base-height)/2 sr(star-size)/2;
+		border-color: transparent transparent transparent sr(text-background);
+	}
+}
