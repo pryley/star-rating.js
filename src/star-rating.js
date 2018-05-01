@@ -1,136 +1,113 @@
-/**!
+/**
  * Star Rating
- *
  * Version: 2.0.0
  * Author: Paul Ryley (http://geminilabs.io)
  * URL: https://github.com/geminilabs/star-rating.js
- * License: MIT
+ * @license: MIT
  */
 
 ;(function( window, document, undefined )
 {
 	"use strict";
 
-	var Plugin = function( el, options )
-	{
-		this.el = this.isString( el ) ? document.querySelector( el ) : el;
-		this.options = options || {};
+	/** @return array */
+	var Plugin = function( selector, options ) {
+		this.selects = {}.toString.call( selector ) === '[object String]' ? document.querySelectorAll( selector ) : [selector];
+		this.destroy = function() {}; // destroy all widgets
+		this.rebuild = function() {}; // rebuild all widgets
 		this.widgets = [];
-		this.init();
+		for( var i = 0; i < this.selects.length; i++ ) {
+			if( this.selects[i].tagName !== 'SELECT' )continue;
+			this.widgets.push( new Widget( this.selects[i], options ));
+		}
 	};
 
-	Plugin.prototype = {
+	var Widget = function( el, options ) {
+		this.el = el;
+		this.options = this.extend( {}, this.defaults, options || {}, JSON.parse( el.getAttribute( 'data-options' ))),
+		this.init();
+	}
+
+	Widget.prototype = {
 
 		defaults: {
 			clearable: true,
-			initialText: 'Click to Rate',
+			initialText: 'Select a Rating',
+			maxStars: 10,
 			onClick: null,
 			showText: true,
 		},
 
 		/** @return void */
 		init: function() {
-			this.initEvents();
-			this.loopEl( function( el, i ) {
-				var stars = this.countStars( el );
-				if( stars < 1 || stars > 10 )return;
-				var selected = el.options[el.selectedIndex].value;
-				this.wrap( el );
-				this.widgets[i] = {
-					config: this.extend( {}, this.defaults, this.options, JSON.parse( el.getAttribute( 'data-options' ))),
-					current: selected,
-					el: el,
-					selected: selected,
-					stars: stars,
-					textEl: null,
-					widgetEl: this.buildWidgetEl(),
-				};
-				this.buildLabelEl();
-				this.handleEvents();
-				this.onClick();
-			});
+			this.setStarCount();
+			if( this.stars < 1 || this.stars > this.options.maxStars )return;
+			this.current = this.selected = this.getSelectedValue();
+			this.wrapEl();
+			this.buildWidgetEl();
+			this.handleEvents();
+			this.onClick();
 		},
 
 		/** @return void */
-		initEvents: function() {
-			this.events = {
-				mousemove: this.onMousemove.bind( this ),
-			};
-		},
-
-		/** @return HTMLElement */
 		buildLabelEl: function() {
-			var current = this.current();
-			if( current.config.showText ) {
-				this.widgets[this.i].textEl = this.insertEl( current.widgetEl, 'span', {
-					class: 'gl-star-rating-text',
-				}, true );
-			}
+			if( !this.options.showText )return;
+			this.textEl = this.insertSpanEl( this.widgetEl, {
+				class: 'gl-star-rating-text',
+			}, true );
 		},
 
-		/** @return HTMLElement */
+		/** @return void */
 		buildWidgetEl: function() {
-			var el = this.el[this.i];
-			var ordered = {};
-			var unordered = {};
-			var widgetEl = this.insertEl( el, 'span', {
+			var values = this.getOrderedValues();
+			var widgetEl = this.insertSpanEl( this.el, {
 				class: 'gl-star-rating-stars',
 			}, true );
-			for( var i = 0; i < el.length; i++ ) {
-				if( el[i].value === '' )continue;
-				unordered[el[i].value] = el[i].text;
-			}
-			Object.keys( unordered ).sort().forEach( function( key ) {
-				ordered[key] = unordered[key];
-			});
-			for( var key in ordered ) {
-				if( !ordered.hasOwnProperty( key ))continue;
-				var newEl = this.createEl( 'span', {
+			for( var key in values ) {
+				if( !values.hasOwnProperty( key ))continue;
+				var newEl = this.createSpanEl({
 					'data-value': key,
-					'data-text': ordered[key],
+					'data-text': values[key],
 				});
 				widgetEl.innerHTML += newEl.outerHTML;
 			}
-			return widgetEl;
+			this.widgetEl = widgetEl;
+			this.buildLabelEl();
 		},
 
 		/** @return void */
-		clear: function( widget ) {
-			if( widget.config.clearable ) {
-				widget.el.value = "";
-				widget.selected = "";
-				this.show(0);
+		changeTo: function( index ) {
+			if( index < 0 || index === '' ) {
+				index = 0;
 			}
+			if( index > this.stars ) {
+				index = this.stars;
+			}
+			this.widgetEl.classList.remove( 's' + ( 10 * this.current ));
+			this.widgetEl.classList.add( 's' + ( 10 * index ));
+			if( this.options.showText ) {
+				this.textEl.textContent = index < 1 ? this.options.initialText : this.widgetEl.childNodes[index - 1].dataset.text;
+			}
+			this.current = index;
 		},
 
-		/** @return int */
-		countStars: function( el ) {
-			var stars = 0;
-			for( var i = 0; i < el.length; i++ ) {
-				if( el[i].value === '' )continue;
-				if( isNaN( parseFloat( el[i].value )) || !isFinite( el[i].value )) {
-					return 0;
-				}
-				stars++;
+		/** @return void */
+		clear: function() {
+			if( this.options.clearable ) {
+				this.el.value = this.selected = '';
+				this.changeTo(0);
 			}
-			return stars;
 		},
 
 		/** @return HTMLElement */
-		createEl: function( tag, attributes ) {
-			var el = ( typeof tag === 'string' ) ? document.createElement( tag ) : tag;
+		createSpanEl: function( attributes ) {
+			var el = document.createElement( 'span' );
 			attributes = attributes || {};
 			for( var key in attributes ) {
 				if( !attributes.hasOwnProperty( key ))continue;
 				el.setAttribute( key, attributes[key] );
 			}
 			return el;
-		},
-
-		/** @return mixed */
-		current: function( key ) {
-			var current = this.widgets[this.i];
-			return key ? current[key] : current;
 		},
 
 		/** @return object */
@@ -147,28 +124,43 @@
 			return result;
 		},
 
-		/** @return void */
-		forEach: function( array, callback, scope ) {
-			for( var i = 0; i < array.length; i++ ) {
-				callback.call( scope, array[i], i );
+		/** @return int */
+		getIndexFromPosition: function( pageX ) {
+			var width = this.widgetEl.offsetWidth;
+			return Math.min(
+				Math.ceil( Math.max( pageX - this.offsetLeft, 1 ) / Math.round( width / this.stars )),
+				this.stars
+			);
+		},
+
+		/** @return array */
+		getOrderedValues: function() {
+			var el = this.el;
+			var unorderedValues = {};
+			var orderedValues = {};
+			for( var i = 0; i < el.length; i++ ) {
+				if( el[i].value === '' )continue;
+				unorderedValues[el[i].value] = el[i].text;
 			}
+			Object.keys( unorderedValues ).sort().forEach( function( key ) {
+				orderedValues[key] = unorderedValues[key];
+			});
+			return orderedValues;
 		},
 
 		/** @return int */
-		getIndexFromPosition: function( pageX ) {
-			var current = this.current();
-			var width = current.widgetEl.offsetWidth;
-			return Math.min(
-				Math.ceil( Math.max( pageX - this.offsetLeft, 1 ) / Math.round( width / current.stars )),
-				current.stars
-			);
+		getSelectedValue: function() {
+			return this.el.options[this.el.selectedIndex].value;
 		},
 
 		/** @return void */
 		handleEvents: function() {
-			var el = this.current( 'el' );
+			var el = this.el;
 			var formEl = el.closest( 'form' );
-			var widgetEl = this.current( 'widgetEl' );
+			var widgetEl = this.widgetEl;
+			this.events = {
+				mousemove: this.onMousemove.bind( this ),
+			};
 			el.addEventListener( 'change', this.onChange.bind( this ));
 			widgetEl.addEventListener( 'click', this.onClick.bind( this ));
 			widgetEl.addEventListener( 'mouseenter', this.onMouseenter.bind( this ));
@@ -179,8 +171,8 @@
 		},
 
 		/** @return HTMLElement */
-		insertEl: function( el, tag, attributes, after ) {
-			var newEl = this.createEl( tag, attributes );
+		insertSpanEl: function( el, attributes, after ) {
+			var newEl = this.createSpanEl( attributes );
 			el.parentNode.insertBefore( newEl, after === true ? el.nextSibling : el );
 			return newEl;
 		},
@@ -190,120 +182,80 @@
 			return Array.isArray( obj ) || {}.toString.call( obj ) == '[object Object]';
 		},
 
-		/** @return bool */
-		isString: function( str ) {
-			return Object.prototype.toString.call( str ) === "[object String]";
-		},
-
-		/** @return void */
-		loopEl: function( callback ) {
-			for( var i = 0; i < this.el.length; ++i ) {
-				if( this.el[i].tagName !== 'SELECT' || typeof callback !== 'function' )continue;
-				this.i = i;
-				callback.call( this, this.el[i], i );
-			}
-		},
-
 		/** @return void */
 		onChange: function( ev ) {
-			var el = this.current( 'el' );
-			this.show( el.options[el.selectedIndex].value );
+			this.changeTo( this.getSelectedValue() );
 		},
 
 		/** @return void */
 		onClick: function( ev ) {
-			var widget = this.current();
-			var index = widget.current;
+			var index = this.current;
 			if( ev !== undefined ) {
 				index = this.getIndexFromPosition( ev.pageX );
-				if( widget.current !== '' && parseFloat( widget.selected ) === index ) {
-					this.clear( widget );
+				if( this.current !== '' && parseFloat( this.selected ) === index ) {
+					this.clear();
 					return;
 				}
 			}
-			widget.el.value = index;
-			widget.selected = index;
-			this.show( index );
-			if( ev !== undefined && typeof widget.config.onClick === 'function' ) {
-				widget.config.onClick.call( this, widget.el );
+			this.el.value = index;
+			this.selected = index;
+			this.changeTo( index );
+			if( ev !== undefined && typeof this.options.onClick === 'function' ) {
+				this.options.onClick.call( this, this.el );
 			}
 		},
 
 		/** @return void */
 		onMouseenter: function( ev ) {
-			this.i = Object.keys( this.widgets ).filter( function( key ) {
-				return this.widgets[key].widgetEl == ev.target;
-			}.bind( this ));
-
-			var widget = this.current();
-			var rect = widget.widgetEl.getBoundingClientRect();
-			widget.widgetEl.addEventListener( 'mousemove', this.events.mousemove );
+			var rect = this.widgetEl.getBoundingClientRect();
 			this.offsetLeft = rect.left + document.body.scrollLeft;
+			this.widgetEl.addEventListener( 'mousemove', this.events.mousemove );
 		},
 
 		/** @return void */
 		onMouseleave: function( ev ) {
-			var widget = this.current();
-			widget.widgetEl.removeEventListener( 'mousemove', this.events.mousemove );
-			this.show( widget.selected );
+			this.widgetEl.removeEventListener( 'mousemove', this.events.mousemove );
+			this.changeTo( this.selected );
 		},
 
 		/** @return void */
 		onMousemove: function( ev ) {
-			this.show( this.getIndexFromPosition( ev.pageX ));
+			this.changeTo( this.getIndexFromPosition( ev.pageX ));
 		},
 
 		/** @return void */
 		onReset: function( ev ) {
-			console.log( ev );
-			if( ev === undefined )return;
-			this.forEach( ev.target.querySelectorAll( 'select' ), function( el ) {
-				var index = this.searchIndex( el );
-				if( index === -1 )return;
-				this.clear( this.widgets[index] );
-			}, this );
-		},
-
-		/** @return int */
-		searchIndex: function( el ) {
-			return Object.keys( this.widgets ).filter( function( key ) {
-				return this.widgets[key].el == el;
-			}.bind( this ));
+			this.clear();
 		},
 
 		/** @return void */
-		show: function( index ) {
-			var widget = this.current();
-			if( index < 0 || index === "" ) {
-				index = 0;
+		setStarCount: function() {
+			var el = this.el;
+			this.stars = 0;
+			for( var i = 0; i < el.length; i++ ) {
+				if( el[i].value === '' )continue;
+				if( isNaN( parseFloat( el[i].value )) || !isFinite( el[i].value )) {
+					this.stars = 0;
+					return;
+				}
+				this.stars++;
 			}
-			if( index > widget.stars ) {
-				index = widget.stars;
-			}
-			widget.widgetEl.classList.remove( 's' + ( 10 * widget.current ));
-			widget.widgetEl.classList.add( 's' + ( 10 * index ));
-			if( widget.config.showText ) {
-				widget.textEl.textContent = index < 1 ? widget.config.initialText : widget.widgetEl.childNodes[index - 1].dataset.text;
-			}
-			widget.current = index;
 		},
 
 		/** @return void */
-		wrap: function( el ) {
-			var wrapEl = this.insertEl( el, 'span', {
-				'class': 'gl-star-rating',
+		wrapEl: function() {
+			var wrapEl = this.insertSpanEl( this.el, {
+				class: 'gl-star-rating',
 				'data-star-rating': '',
 			});
-			wrapEl.appendChild( el );
+			wrapEl.appendChild( this.el );
 		},
 	};
 
-	Plugin.defaults = Plugin.prototype.defaults;
-
-	if( typeof define === "function" && define.amd ) {
+	if( typeof define === 'function' && define.amd ) {
 		define( [], function() { return Plugin; });
 	}
-	else if( typeof module === "object" && module.exports ) {
+	else if( typeof module === 'object' && module.exports ) {
 		module.exports = Plugin;
 	}
 	else {

@@ -1,0 +1,223 @@
+@mixin small {
+	@media screen and (min-width: 35em) {
+		@content;
+	}
+}
+
+@mixin medium {
+	@media screen and (min-width: 42em) {
+		@content;
+	}
+}
+
+@mixin large {
+	@media screen and (min-width: 50em) {
+		@content;
+	}
+}
+
+$features: (
+	// debug: true,
+	styled: false,
+);
+
+$gl-sr-star-empty       : "../../img/star-empty.svg";
+$gl-sr-star-filled      : "../../img/star-filled.svg";
+$gl-sr-star-half        : "../../img/star-half.svg";
+
+@import "../../node_modules/nolie.css/src/1-functions/all";
+@import "../../node_modules/nolie.css/src/2-config/all";
+
+$colors: (
+	white: #fff,
+	primary: material-color(blue, 800),
+);
+
+$typefaces: extend($typefaces, (
+  body: ('Open Sans', sans-serif),
+));
+
+$typestyles: extend($typestyles, (
+	heading-1: h3 1 bold,
+	heading-2: xxl 1 bold,
+	heading-3: l 1 bold,
+	heading-4: m 1 bold,
+));
+
+@import "../../node_modules/nolie.css/src/3-mixins/all";
+@import "../../node_modules/nolie.css/src/4-components/all";
+@import "../../src/star-rating";
+
+$transition-duration: 0.2s;
+$transition-function: ease-in-out;
+
+a {
+	color: color(primary);
+	text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+blockquote {
+	border-left: 4px solid material-color(blue-grey, 50);
+	color: material-color(blue-grey, 700);
+	p {
+		@include font-size(s);
+		&:not(:last-child) {
+			@include margin-bottom(0.5);
+		}
+	}
+	pre {
+		margin-bottom: 0;
+	}
+}
+
+code {
+	@include font-size(m);
+	border-radius: $border-radius;
+	background-color: material-color(blue-grey, 50);
+	text-shadow: 1px 1px 0 rgba(color(white), 0.75);
+}
+
+pre {
+	@include line-height(1);
+	font-weight: weight(light);
+	background-color: material-color(blue-grey, 900);
+	code {
+		@include font-size(s);
+		color: material-color(light-green, 100);
+		text-shadow: 1px 1px 0 rgba(color(black), 0.25);
+		background: none;
+	}
+}
+
+.page-header {
+	@include debug-baseline;
+	@include padding(2 1);
+	background-color: material-color(blue-grey, 900);
+	text-align: center;
+
+	@include medium {
+		@include padding(2 3);
+	}
+
+	@include large {
+		@include padding(4 3);
+	}
+
+	.button {
+		color: rgba(color(white), 0.7);
+		border-color: transparent;
+		background-color: rgba(material-color(blue-grey, 700), 0.3);
+		@include button-medium;
+		@include margin(0.75 0 0);
+		&:hover {
+			color: rgba(color(white), 0.7);
+			border-color: transparent;
+			background-color: rgba(material-color(blue-grey, 700), 0.5);
+		}
+		&:active {
+			background-color: rgba(material-color(blue-grey, 700), 0.7);
+		}
+
+		@include small {
+			@include margin(0.75 0.25 0);
+		}
+	}
+}
+
+.page-footer {
+	max-width: 52em;
+	margin: 0 auto;
+	@include padding(1);
+	p:first-child {
+		position: relative;
+		top: $border-width;
+		font-weight: bold;
+		border-top: $border-width solid material-color(blue-grey, 50);
+		margin: -($border-width * 2) 0 0;
+		@include padding-top(1);
+	}
+}
+
+.main-content {
+	max-width: 52em;
+	margin: 0 auto;
+	@include padding(1.5 1 0);
+}
+
+.section ul {
+	@include line-height(1.25);
+}
+
+.section:not(:last-child) {
+	@include margin-bottom(2);
+}
+
+.project-name {
+	color: color(white);
+
+	@include medium {
+		@include font-size(h2);
+		@include line-height(2);
+	}
+
+	@include large {
+		@include font-size(h1);
+	}
+}
+
+.project-tagline {
+	color: rgba(color(white), 0.5);
+	font-weight: weight(normal);
+	@include font-size(m);
+	@include margin-bottom(1);
+
+	@include medium {
+		@include font-size(xl);
+		@include line-height(2);
+		@include line-height(1.5);
+	}
+}
+
+.badge {
+	display: inline-block;
+	@include line-height(1.5);
+	@include margin-bottom(1);
+	img {
+		@include spacing(height, 1);
+	}
+}
+
+.button {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	@include button;
+	@include button-group;
+	@include button-solid(color(primary), color(white));
+	@include button-transition;
+
+	&.secondary {
+		@include button-solid(color(text), color(white));
+	}
+}
+
+
+.button-group {
+	@include clearfix;
+	display: block;
+	@include margin-bottom(1);
+}
+
+:not(.button-group) > .button {
+	width: 100%;
+	@include small {
+		width: auto;
+	}
+}
+
+form .button {
+	display: block;
+	margin: 0;
+}

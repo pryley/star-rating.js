@@ -32,6 +32,7 @@
     "hoek": "^4.2.1",
     "jshint": "^2.9.5",
     "jshint-stylish": "^2.2.1",
+    "nolie.css": "geminilabs/nolie.css#develop",
     "pump": "^3.0.0",
     "yargs": "^11.1.0"
   },

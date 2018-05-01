@@ -1,238 +1,187 @@
 <!doctype html>
-<html>
+<html lang="en-us">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-	<title>star-rating.js by geminilabs</title>
-
-	<link href="demo/css/styles.css" rel="stylesheet">
-	<link href="dist/star-rating.css" rel="stylesheet">
-
-	<style>
-		.gl-star-rating {
-			margin-bottom: 1em;
-		}
-
-		pre {
-			hyphens: none;
-			tab-size: 4;
-			white-space: pre;
-			word-break: normal;
-			word-spacing: normal;
-			word-wrap: normal;
-		}
-
-		header ul a {
-			line-height: 1.2;
-			padding-top: 5px;
-		}
-	</style>
-
-	<!--[if lt IE 9]>
-	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Star Rating by Gemini Labs</title>
+	<meta name="keywords" content="starrating star-rating star rating">
+	<meta name="description" content="A zero-dependency plugin that transforms a SELECT with numerical-range values (i.e. 1-5) into a dynamic star rating element.">
+	<meta name="author" content="Paul Ryley">
+	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' type='text/css'>
+	<link rel="stylesheet" href="demo/css/styles.css">
 </head>
 <body>
-
-<div class="wrapper">
-
-	<header>
-
-		<h1>star-rating.js</h1>
-
-		<p>
-			<a href="https://badge.fury.io/gh/geminilabs%2Fstar-rating.js"><img src="https://badge.fury.io/gh/geminilabs%2Fstar-rating.js.svg" alt="GitHub version" height="18"></a>
-			<a href="https://github.com/geminilabs/star-rating.js/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" height="18"></a>
-		</p>
-
-		<p>This zero-dependency plugin transforms a select with numerical-range values (i.e. 1-5) into a dynamic star rating element.</p>
-		<p>For convenience, this plugin can also be used as a jQuery plugin (see examples below). </p>
-		<p>For production, use the files from the <code>dist/</code> folder.</p>
-
-		<p class="view"><a href="https://github.com/geminilabs/star-rating.js">View the Project on GitHub</a></p>
-
-		<ul>
-			<li><a href="https://github.com/geminilabs/star-rating.js/zipball/master">Download <strong>ZIP File</strong></a></li>
-			<li><a href="https://github.com/geminilabs/star-rating.js/tarball/master">Download <strong>TAR Ball</strong></a></li>
-			<li><a href="https://github.com/geminilabs/star-rating.js">View On <strong>GitHub</strong></a></li>
-		</ul>
-
+	<header class="page-header">
+		<h1 class="project-name">star-rating.js</h1>
+		<h2 class="project-tagline">A zero-dependency plugin that transforms a SELECT with numerical-range values (i.e. 1-5) into a dynamic star rating element.</h2>
+		<a class="button medium" href="https://github.com/geminilabs/star-rating.js">View on GitHub</a>
+		<a class="button medium" href="https://github.com/geminilabs/star-rating.js/zipball/master">Download .zip</a>
+		<a class="button medium" href="https://github.com/geminilabs/star-rating.js/tarball/master">Download .tar.gz</a>
 	</header>
 
-	<section>
+	<main class="main-content">
 
-		<h2>Usage Example</h2>
+		<section class="section">
+			<a class="badge" href="https://badge.fury.io/gh/geminilabs%2Fstar-rating.js"><img src="https://badge.fury.io/gh/geminilabs%2Fstar-rating.js.svg" alt="GitHub version" height="18"></a>
+			<a class="badge" href="https://github.com/geminilabs/star-rating.js/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" height="18"></a>
+			<p>For production, use the files from the <code>dist/</code> folder.</p>
+		</section>
 
-		<pre><code>&lt;link href="css/star-rating.css" rel="stylesheet"&gt;
+		<section class="section">
+			<h2>Demo</h2>
+			<form class="form-1">
+				<p>
+					<select class="star-rating">
+						<option value="">Select a rating</option>
+						<option value="5">Fantastic</option>
+						<option value="4">Great</option>
+						<option value="3">Good</option>
+						<option value="2">Poor</option>
+						<option value="1">Terrible</option>
+					</select>
+				</p>
+				<p>
+					<select class="star-rating" data-options='{"clearable":false, "showText":false}'>
+						<option value="">Select a rating</option>
+						<option value="7">7</option>
+						<option value="6">6</option>
+						<option value="5">5</option>
+						<option value="4" selected>4</option>
+						<option value="3">3</option>
+						<option value="2">2</option>
+						<option value="1">1</option>
+					</select>
+				</p>
+				<div class="button-group">
+					<button type="button" class="button large gl-toggle">Toggle Star Rating</button>
+					<button type="reset" class="button large secondary">Reset form</button>
+				</div>
+			</form>
+		</section>
 
-&lt;select id="star-rating"&gt;
-	&lt;option value=""&gt;Select a rating&lt;/option&gt;
-	&lt;option value="5"&gt;Excellent&lt;/option&gt;
-	&lt;option value="4"&gt;Very Good&lt;/option&gt;
-	&lt;option value="3"&gt;Average&lt;/option&gt;
-	&lt;option value="2"&gt;Poor&lt;/option&gt;
-	&lt;option value="1"&gt;Terrible&lt;/option&gt;
-&lt;/select&gt;
+		<section class="section">
+			<h2>Installation</h2>
+			<p>Use one of the following methods to add the plugin to your project:</p>
+			<ul>
+				<li><a href="https://github.com/geminilabs/star-rating.js/zipball/master">Download ZIP</a></li>
+				<li><code>yarn add star-rating.js</code></li>
+				<li><code>npm install star-rating.js</code></li>
+				<li><code>bower install star-rating.js</code></li>
+			</ul>
+		</section>
 
-&lt;script src="js/star-rating.min.js"&gt;&lt;/script&gt;
-&lt;script&gt;
-	var starrating = new StarRating( document.getElementById( 'star-rating' ));
-&lt;/script&gt;</code></pre>
+		<section class="section">
+			<h2>Usage</h2>
+			<p>Load the <code>dist/star-rating.css</code> and <code>dist/star-rating.min.js</code> files somewhere on your page and then trigger the plugin as follows:</p>
+			<div class="highlight highlight-Javascript"><pre class="alt"><code>var starrating = new StarRating( '.star-rating' );</code></pre></div>
+			<p>To re-initialize after it has already been initialized (e.g. form fields have changed with ajax):</p>
+			<div class="highlight highlight-Javascript"><pre class="alt"><code>starrating.rebuild();</code></pre></div>
+			<p>To fully remove, including all attached Event Listeners:</p>
+			<div class="highlight highlight-Javascript"><pre class="alt"><code>starrating.destroy();</code></pre></div>
+			<h3>HTML markup</h3>
+			<p>Your SELECT option fields must have numerical values.</p>
+			<div class="highlight highlight-Html"><pre class="alt"><code>&lt;select id="star-rating"&gt;
+    &lt;option value=""&gt;Select a rating&lt;/option&gt;
+    &lt;option value="5"&gt;Excellent&lt;/option&gt;
+    &lt;option value="4"&gt;Very Good&lt;/option&gt;
+    &lt;option value="3"&gt;Average&lt;/option&gt;
+    &lt;option value="2"&gt;Poor&lt;/option&gt;
+    &lt;option value="1"&gt;Terrible&lt;/option&gt;
+&lt;/select&gt;</code></pre></div>
+		</section>
 
-		<p>by default, the images are located in the following relative path from the stylesheet: <code>../img/star-*.svg</code>. To change this location, either import the SCSS file into your project and change the default SCSS variables, or override the CSS directly in your stylesheet.</p>
-
-		<h2>Live Examples</h2>
-
-		<h3>Using vanilla javascript</h3>
-
-		<select id="star-rating-1">
-			<option value="">Select a rating</option>
-			<option value="5">5</option>
-			<option value="4">4</option>
-			<option value="3">3</option>
-			<option value="2">2</option>
-			<option value="1">1</option>
-		</select>
-
-		<pre><code>var starrating1 = new StarRating( document.getElementById( 'star-rating-1' ));</code></pre>
-
-		<h3>Using jQuery</h3>
-
-		<select id="star-rating-2">
-			<option value="">Select a rating</option>
-			<option value="5">5</option>
-			<option value="4">4</option>
-			<option value="3">3</option>
-			<option value="2">2</option>
-			<option value="1">1</option>
-		</select>
-
-		<pre><code>$( '#star-rating-2' ).starrating();</code></pre>
-
-		<h3>Changing the global plugin defaults</h3>
-
-		<select id="star-rating-3">
-			<option value="">Select a rating</option>
-			<option value="5">5</option>
-			<option value="4">4</option>
-			<option value="3">3</option>
-			<option value="2">2</option>
-			<option value="1">1</option>
-		</select>
-
-		<pre><code>StarRating.defaults.initialText = "Rate me";
-
-var starrating3 = new StarRating( document.getElementById( 'star-rating-3' ));</code></pre>
-
-		<h3>Using the "data-option" attribute on the &lt;select&gt; to set the options</h3>
-
-		<select id="star-rating-4" data-options='{"initialText":"Rate this"}'>
-			<option value="">Select a rating</option>
-			<option value="5">Fantastic</option>
-			<option value="4">Great</option>
-			<option value="3">Good</option>
-			<option value="2">Poor</option>
-			<option value="1">Terrible</option>
-		</select>
-
-		<pre><code>&lt;select id="star-rating-4" data-options='{"initialText":"Rate this"}'&gt;
-	...
-&lt;select&gt;
-
-&lt;script&gt;
-	var starrating4 = new StarRating( document.getElementById( 'star-rating-4' ));
-&lt;/script&gt;</code></pre>
-
-		<h3>Changing all available options in a 7-star rating with a pre-selected &lt;option&gt;</h3>
-
-		<select id="star-rating-5">
-			<option value="">Select a rating</option>
-			<option value="7">7</option>
-			<option value="6">6</option>
-			<option value="5">5</option>
-			<option value="4" selected>4</option>
-			<option value="3">3</option>
-			<option value="2">2</option>
-			<option value="1">1</option>
-		</select>
-
-		<pre><code>var starrating5 = new StarRating( document.getElementById( 'star-rating-5' ), {
-	clearable: false,
-	showText: false,
-	onClick: function( el ) {
-		console.log( 'I selected: ' + el[ el.selectedIndex ].text );
-	},
-});</code></pre>
-
-		<h2>Options</h2>
-
-		<p>Here are the default options</p>
-
-		<pre><code>{
+		<section class="section">
+			<h2>Options</h2>
+			<h3>Default options</h3>
+			<div class="highlight highlight-Javascript"><pre><code>{
     clearable  : true,
     onClick    : null,
     initialText: "Click to Rate",
     showText   : true,
-}</code></pre>
+}</code></pre></div>
+			<h4>clearable</h4>
+			<blockquote>
+				<p>Type: <code>Boolean</code></p>
+				<p>Determines whether the star rating can be cleared by clicking on an already pre-selected star.</p>
+			</blockquote>
+			<h4>onClick</h4>
+			<blockquote>
+				<p>Type: <code>Function</code></p>
+				<p>This is triggered after you click on a star. The function argument is the SELECT HTMLElement.</p>
+				<div class="highlight highlight-Javascript"><pre><code>onClick: function( selectEl ) {
+    // do something
+},</code></pre></div>
+			</blockquote>
+			<h4>initialText</h4>
+			<blockquote>
+				<p>Type: <code>String</code></p>
+				<p>Determines the initial text when no value is selected. This has no effect if `showText` is set to false.</p>
+			</blockquote>
+			<h4>showText</h4>
+			<blockquote>
+				<p>Type: <code>Boolean</code></p>
+				<p>Determines whether or not the rating text is shown.</p>
+			</blockquote>
+		</section>
 
-		<h3>clearable</h3>
+		<section class="section">
+			<h2>Build</h2>
+			<p>star-rating.js uses <a href="https://www.npmjs.com/get-npm">npm</a> or <a href="https://yarnpkg.com/">yarn</a> to manage package dependencies and <a href="http://gulpjs.com/">gulp</a> to build from <code>src/</code>.</p>
+			<div class="highlight highlight-Bash"><pre><code>$ yarn
+$ gulp</code></pre></div>
+			<p>The compiled files will be saved in the <code>dist/</code> folder.</p>
+			<h3>Style Customization</h3>
+			<p><a href="http://sass-lang.com/">Sass</a> is used to build the stylesheet so you can <code>@import</code> the <code>src/star-rating.scss</code> file to compile it directly into your Sass project.</p>
+			<p>Following are the default sass values for Star Rating, they are contained in a map variable.</p>
+			<pre><code>$star-rating-defaults: (
+    base-display   : block,
+    base-height    : 26px,
+    font-size      : 0.8em,
+    font-weight    : 600,
+    star-empty     : '../img/star-empty.svg',
+    star-filled    : '../img/star-filled.svg',
+    star-half      : '../img/star-half.svg',
+    star-size      : 24px,
+    text-background: #1a1a1a,
+    text-color     : #fff,
+);</code></pre>
+			<p>To override any values with your own, simply create a new <code>$star-rating</code> map variable and include only the values you wish to change.</p>
+			<p><strong>Important:</strong> Make sure you define <code>$star-rating</code> before you import the <code>src/star-rating.scss</code> file:</p>
+			<pre><code>$star-rating: (
+    base-height: 32px,
+    star-size  : 30px,
+);
+@import "../../node_modules/star-rating.js/src/star-rating"</code></pre>
+		</section>
 
-		<p>This boolean value determines whether the star rating can be cleared by clicking on the an already pre-selected star.</p>
+		<section class="section">
+			<h2>Compatibility</h2>
+			<ul>
+				<li>All modern browsers</li>
+				<li>IE 10+</li>
+			</ul>
+		</section>
 
-		<h3>onClick</h3>
+		<section class="section">
+			<h2>License</h2>
+			<p><a href="https://github.com/geminilabs/star-rating.js/blob/master/LICENSE">MIT</a></p>
+		</section>
 
-		<p>This value determines the custom function that is triggered after you click on a star. The custom function argument is the select HTMLElement.</p>
+	</main>
 
-		<h3>initialText</h3>
-
-		<p>This string value determines the initial text when no value is selected. This has no effect if <code>showText</code> is set to false.</p>
-
-		<h3>showText</h3>
-
-		<p>This boolean value determines whether or not the rating text is shown.</p>
-
-		<h2>Build</h2>
-
-		<p>star-rating.js uses gulp to build from src.</p>
-
-		<pre><code>$ npm install
-$ gulp</code></pre>
-
-		<p>The compiled files will be saved in the <code>dist/</code> folder.</p>
-
-		<h2>License</h2>
-
-		<p><a href="https://github.com/geminilabs/star-rating.js/blob/master/LICENSE">MIT</a></p>
-
-	</section>
-
-	<footer>
-		<p>This project is maintained by <a href="https://github.com/geminilabs">geminilabs</a></p>
+	<footer class="page-footer">
+		<p>This project is maintained by <a href="https://github.com/geminilabs">Gemini Labs</a></p>
 	</footer>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js"></script>
-	<script src="demo/js/scale.fix.js"></script>
-	<script src="dist/star-rating.min.js"></script>
-
+	<script src="src/star-rating.js"></script>
 	<script>
-
-		var starratings = new StarRating( '#star-rating-1, #star-rating-2' );
-
-		StarRating.defaults.initialText = "Rate me";
-
-		var starratings2 = new StarRating( '#star-rating-3, #star-rating-4' );
-		var starratings3 = new StarRating( '#star-rating-5', {
-			clearable: false,
-			showText: false,
+		var starratings = new StarRating( '.star-rating', {
 			onClick: function( el ) {
 				console.log( 'Selected: ' + el[el.selectedIndex].text );
 			},
 		});
-
 	</script>
-</div>
 
 </body>
 </html>
