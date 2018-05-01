@@ -22,17 +22,17 @@ Use one of the following methods to add the plugin to your project:
 <link href="css/star-rating.css" rel="stylesheet">
 
 <select class="star-rating">
-	<option value="">Select a rating</option>
-	<option value="5">Excellent</option>
-	<option value="4">Very Good</option>
-	<option value="3">Average</option>
-	<option value="2">Poor</option>
-	<option value="1">Terrible</option>
+    <option value="">Select a rating</option>
+    <option value="5">Excellent</option>
+    <option value="4">Very Good</option>
+    <option value="3">Average</option>
+    <option value="2">Poor</option>
+    <option value="1">Terrible</option>
 </select>
 
 <script src="js/star-rating.min.js"></script>
 <script>
-	var starRatingControls = new StarRating( '.star-rating' );
+    var starRatingControls = new StarRating( '.star-rating' );
 </script>
 ```
 
