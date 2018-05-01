@@ -1,6 +1,5 @@
 /*!
  * Star Rating
- *
  * @version: 2.0.0
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/geminilabs/star-rating.js
@@ -35,8 +34,8 @@ $star-rating-defaults: (
 	position: absolute !important;
 	top: 0;
 	left: 0;
-	clip: rect(1px, 1px, 1px, 1px);
-	clip-path: circle(1px at 0 0);
+	clip: rect(1px, 1px, 1px, 1px); // IE/Edge
+	clip-path: circle(1px at 0 0); // Modern
 }
 
 .gl-star-rating-stars {

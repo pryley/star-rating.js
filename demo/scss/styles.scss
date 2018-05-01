@@ -21,18 +21,13 @@ $features: (
 	styled: false,
 );
 
-$star-rating: (
-	star-empty: '../../img/star-empty.svg',
-	star-filled: '../../img/star-filled.svg',
-	star-half: '../../img/star-half.svg',
-);
-
 @import "../../node_modules/nolie.css/src/1-functions/all";
 @import "../../node_modules/nolie.css/src/2-config/all";
 
 $colors: (
 	white: #fff,
-	primary: material-color(blue, 800),
+	text: material-color(grey, 900),
+	primary: material-color(pink, 500),
 );
 
 $typefaces: extend($typefaces, (
@@ -45,6 +40,18 @@ $typestyles: extend($typestyles, (
 	heading-3: l 1 bold,
 	heading-4: m 1 bold,
 ));
+
+$star-rating: (
+	star-empty: '../../img/star-empty.svg',
+	star-filled: '../../img/star-filled.svg',
+	star-half: '../../img/star-half.svg',
+	star-size: 24px,
+	base-height: 34px,
+	font-size: 14px,
+	font-weight: 400,
+	text-background: material-color(grey, 900),
+	// text-color: material-color(grey, 900),
+);
 
 @import "../../node_modules/nolie.css/src/3-mixins/all";
 @import "../../node_modules/nolie.css/src/4-components/all";
@@ -62,8 +69,7 @@ a {
 }
 
 blockquote {
-	border-left: 4px solid material-color(blue-grey, 50);
-	color: material-color(blue-grey, 700);
+	border-left: 4px solid material-color(grey, 200);
 	p {
 		@include font-size(s);
 		&:not(:last-child) {
@@ -78,17 +84,17 @@ blockquote {
 code {
 	@include font-size(m);
 	border-radius: $border-radius;
-	background-color: material-color(blue-grey, 50);
+	background-color: material-color(grey, 200);
 	text-shadow: 1px 1px 0 rgba(color(white), 0.75);
 }
 
 pre {
 	@include line-height(1);
 	font-weight: weight(light);
-	background-color: material-color(blue-grey, 900);
+	background-color: material-color(grey, 900);
 	code {
 		@include font-size(s);
-		color: material-color(light-green, 100);
+		color: material-color(yellow, 50);
 		text-shadow: 1px 1px 0 rgba(color(black), 0.25);
 		background: none;
 	}
@@ -97,7 +103,7 @@ pre {
 .page-header {
 	@include debug-baseline;
 	@include padding(2 1);
-	background-color: material-color(blue-grey, 900);
+	background-color: material-color(yellow, 600);
 	text-align: center;
 
 	@include medium {
@@ -109,19 +115,8 @@ pre {
 	}
 
 	.button {
-		color: rgba(color(white), 0.7);
-		border-color: transparent;
-		background-color: rgba(material-color(blue-grey, 700), 0.3);
 		@include button-medium;
 		@include margin(0.75 0 0);
-		&:hover {
-			color: rgba(color(white), 0.7);
-			border-color: transparent;
-			background-color: rgba(material-color(blue-grey, 700), 0.5);
-		}
-		&:active {
-			background-color: rgba(material-color(blue-grey, 700), 0.7);
-		}
 
 		@include small {
 			@include margin(0.75 0.25 0);
@@ -137,7 +132,7 @@ pre {
 		position: relative;
 		top: $border-width;
 		font-weight: bold;
-		border-top: $border-width solid material-color(blue-grey, 50);
+		border-top: $border-width solid material-color(grey, 200);
 		margin: -($border-width * 2) 0 0;
 		@include padding-top(1);
 	}
@@ -158,7 +153,7 @@ pre {
 }
 
 .project-name {
-	color: color(white);
+	color: material-color(grey, 900);
 	max-width: 52rem;
 	margin-left: auto;
 	margin-right: auto;
@@ -178,7 +173,7 @@ pre {
 	max-width: 52rem;
 	margin-left: auto;
 	margin-right: auto;
-	color: rgba(color(white), 0.5);
+	color: material-color(grey, 900);
 	font-weight: weight(normal);
 	@include font-size(m);
 	@include margin-bottom(1);
@@ -200,15 +195,15 @@ pre {
 }
 
 .button {
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
 	@include button;
 	@include button-group;
-	@include button-solid(color(primary), color(white));
+	@include button-solid(material-color(pink, 500), color(white));
 	@include button-transition;
+	text-shadow: 0 -1px 0 rgba(material-color(pink, 800), 0.5);
 
 	&.secondary {
-		@include button-solid(color(text), color(white));
+		@include button-solid(material-color(grey, 800), color(white));
+		text-shadow: 0 -1px 0 rgba(color(black), 0.5);
 	}
 }
 
@@ -229,4 +224,52 @@ pre {
 form .button {
 	display: block;
 	margin: 0;
+}
+
+label {
+	font-size: 1rem;
+	font-weight: 600;
+}
+
+.form-field {
+	@include margin-bottom(1);
+	border-radius: $border-radius;
+	background-color: material-color(grey, 50);
+	box-shadow: inset 0 0 8px material-color(grey, 200);
+	@include padding(0.5);
+	@include medium {
+		@include padding(0.75);
+	}
+}
+
+select {
+	background-color: #fff;
+	border-color: material-color(grey, 300);
+	height: sr(base-height);
+	margin: 0;
+}
+
+.button-group .button:not(:first-child) {
+	margin-left: 0;
+}
+
+
+.gl-star-rating-stars > span {
+	width: 20px;
+	height: 32px;
+	background-size: 20px;
+	background-position: center;
+	@media screen and (min-width: 375px) {
+		width: 24px;
+		background-size: 24px;
+	}
+	@media screen and (min-width: 414px) {
+		width: 28px;
+		background-size: 28px;
+	}
+	@include small {
+		width: 32px;
+		height: 32px;
+		background-size: 32px;
+	}
 }

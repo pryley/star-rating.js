@@ -1,4 +1,4 @@
-/**
+/*!
  * Star Rating
  * @version: 2.0.0
  * @author: Paul Ryley (http://geminilabs.io)
@@ -6,25 +6,38 @@
  * @license: MIT
  */
 
-;(function( window, document, undefined )
-{
+;(function( window, document, undefined ) {
+
 	"use strict";
 
 	/** @return array */
-	var Plugin = function( selector, options ) {
+	var Plugin = function( selector, options ) { // string|object, object
 		this.selects = {}.toString.call( selector ) === '[object String]' ? document.querySelectorAll( selector ) : [selector];
-		this.destroy = function() {}; // destroy all widgets
-		this.rebuild = function() {}; // rebuild all widgets
+		this.destroy = function() {
+			this.widgets.forEach( function( widget ) {
+				widget.destroy();
+			})
+		};
+		this.rebuild = function() {
+			this.widgets.forEach( function( widget ) {
+				widget.rebuild();
+			})
+		};
 		this.widgets = [];
 		for( var i = 0; i < this.selects.length; i++ ) {
 			if( this.selects[i].tagName !== 'SELECT' )continue;
-			this.widgets.push( new Widget( this.selects[i], options ));
+			var widget = new Widget( this.selects[i], options );
+			if( widget.direction === undefined )continue;
+			this.widgets.push( widget );
 		}
 	};
 
-	var Widget = function( el, options ) {
+	/** @return void */
+	var Widget = function( el, options ) { // HTMLElement, object
 		this.el = el;
 		this.options = this.extend( {}, this.defaults, options || {}, JSON.parse( el.getAttribute( 'data-options' ))),
+		this.setStarCount();
+		if( this.stars < 1 || this.stars > this.options.maxStars )return;
 		this.init();
 	}
 
@@ -40,13 +53,12 @@
 
 		/** @return void */
 		init: function() {
-			this.setStarCount();
-			if( this.stars < 1 || this.stars > this.options.maxStars )return;
+			this.initEvents();
 			this.current = this.selected = this.getSelectedValue();
 			this.wrapEl();
 			this.buildWidgetEl();
 			this.setDirection();
-			this.handleEvents();
+			this.handleEvents( 'add' );
 			this.onClick();
 		},
 
@@ -77,7 +89,7 @@
 		},
 
 		/** @return void */
-		changeTo: function( index ) {
+		changeTo: function( index ) { // int
 			if( index < 0 || index === '' ) {
 				index = 0;
 			}
@@ -92,16 +104,8 @@
 			this.current = index;
 		},
 
-		/** @return void */
-		clear: function() {
-			if( this.options.clearable ) {
-				this.el.value = this.selected = '';
-				this.changeTo(0);
-			}
-		},
-
 		/** @return HTMLElement */
-		createSpanEl: function( attributes ) {
+		createSpanEl: function( attributes ) { // object
 			var el = document.createElement( 'span' );
 			attributes = attributes || {};
 			for( var key in attributes ) {
@@ -111,8 +115,22 @@
 			return el;
 		},
 
+		/** @return void */
+		destroy: function() {
+			this.handleEvents( 'remove' );
+			var wrapEl = this.el.parentNode;
+			wrapEl.parentNode.replaceChild( this.el, wrapEl );
+		},
+
+		/** @return void */
+		eventListener: function( el, action, events ) { // HTMLElement, string, array
+			events.forEach( function( event ) {
+				el[action + 'EventListener']( event, this.events[event] );
+			}.bind( this ));
+		},
+
 		/** @return object */
-		extend: function() {
+		extend: function() { // object ...
 			var args = [].slice.call( arguments );
 			var result = args[0];
 			var extenders = args.slice(1);
@@ -126,7 +144,7 @@
 		},
 
 		/** @return int */
-		getIndexFromPosition: function( pageX ) {
+		getIndexFromPosition: function( pageX ) { // int
 			var direction = {};
 			var widgetWidth = this.widgetEl.offsetWidth;
 			direction.ltr = Math.max( pageX - this.offsetLeft, 1 );
@@ -137,7 +155,7 @@
 			);
 		},
 
-		/** @return array */
+		/** @return object */
 		getOptionValues: function() {
 			var el = this.el;
 			var unorderedValues = {};
@@ -154,35 +172,40 @@
 
 		/** @return int */
 		getSelectedValue: function() {
-			return this.el.options[this.el.selectedIndex].value;
+			return parseInt( this.el.options[Math.max( this.el.selectedIndex, 0 )].value ) || 0;
 		},
 
 		/** @return void */
-		handleEvents: function() {
-			var el = this.el;
-			var formEl = el.closest( 'form' );
-			var widgetEl = this.widgetEl;
-			this.events = {
-				mousemove: this.onMousemove.bind( this ),
-			};
-			el.addEventListener( 'change', this.onChange.bind( this ));
-			widgetEl.addEventListener( 'click', this.onClick.bind( this ));
-			widgetEl.addEventListener( 'mouseenter', this.onMouseenter.bind( this ));
-			widgetEl.addEventListener( 'mouseleave', this.onMouseleave.bind( this ));
+		handleEvents: function( action ) { // string
+			var formEl = this.el.closest( 'form' );
+			this.eventListener( this.el, action, ['change'] );
+			this.eventListener( this.widgetEl, action, ['click', 'mouseenter', 'mouseleave'] );
 			if( formEl ) {
-				formEl.addEventListener( 'reset', this.onReset.bind( this ));
+				this.eventListener( formEl, action, ['reset'] );
 			}
 		},
 
-		/** @return HTMLElement */
-		insertSpanEl: function( el, attributes, after ) {
+		/** @return void */
+		initEvents: function() {
+			this.events = {
+				change: this.onChange.bind( this ),
+				click: this.onClick.bind( this ),
+				mouseenter: this.onMouseenter.bind( this ),
+				mouseleave: this.onMouseleave.bind( this ),
+				mousemove: this.onMousemove.bind( this ),
+				reset: this.onReset.bind( this ),
+			};
+		},
+
+		/** @return void */
+		insertSpanEl: function( el, attributes, after ) { // HTMLElement, object, bool
 			var newEl = this.createSpanEl( attributes );
 			el.parentNode.insertBefore( newEl, after === true ? el.nextSibling : el );
 			return newEl;
 		},
 
 		/** @return bool */
-		isCloneable: function( obj ) {
+		isCloneable: function( obj ) { // mixed
 			return Array.isArray( obj ) || {}.toString.call( obj ) == '[object Object]';
 		},
 
@@ -192,12 +215,12 @@
 		},
 
 		/** @return void */
-		onClick: function( ev ) {
+		onClick: function( ev ) { // MouseEvent
 			var index = this.current;
 			if( ev !== undefined ) {
 				index = this.getIndexFromPosition( ev.pageX );
-				if( this.current !== '' && parseFloat( this.selected ) === index ) {
-					this.clear();
+				if( this.current !== 0 && parseFloat( this.selected ) === index  && this.options.clearable ) {
+					this.onReset();
 					return;
 				}
 			}
@@ -223,13 +246,25 @@
 		},
 
 		/** @return void */
-		onMousemove: function( ev ) {
+		onMousemove: function( ev ) { // MouseEvent
 			this.changeTo( this.getIndexFromPosition( ev.pageX ));
 		},
 
 		/** @return void */
 		onReset: function() {
-			this.clear();
+			var originallySelected = this.el.querySelector( '[selected]' );
+			var value = originallySelected ? originallySelected.value : '';
+			this.el.value = value;
+			this.selected = parseInt( value ) || 0;
+			this.changeTo( value );
+		},
+
+		/** @return void */
+		rebuild: function() {
+			if( this.el.parentNode.classList.contains( 'gl-star-rating' )) {
+				this.destroy();
+			}
+			this.init();
 		},
 
 		/** @return void */
