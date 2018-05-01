@@ -60,7 +60,7 @@
 
 		/** @return void */
 		buildWidgetEl: function() {
-			var values = this.getOrderedValues();
+			var values = this.getOptionValues();
 			var widgetEl = this.insertSpanEl( this.el, {
 				class: 'gl-star-rating-stars',
 			}, true );
@@ -138,7 +138,7 @@
 		},
 
 		/** @return array */
-		getOrderedValues: function() {
+		getOptionValues: function() {
 			var el = this.el;
 			var unorderedValues = {};
 			var orderedValues = {};
@@ -187,7 +187,7 @@
 		},
 
 		/** @return void */
-		onChange: function( ev ) {
+		onChange: function() {
 			this.changeTo( this.getSelectedValue() );
 		},
 
@@ -210,14 +210,14 @@
 		},
 
 		/** @return void */
-		onMouseenter: function( ev ) {
+		onMouseenter: function() {
 			var rect = this.widgetEl.getBoundingClientRect();
 			this.offsetLeft = rect.left + document.body.scrollLeft;
 			this.widgetEl.addEventListener( 'mousemove', this.events.mousemove );
 		},
 
 		/** @return void */
-		onMouseleave: function( ev ) {
+		onMouseleave: function() {
 			this.widgetEl.removeEventListener( 'mousemove', this.events.mousemove );
 			this.changeTo( this.selected );
 		},
@@ -228,7 +228,7 @@
 		},
 
 		/** @return void */
-		onReset: function( ev ) {
+		onReset: function() {
 			this.clear();
 		},
 
