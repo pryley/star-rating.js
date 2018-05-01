@@ -75,7 +75,9 @@ gulp.task('jshint', function() {
 gulp.task('js', function() {
 	pump([
 		gulp.src(paths.js),
-		gulpif(args.production, uglify()),
+		gulpif(args.production, uglify({
+			output: { comments: 'some' },
+		})),
 		rename({ suffix: '.min' }),
 		gulp.dest(paths.dist),
 		browserSync.stream(),

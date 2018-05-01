@@ -45,6 +45,7 @@
 			this.current = this.selected = this.getSelectedValue();
 			this.wrapEl();
 			this.buildWidgetEl();
+			this.setDirection();
 			this.handleEvents();
 			this.onClick();
 		},
@@ -126,9 +127,12 @@
 
 		/** @return int */
 		getIndexFromPosition: function( pageX ) {
-			var width = this.widgetEl.offsetWidth;
+			var direction = {};
+			var widgetWidth = this.widgetEl.offsetWidth;
+			direction.ltr = Math.max( pageX - this.offsetLeft, 1 );
+			direction.rtl = widgetWidth - direction.ltr;
 			return Math.min(
-				Math.ceil( Math.max( pageX - this.offsetLeft, 1 ) / Math.round( width / this.stars )),
+				Math.ceil( direction[this.direction] / Math.round( widgetWidth / this.stars )),
 				this.stars
 			);
 		},
@@ -226,6 +230,13 @@
 		/** @return void */
 		onReset: function( ev ) {
 			this.clear();
+		},
+
+		/** @return void */
+		setDirection: function() {
+			var wrapEl = this.el.parentNode;
+			this.direction = window.getComputedStyle( wrapEl, null ).getPropertyValue( 'direction' );
+			wrapEl.classList.add( 'gl-star-rating-' + this.direction );
 		},
 
 		/** @return void */

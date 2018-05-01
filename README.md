@@ -21,7 +21,7 @@ Use one of the following methods to add the plugin to your project:
 ```html
 <link href="css/star-rating.css" rel="stylesheet">
 
-<select id="star-rating">
+<select class="star-rating">
 	<option value="">Select a rating</option>
 	<option value="5">Excellent</option>
 	<option value="4">Very Good</option>
@@ -32,20 +32,20 @@ Use one of the following methods to add the plugin to your project:
 
 <script src="js/star-rating.min.js"></script>
 <script>
-	var starrating = new StarRating( '#star-rating' );
+	var starRatingControls = new StarRating( '.star-rating' );
 </script>
 ```
 
-To re-initialize after it has already been initialized (e.g. form fields have changed with ajax):
+To rebuild all star rating controls (e.g. after form fields have changed with ajax):
 
 ```js
-starrating.rebuild();
+starRatingControls.rebuild();
 ```
 
-To fully remove, including all attached Event Listeners:
+To fully remove all star rating controls, including all attached Event Listeners:
 
 ```js
-starrating.destroy();
+starRatingControls.destroy();
 ```
 
 ## Options
@@ -54,10 +54,11 @@ Here are the default options
 
 ```js
 {
-    clearable  : true,
-    initialText: "Click to Rate",
-    onClick    : null,
-    showText   : true,
+    clearable: true,
+    initialText: "Select a Rating",
+    maxStars: 10,
+    onClick: null,
+    showText: true,
 }
 ```
 
@@ -67,17 +68,23 @@ Type: `Boolean`
 
 Determines whether the star rating can be cleared by clicking on an already pre-selected star.
 
-### onClick:
-
-Type: `Function`
-
-This is triggered after you click on a star. The function argument is the select HTMLElement.
-
 ### initialText:
 
 Type: `String`
 
 Determines the initial text when no value is selected. This has no effect if `showText` is set to false.
+
+### maxStars:
+
+Type: `Integer`
+
+Determines the maximum number of stars allowed in a star rating.
+
+### onClick:
+
+Type: `Function`
+
+This is triggered after you click on a star. The function argument is the select HTMLElement.
 
 ### showText:
 
@@ -143,6 +150,7 @@ All changes should be committed to the files in `src/`.
 
 `v2.0.0 - [02-05-2018]`
 
+- Major rewrite of plugin
 - Added support for loading as a module
 - Added support for RTL
 - Removed jQuery plugin

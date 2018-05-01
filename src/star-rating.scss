@@ -37,7 +37,6 @@ $gl-sr-text-font-weight : 600 !default;
 		position: absolute !important;
 		top: 0;
 		left: 0;
-		clip: rect(1px 1px 1px 1px); // IE6, IE7
 		clip: rect(1px, 1px, 1px, 1px);
 		clip-path: circle(1px at 0 0);
 	}
@@ -72,6 +71,11 @@ $gl-sr-text-font-weight : 600 !default;
 		}
 	}
 
+	&.gl-star-rating-rtl .gl-star-rating-stars > span {
+		margin-left: ($gl-sr-star-size/6);
+		margin-right: 0;
+	}
+
 	.gl-star-rating-text {
 		display: inline-block;
 		position: relative;
@@ -86,7 +90,7 @@ $gl-sr-text-font-weight : 600 !default;
 		padding: 0 ($gl-sr-star-size/2) 0 ($gl-sr-star-size/4);
 		margin: 0 0 0 ($gl-sr-star-size/2);
 
-		&:before {
+		&::before {
 			position: absolute;
 			top: 0;
 			left: -($gl-sr-star-size/2);
@@ -96,6 +100,18 @@ $gl-sr-text-font-weight : 600 !default;
 			border-style: solid;
 			border-width: ($gl-sr-base-height/2) ($gl-sr-star-size/2) ($gl-sr-base-height/2) 0;
 			border-color: transparent $gl-sr-text-background transparent transparent;
+		}
+	}
+
+	&.gl-star-rating-rtl .gl-star-rating-text {
+		padding: 0 ($gl-sr-star-size/4) 0 ($gl-sr-star-size/2);
+		margin: 0 ($gl-sr-star-size/2) 0 0;
+
+		&::before {
+			left: unset;
+			right: -($gl-sr-star-size/2);
+			border-width: ($gl-sr-base-height/2) 0 ($gl-sr-base-height/2) ($gl-sr-star-size/2);
+			border-color: transparent transparent transparent $gl-sr-text-background;
 		}
 	}
 }
