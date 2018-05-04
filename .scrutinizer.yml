@@ -1,0 +1,110 @@
+# language: javascript
+
+filter:
+  excluded_paths:
+    - demo/*
+    - dist/*
+    - node_modules/
+    - gulpfile.js
+
+checks:
+  javascript:
+    check_for_loops_test: true
+    check_loop_no_body: true
+    check_switch_ambiguous_test: true
+    check_switch_default_not_last: true
+    check_switch_default_only: true
+    check_switch_no_default: true
+    check_too_many_arguments: true
+    check_try_statement: true
+    check_undeclared_vars: true
+    check_unnecessary_continue: true
+    check_unnecessary_return: true
+    check_unused_member_calls: true
+    check_unused_object_creation: true
+    check_unused_parameters: true
+    code_rating: true
+    consistent_return: true
+    curly: false
+    duplicate_code: true
+    eqeqeq: true
+    guard_for_in: true
+    jsdoc_no_duplicate_params: true
+    jsdoc_non_existent_params: true
+    new_cap: true
+    no_alert: true
+    no_alias_builtins: true
+    no_array_constructor: true
+    no_bitwise: true
+    no_caller: true
+    no_comma_dangle: true
+    no_console: true
+    no_constant_condition: true
+    no_debugger: true
+    no_delete_var: true
+    no_dupe_keys: true
+    no_else_return: true
+    no_empty: true
+    no_empty_class: true
+    no_empty_label: true
+    no_eval: true
+    no_ex_assign: true
+    no_extend_native: true
+    no_extra_bind: true
+    no_func_assign: true
+    no_implicit_undefined_return: true
+    no_implied_eval: true
+    no_inner_declarations: true
+    no_invalid_regexp: true
+    no_label_var: true
+    no_loop_var_assign: true
+    no_native_reassign: true
+    no_negated_in_lhs: true
+    no_new_func: true
+    no_new_require: true
+    no_new_wrappers: true
+    no_param_assign: true
+    no_path_concat: true
+    no_process_exit: true
+    no_redeclare: true
+    no_redeclared_const: true
+    no_return_assign: true
+    no_sequences: true
+    no_shadow_builtins: true
+    no_sparse_arrays: true
+    no_undef: true
+    no_undef_init: true
+    no_unreachable: true
+    no_unused_assignment: true
+    no_unused_const: true
+    no_unused_expressions: true
+    no_unused_function: true
+    no_unused_vars: true
+    no_use_before_define: true
+    no_var: true
+    no_void: true
+    no_with: true
+    nsp_vulnerabilities: true
+    unsafe_mutable_variable_usage: true
+    unsafe_undefined: true
+    use_isnan: true
+    valid_typeof: true
+    var_never_initialized: true
+    var_sometimes_initialized: true
+
+build:
+  nodes:
+    analysis:
+      environment:
+        elasticsearch: false
+        memcached: false
+        mongodb: false
+        neo4j: false
+        node: '9.3.0'
+        php: '7.2.0'
+        postgresql: false
+        rabbitmq: false
+        redis: false
+      tests:
+        override:
+          - js-scrutinizer-run

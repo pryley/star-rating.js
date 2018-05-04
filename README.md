@@ -1,6 +1,6 @@
 # star-rating.js
 
-[![GitHub version](https://badge.fury.io/gh/geminilabs%2Fstar-rating.js.svg)](https://badge.fury.io/gh/geminilabs%2Fstar-rating.js)
+[![npm version](https://badge.fury.io/js/star-rating.js.svg)](https://badge.fury.io/js/star-rating.js)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/geminilabs/star-rating.js/blob/master/LICENSE)
 
 A zero-dependency plugin that transforms a select with numerical-range values (i.e. 1-5) into a dynamic star rating element.

@@ -6,6 +6,8 @@
  * @license: MIT
  */
 
+/** global: define */
+
 ;(function( window, document, undefined ) {
 
 	"use strict";
