@@ -151,6 +151,7 @@ All changes should be committed to the files in `src/`.
 `v2.0.1 - [2018-05-11]`
 
 - Fixed accessibility support
+- Fixed RTL support
 
 `v2.0.0 - [2018-05-02]`
 

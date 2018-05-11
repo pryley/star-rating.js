@@ -34,12 +34,19 @@ $star-rating-defaults: (
 	overflow: hidden;
 	position: absolute !important;
 	top: 0;
-	left: 0;
 	width: 1px;
 	height: 1px;
 	clip: rect(1px, 1px, 1px, 1px); // IE/Edge
 	clip-path: circle(1px at 0 0); // Modern
 	white-space: nowrap;
+}
+
+.gl-star-rating-ltr[data-star-rating] > select {
+	left: 0;
+}
+
+.gl-star-rating-rtl[data-star-rating] > select {
+	right: 0;
 }
 
 .gl-star-rating[data-star-rating] > select:focus + .gl-star-rating-stars::before {
@@ -69,10 +76,16 @@ $star-rating-defaults: (
 	background-repeat: no-repeat;
 	background-image: url( sr(star-empty) );
 	margin: 0 sr(star-size)/6 0 0;
+	&:last-of-type {
+		margin-right: 0;
+	}
 }
 
 .gl-star-rating-rtl[data-star-rating] .gl-star-rating-stars > span {
 	margin: 0 0 0 sr(star-size)/6;
+	&:last-of-type {
+		margin-left: 0;
+	}
 }
 
 .gl-star-rating-stars.s10 > span:nth-child(1),
