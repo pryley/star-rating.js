@@ -60,8 +60,8 @@
 			this.wrapEl();
 			this.buildWidgetEl();
 			this.setDirection();
+			this.setValue( this.current );
 			this.handleEvents( 'add' );
-			this.onClick();
 		},
 
 		/** @return void */
@@ -218,18 +218,12 @@
 
 		/** @return void */
 		onClick: function( ev ) { // MouseEvent
-			var index = this.current;
-			if( ev !== undefined ) {
-				index = this.getIndexFromPosition( ev.pageX );
-				if( this.current !== 0 && parseFloat( this.selected ) === index  && this.options.clearable ) {
-					this.onReset();
-					return;
-				}
+			var index = this.getIndexFromPosition( ev.pageX );
+			if( this.current !== 0 && parseFloat( this.selected ) === index  && this.options.clearable ) {
+				return this.onReset();
 			}
-			this.el.value = index;
-			this.selected = index;
-			this.changeTo( index );
-			if( ev !== undefined && typeof this.options.onClick === 'function' ) {
+			this.setValue( index );
+			if( typeof this.options.onClick === 'function' ) {
 				this.options.onClick.call( this, this.el );
 			}
 		},
@@ -274,6 +268,13 @@
 			var wrapEl = this.el.parentNode;
 			this.direction = window.getComputedStyle( wrapEl, null ).getPropertyValue( 'direction' );
 			wrapEl.classList.add( 'gl-star-rating-' + this.direction );
+		},
+
+		/** @return void */
+		setValue: function( index ) {
+			this.el.value = index;
+			this.selected = index;
+			this.changeTo( index );
 		},
 
 		/** @return void */
