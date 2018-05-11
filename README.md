@@ -148,7 +148,11 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
-`v2.0.0 - [02-05-2018]`
+`v2.0.1 - [2018-05-11]`
+
+- Fixed accessibility support
+
+`v2.0.0 - [2018-05-02]`
 
 - Major rewrite of plugin
 - Added support for loading as a module
@@ -156,41 +160,41 @@ All changes should be committed to the files in `src/`.
 - Removed jQuery plugin
 - Removed IE9 support
 
-`v1.3.3 - [11-04-2017]`
+`v1.3.3 - [2017-04-11]`
 
 - Fixed race conditions preventing correct element.outerWidth calculation
 
-`v1.3.1 - [22-12-2016]`
+`v1.3.1 - [2016-12-22]`
 
 - Fixed checking existence of parent form element before attaching an event to it
 - Fixed mousemove event not correctly unattaching
 
-`v1.3.0 - [10-10-2016]`
+`v1.3.0 - [2016-10-10]`
 
 - Changed `clickFn` to `onClick` which now passes the select HTMLElement as the argument
 
-`v1.2.2 - [10-10-2016]`
+`v1.2.2 - [2016-10-10]`
 
 - Fixed "reset" event when the `clearable` option is false
 
-`v1.2.1 - [09-10-2016]`
+`v1.2.1 - [2016-10-09]`
 
 - Fixed resetting the star-rating when a form "reset" event is triggered
 
-`v1.2.0 - [09-10-2016]`
+`v1.2.0 - [2016-10-09]`
 
 - Removed plugin dependencies
 - Fixed HTML5 “required” attribute validation
 
-`v1.1.0 - [06-10-2016]`
+`v1.1.0 - [2016-10-06]`
 
 - Added `showText` option
 
-`v1.0.1 - [06-10-2016]`
+`v1.0.1 - [2016-10-06]`
 
 - Fixed using the wrong left offset
 
-`v1.0.0 - [06-10-2016]`
+`v1.0.0 - [2016-10-06]`
 
 - Initial release
 
