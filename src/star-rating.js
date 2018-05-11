@@ -1,6 +1,6 @@
 /*!
  * Star Rating
- * @version: 2.0.1
+ * @version: 2.1.0
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/geminilabs/star-rating.js
  * @license: MIT
@@ -181,6 +181,7 @@
 		handleEvents: function( action ) { // string
 			var formEl = this.el.closest( 'form' );
 			this.eventListener( this.el, action, ['change'] );
+			this.eventListener( this.el, action, ['keydown'] );
 			this.eventListener( this.widgetEl, action, ['click', 'mouseenter', 'mouseleave'] );
 			if( formEl ) {
 				this.eventListener( formEl, action, ['reset'] );
@@ -192,6 +193,7 @@
 			this.events = {
 				change: this.onChange.bind( this ),
 				click: this.onClick.bind( this ),
+				keydown: this.onKeydown.bind( this ),
 				mouseenter: this.onMouseenter.bind( this ),
 				mouseleave: this.onMouseleave.bind( this ),
 				mousemove: this.onMousemove.bind( this ),
@@ -226,6 +228,16 @@
 			if( typeof this.options.onClick === 'function' ) {
 				this.options.onClick.call( this, this.el );
 			}
+		},
+
+		/** @return void */
+		onKeydown: function( ev ) { // KeyboardEvent
+			if( ['ArrowLeft', 'ArrowRight'].indexOf( ev.key ) === -1 )return;
+			var increment = ev.key === 'ArrowLeft' ? -1 : 1;
+			if( this.direction === 'rtl' ) {
+				increment *= -1;
+			}
+			this.setValue( Math.min( Math.max( this.getSelectedValue() + increment, 0 ), this.stars ));
 		},
 
 		/** @return void */

@@ -148,8 +148,9 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
-`v2.0.1 - [2018-05-11]`
+`v2.1.0 - [2018-05-11]`
 
+- Added support for the keyboard
 - Fixed accessibility support
 - Fixed RTL support
 
