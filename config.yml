@@ -1,0 +1,12 @@
+bump:
+  - bower.json
+  - package.json
+  - src/star-rating.js
+  - src/star-rating.scss
+dest: dist/
+watch:
+  html: index.html
+  js: src/star-rating.js
+  scss:
+    - demo/styles.scss
+    - src/star-rating.scss

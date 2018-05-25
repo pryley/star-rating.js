@@ -4,118 +4,79 @@ var browserSync    = require('browser-sync').create();
 var bump           = require('gulp-bump');
 var cssnano        = require('gulp-cssnano');
 var gulp           = require('gulp');
-var gulpif         = require('gulp-if');
 var jshint         = require('gulp-jshint');
 var moduleImporter = require('sass-module-importer');
-var notify         = require('gulp-notify');
 var pump           = require('pump');
 var rename         = require('gulp-rename');
 var sass           = require('gulp-sass');
 var uglify         = require('gulp-uglify');
-var watch          = require('gulp-watch');
+var yaml           = require('yamljs');
 
-var paths = {
-	bump: {
-		'version': [
-			'bower.json',
-			'package.json',
-			'src/star-rating.js',
-			'src/star-rating.scss',
-		],
-	},
-	dist: 'dist/',
-	js: 'src/star-rating.js',
-	scss: [
-		'demo/scss/**/*.scss',
-		'src/star-rating.scss',
-	],
-};
+var config = yaml.load('config.yml');
 
-/* CSS Task
- -------------------------------------------------- */
-gulp.task('css', function() {
-	pump([
-		gulp.src(paths.scss, { base: '.' }),
-		sass({
-			importer: moduleImporter(),
-			outputStyle: 'expanded'
-		}).on('error', sass.logError),
-		autoprefixer(),
-		gulpif(args.production, cssnano()),
-		rename(function(path) {
-			path.dirname = path.dirname.replace('src', 'dist');
-			path.dirname = path.dirname.replace('scss', 'css');
-		}),
-		gulp.dest('.'),
-		browserSync.stream(),
-		notify({
-			message: 'CSS Task complete!',
-			onLast: true,
-		}),
-	]);
-});
-
-/* JSHint Task
- -------------------------------------------------- */
-gulp.task('jshint', function() {
-	pump([
-		gulp.src(paths.js),
-		jshint(),
-		jshint.reporter('jshint-stylish'),
-		jshint.reporter('fail'),
-		notify({
-			message: 'JSHint Task complete!',
-			onLast: true,
-		}),
-	]);
-});
-
-/* JS Task
- -------------------------------------------------- */
-gulp.task('js', function() {
-	pump([
-		gulp.src(paths.js),
-		gulpif(args.production, uglify({
-			output: { comments: 'some' },
-		})),
-		rename({ suffix: '.min' }),
-		gulp.dest(paths.dist),
-		browserSync.stream(),
-		notify({
-			message: 'JS Task complete!',
-			onLast: true,
-		}),
-	]);
-});
-
-/* Version Task
- -------------------------------------------------- */
 gulp.task('bump', function() {
-	['patch', 'minor', 'major'].some(function(arg) {
-		if(!args[arg])return;
-		for(var key in paths.bump) {
-			if(!paths.bump.hasOwnProperty(key))continue;
-			gulp.src(paths.bump[key], { base: '.' })
-				.pipe(bump({ type: arg, key: key }))
-				.pipe(gulp.dest('.'));
-		}
-		return true;
-	});
+    var type = 'patch';
+    ['prerelease','patch','minor','major'].some(function(arg) {
+        if(!args[arg])return;
+        type = arg;
+        return true;
+    });
+    return pump([
+        gulp.src(config.bump, {base: '.'}),
+        bump({type: type, keys: ['version']}),
+        gulp.dest('.'),
+    ]);
 });
 
-/* Watch Task
- -------------------------------------------------- */
+gulp.task('js', function() {
+    return pump([
+        gulp.src(config.watch.js),
+        uglify({
+            output: {comments: 'some'},
+        }),
+        rename({suffix: '.min'}),
+        gulp.dest(config.dest),
+        browserSync.stream(),
+    ]);
+});
+
+gulp.task('jshint', function() {
+    return pump([
+        gulp.src(config.watch.js),
+        jshint(),
+        jshint.reporter('jshint-stylish'),
+        jshint.reporter('fail'),
+    ]);
+});
+
+gulp.task('scss', function() {
+    return pump([
+        gulp.src(config.watch.scss, {base: '.'}),
+        sass({
+            importer: moduleImporter(),
+            outputStyle: 'expanded',
+        }).on('error', sass.logError),
+        autoprefixer(),
+        cssnano({
+            minifyFontValues: false,
+            zindex: false,
+        }),
+        rename(function(path) {
+            path.dirname = path.dirname.replace('src','dist');
+            path.dirname = path.dirname.replace('scss','css');
+        }),
+        gulp.dest('.'),
+        browserSync.stream(),
+    ]);
+});
+
 gulp.task('watch', function() {
-	browserSync.init({
-		server: { baseDir: '.' }
-	});
-	gulp.watch(paths.js, ['js']);
-	gulp.watch(paths.scss, ['css']);
-	gulp.watch('*.html').on('change', browserSync.reload);
+    browserSync.init({
+        server: {baseDir: '.'},
+    });
+    gulp.watch(config.watch.js, gulp.parallel('jshint','js'));
+    gulp.watch(config.watch.scss, gulp.series('scss'));
+    gulp.watch(config.watch.html).on('change', browserSync.reload);
 });
 
-/* Default Task
- -------------------------------------------------- */
-gulp.task('default', function() {
-	gulp.start('css', 'js');
-});
+gulp.task('default', gulp.parallel('scss','jshint','js'));
