@@ -1,6 +1,6 @@
 /*!
  * Star Rating
- * @version: 2.1.0
+ * @version: 2.1.1
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/geminilabs/star-rating.js
  * @license: MIT
@@ -18,12 +18,12 @@
 		this.destroy = function() {
 			this.widgets.forEach( function( widget ) {
 				widget.destroy();
-			})
+			});
 		};
 		this.rebuild = function() {
 			this.widgets.forEach( function( widget ) {
 				widget.rebuild();
-			})
+			});
 		};
 		this.widgets = [];
 		for( var i = 0; i < this.selects.length; i++ ) {
@@ -35,13 +35,13 @@
 	};
 
 	/** @return void */
-	var Widget = function( el, options ) { // HTMLElement, object
+	var Widget = function( el, options ) { // HTMLElement, object|null
 		this.el = el;
-		this.options = this.extend( {}, this.defaults, options || {}, JSON.parse( el.getAttribute( 'data-options' ))),
+		this.options = this.extend( {}, this.defaults, options || {}, JSON.parse( el.getAttribute( 'data-options' )));
 		this.setStarCount();
 		if( this.stars < 1 || this.stars > this.options.maxStars )return;
 		this.init();
-	}
+	};
 
 	Widget.prototype = {
 
@@ -132,7 +132,7 @@
 		},
 
 		/** @return object */
-		extend: function() { // object ...
+		extend: function() { // ...object
 			var args = [].slice.call( arguments );
 			var result = args[0];
 			var extenders = args.slice(1);
@@ -180,8 +180,7 @@
 		/** @return void */
 		handleEvents: function( action ) { // string
 			var formEl = this.el.closest( 'form' );
-			this.eventListener( this.el, action, ['change'] );
-			this.eventListener( this.el, action, ['keydown'] );
+			this.eventListener( this.el, action, ['change', 'keydown'] );
 			this.eventListener( this.widgetEl, action, ['click', 'mouseenter', 'mouseleave'] );
 			if( formEl ) {
 				this.eventListener( formEl, action, ['reset'] );
@@ -221,7 +220,7 @@
 		/** @return void */
 		onClick: function( ev ) { // MouseEvent
 			var index = this.getIndexFromPosition( ev.pageX );
-			if( this.current !== 0 && parseFloat( this.selected ) === index  && this.options.clearable ) {
+			if( this.current !== 0 && parseFloat( this.selected ) === index && this.options.clearable ) {
 				return this.onReset();
 			}
 			this.setValue( index );

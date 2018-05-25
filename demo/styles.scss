@@ -1,0 +1,272 @@
+@mixin small {
+	@media screen and (min-width: 35em) {
+		@content;
+	}
+}
+
+@mixin medium {
+	@media screen and (min-width: 42em) {
+		@content;
+	}
+}
+
+@mixin large {
+	@media screen and (min-width: 50em) {
+		@content;
+	}
+}
+
+$features: (
+	// debug: true,
+	styled: false,
+);
+
+@import "node_modules/nolie/src/1-functions/all";
+@import "node_modules/nolie/src/2-config/all";
+
+$colors: (
+	white: #fff,
+	text: material-color(grey, 900),
+	primary: material-color(pink, 500),
+);
+
+$typefaces: extend($typefaces, (
+  body: ('Open Sans', sans-serif),
+));
+
+$typestyles: extend($typestyles, (
+	heading-1: h3 1 bold,
+	heading-2: xxl 1 bold,
+	heading-3: l 1 bold,
+	heading-4: m 1 bold,
+));
+
+$star-rating: (
+	star-size: 24px,
+	base-height: 34px,
+	font-size: 14px,
+	font-weight: 400,
+	text-background: material-color(grey, 900),
+	// text-color: material-color(grey, 900),
+);
+
+@import "node_modules/nolie/src/3-mixins/all";
+@import "node_modules/nolie/src/4-components/all";
+@import "../src/star-rating";
+
+$transition-duration: 0.2s;
+$transition-function: ease-in-out;
+
+a {
+	color: color(primary);
+	text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+blockquote {
+	border-left: 4px solid material-color(grey, 200);
+	p {
+		@include font-size(s);
+		&:not(:last-child) {
+			@include margin-bottom(0.5);
+		}
+	}
+	pre {
+		margin-bottom: 0;
+	}
+}
+
+code {
+	@include font-size(m);
+	border-radius: $border-radius;
+	background-color: material-color(grey, 200);
+	text-shadow: 1px 1px 0 rgba(color(white), 0.75);
+}
+
+pre {
+	@include line-height(1);
+	font-weight: weight(light);
+	background-color: material-color(grey, 900);
+	code {
+		@include font-size(s);
+		color: material-color(yellow, 50);
+		text-shadow: 1px 1px 0 rgba(color(black), 0.25);
+		background: none;
+	}
+}
+
+.page-header {
+	@include debug-baseline;
+	@include padding(2 1);
+	background-color: material-color(yellow, 600);
+	text-align: center;
+
+	@include medium {
+		@include padding(2 3);
+	}
+
+	@include large {
+		@include padding(4 3);
+	}
+
+	.button {
+		@include button-medium;
+		@include margin(0.75 0 0);
+
+		@include small {
+			@include margin(0.75 0.25 0);
+		}
+	}
+}
+
+.page-footer {
+	max-width: 52em;
+	margin: 0 auto;
+	@include padding(1);
+	p:first-child {
+		position: relative;
+		top: $border-width;
+		font-weight: bold;
+		border-top: $border-width solid material-color(grey, 200);
+		margin: -($border-width * 2) 0 0;
+		@include padding-top(1);
+	}
+}
+
+.main-content {
+	max-width: 52em;
+	margin: 0 auto;
+	@include padding(1.5 1 0);
+}
+
+.section ul {
+	@include line-height(1.25);
+}
+
+.section:not(:last-child) {
+	@include margin-bottom(2);
+}
+
+.project-name {
+	color: material-color(grey, 900);
+	max-width: 52rem;
+	margin-left: auto;
+	margin-right: auto;
+	@include margin-bottom(2);
+
+	@include medium {
+		@include font-size(h2);
+		@include line-height(2);
+	}
+
+	@include large {
+		@include font-size(h1);
+	}
+}
+
+.project-tagline {
+	max-width: 52rem;
+	margin-left: auto;
+	margin-right: auto;
+	color: material-color(grey, 900);
+	font-weight: weight(normal);
+	@include font-size(m);
+	@include margin-bottom(1);
+
+	@include medium {
+		@include font-size(xl);
+		@include line-height(2);
+		@include line-height(1.5);
+	}
+}
+
+.badge {
+	display: inline-block;
+	@include line-height(1.5);
+	@include margin-bottom(1);
+	img {
+		@include spacing(height, 1);
+	}
+}
+
+.button {
+	@include button;
+	@include button-group;
+	@include button-solid(material-color(pink, 500), color(white));
+	@include button-transition;
+	text-shadow: 0 -1px 0 rgba(material-color(pink, 800), 0.5);
+
+	&.secondary {
+		@include button-solid(material-color(grey, 800), color(white));
+		text-shadow: 0 -1px 0 rgba(color(black), 0.5);
+	}
+}
+
+
+.button-group {
+	@include clearfix;
+	display: block;
+	@include margin-bottom(1);
+}
+
+:not(.button-group) > .button {
+	width: 100%;
+	@include small {
+		width: auto;
+	}
+}
+
+form .button {
+	display: block;
+	margin: 0;
+}
+
+label {
+	font-size: 1rem;
+	font-weight: 600;
+}
+
+.form-field {
+	@include margin-bottom(1);
+	border-radius: $border-radius;
+	background-color: material-color(grey, 50);
+	box-shadow: inset 0 0 8px material-color(grey, 200);
+	@include padding(0.5);
+	@include medium {
+		@include padding(0.75);
+	}
+}
+
+select {
+	background-color: #fff;
+	border-color: material-color(grey, 300);
+	height: sr(base-height);
+	margin: 0;
+}
+
+.button-group .button:not(:first-child) {
+	margin-left: 0;
+}
+
+
+.gl-star-rating-stars > span {
+	width: 20px;
+	height: 32px;
+	background-size: 20px;
+	background-position: center;
+	@media screen and (min-width: 375px) {
+		width: 24px;
+		background-size: 24px;
+	}
+	@media screen and (min-width: 414px) {
+		width: 28px;
+		background-size: 28px;
+	}
+	@include small {
+		width: 32px;
+		height: 32px;
+		background-size: 32px;
+	}
+}

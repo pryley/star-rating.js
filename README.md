@@ -148,6 +148,10 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v2.1.1 - [2018-05-25]`
+
+- Fixed jshint warnings
+
 `v2.1.0 - [2018-05-11]`
 
 - Added support for the keyboard
