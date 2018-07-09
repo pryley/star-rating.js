@@ -14,43 +14,44 @@ var yaml           = require('yamljs');
 
 var config = yaml.load('config.yml');
 
-gulp.task('bump', function() {
+gulp.task('bump', function(cb) {
     var type = 'patch';
     ['prerelease','patch','minor','major'].some(function(arg) {
         if(!args[arg])return;
         type = arg;
         return true;
     });
-    return pump([
+    pump([
         gulp.src(config.bump, {base: '.'}),
         bump({type: type, keys: ['version']}),
         gulp.dest('.'),
-    ]);
+    ], cb);
 });
 
-gulp.task('js', function() {
-    return pump([
+gulp.task('js', function(cb) {
+    pump([
         gulp.src(config.watch.js),
         uglify({
+            mangle: {properties: {regex: /_$/}},
             output: {comments: 'some'},
         }),
         rename({suffix: '.min'}),
         gulp.dest(config.dest),
         browserSync.stream(),
-    ]);
+    ], cb);
 });
 
-gulp.task('jshint', function() {
-    return pump([
+gulp.task('jshint', function(cb) {
+    pump([
         gulp.src(config.watch.js),
         jshint(),
         jshint.reporter('jshint-stylish'),
         jshint.reporter('fail'),
-    ]);
+    ], cb);
 });
 
-gulp.task('scss', function() {
-    return pump([
+gulp.task('scss', function(cb) {
+    pump([
         gulp.src(config.watch.scss, {base: '.'}),
         sass({
             importer: moduleImporter(),
@@ -67,7 +68,7 @@ gulp.task('scss', function() {
         }),
         gulp.dest('.'),
         browserSync.stream(),
-    ]);
+    ], cb);
 });
 
 gulp.task('watch', function() {
