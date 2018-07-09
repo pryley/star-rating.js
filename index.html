@@ -111,12 +111,18 @@
 			<h2>Options</h2>
 			<h3>Default options</h3>
 			<div class="highlight highlight-Javascript"><pre><code>{
+    classname: "gl-star-rating",
     clearable: true,
     initialText: "Select a Rating",
     maxStars: 10,
     onClick: null,
     showText: true,
 }</code></pre></div>
+			<h4>classname</h4>
+			<blockquote>
+				<p>Type: <code>String</code></p>
+				<p>Determines the classname to use of the rendered star-rating HTMLElement. If you change this, make sure you also change the SCSS <code>$star-rating[base-classname]</code> map variable to match.</p>
+			</blockquote>
 			<h4>clearable</h4>
 			<blockquote>
 				<p>Type: <code>Boolean</code></p>
@@ -157,6 +163,7 @@ $ gulp</code></pre></div>
 			<p><a href="http://sass-lang.com/">Sass</a> is used to build the stylesheet so you can <code>@import</code> the <code>src/star-rating.scss</code> file to compile it directly into your Sass project.</p>
 			<p>Following are the default sass values for Star Rating, they are contained in a map variable.</p>
 			<pre><code>$star-rating-defaults: (
+    base-classname : 'gl-star-rating',
     base-display   : block,
     base-height    : 26px,
     font-size      : 0.8em,

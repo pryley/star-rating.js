@@ -54,6 +54,7 @@ Here are the default options
 
 ```js
 {
+    classname: "gl-star-rating",
     clearable: true,
     initialText: "Select a Rating",
     maxStars: 10,
@@ -61,6 +62,12 @@ Here are the default options
     showText: true,
 }
 ```
+
+### classname:
+
+Type: `String`
+
+Determines the classname to use of the rendered star-rating HTMLElement. If you change this, make sure you also change the SCSS `$star-rating[base-classname]` map variable to match.
 
 ### clearable:
 
@@ -111,6 +118,7 @@ Following are the default sass values for Star Rating, they are contained in a m
 
 ```sass
 $star-rating-defaults: (
+    base-classname : 'gl-star-rating',
     base-display   : block,
     base-height    : 26px,
     font-size      : 0.8em,
@@ -147,6 +155,14 @@ $star-rating: (
 All changes should be committed to the files in `src/`.
 
 ## Changelog
+
+`v2.2.0 - [2018-07-09]`
+
+- Added a `classname` option
+- Added a `$star-rating[base-classname]` SCSS option
+- Fixed detection of an unset option value
+- Optimised the minified output
+- Removed unused code
 
 `v2.1.1 - [2018-05-25]`
 
