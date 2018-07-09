@@ -12,17 +12,17 @@
 
 	"use strict";
 
-	/** @return array */
+	/** @return object */
 	var Plugin = function( selector, options ) { // string|object, object
 		this.selects = {}.toString.call( selector ) === '[object String]' ? document.querySelectorAll( selector ) : [selector];
 		this.destroy = function() {
 			this.widgets.forEach( function( widget ) {
-				widget.destroy();
+				widget.destroy_();
 			});
 		};
 		this.rebuild = function() {
 			this.widgets.forEach( function( widget ) {
-				widget.rebuild();
+				widget.rebuild_();
 			});
 		};
 		this.widgets = [];
@@ -37,10 +37,10 @@
 	/** @return void */
 	var Widget = function( el, options ) { // HTMLElement, object|null
 		this.el = el;
-		this.options = this.extend( {}, this.defaults, options || {}, JSON.parse( el.getAttribute( 'data-options' )));
-		this.setStarCount();
-		if( this.stars < 1 || this.stars > this.options.maxStars )return;
-		this.init();
+		this.options_ = this.extend_( {}, this.defaults, options || {}, JSON.parse( el.getAttribute( 'data-options' )));
+		this.setStarCount_();
+		if( this.stars < 1 || this.stars > this.options_.maxStars )return;
+		this.init_();
 	};
 
 	Widget.prototype = {
@@ -54,44 +54,44 @@
 		},
 
 		/** @return void */
-		init: function() {
-			this.initEvents();
-			this.current = this.selected = this.getSelectedValue();
-			this.wrapEl();
-			this.buildWidgetEl();
-			this.setDirection();
-			this.setValue( this.current );
-			this.handleEvents( 'add' );
+		init_: function() {
+			this.initEvents_();
+			this.current = this.selected = this.getSelectedValue_();
+			this.wrapEl_();
+			this.buildWidgetEl_();
+			this.setDirection_();
+			this.setValue_( this.current );
+			this.handleEvents_( 'add' );
 		},
 
 		/** @return void */
-		buildLabelEl: function() {
-			if( !this.options.showText )return;
-			this.textEl = this.insertSpanEl( this.widgetEl, {
 				class: 'gl-star-rating-text',
+		buildLabelEl_: function() {
+			if( !this.options_.showText )return;
+			this.textEl = this.insertSpanEl_( this.widgetEl, {
 			}, true );
 		},
 
 		/** @return void */
-		buildWidgetEl: function() {
-			var values = this.getOptionValues();
-			var widgetEl = this.insertSpanEl( this.el, {
 				class: 'gl-star-rating-stars',
+		buildWidgetEl_: function() {
+			var values = this.getOptionValues_();
+			var widgetEl = this.insertSpanEl_( this.el, {
 			}, true );
 			for( var key in values ) {
 				if( !values.hasOwnProperty( key ))continue;
-				var newEl = this.createSpanEl({
+				var newEl = this.createSpanEl_({
 					'data-value': key,
 					'data-text': values[key],
 				});
 				widgetEl.innerHTML += newEl.outerHTML;
 			}
 			this.widgetEl = widgetEl;
-			this.buildLabelEl();
+			this.buildLabelEl_();
 		},
 
 		/** @return void */
-		changeTo: function( index ) { // int
+		changeTo_: function( index ) { // int
 			if( index < 0 || index === '' ) {
 				index = 0;
 			}
@@ -100,14 +100,14 @@
 			}
 			this.widgetEl.classList.remove( 's' + ( 10 * this.current ));
 			this.widgetEl.classList.add( 's' + ( 10 * index ));
-			if( this.options.showText ) {
-				this.textEl.textContent = index < 1 ? this.options.initialText : this.widgetEl.childNodes[index - 1].dataset.text;
+			if( this.options_.showText ) {
+				this.textEl.textContent = index < 1 ? this.options_.initialText : this.widgetEl.childNodes[index - 1].dataset.text;
 			}
 			this.current = index;
 		},
 
 		/** @return HTMLElement */
-		createSpanEl: function( attributes ) { // object
+		createSpanEl_: function( attributes ) { // object
 			var el = document.createElement( 'span' );
 			attributes = attributes || {};
 			for( var key in attributes ) {
@@ -118,21 +118,21 @@
 		},
 
 		/** @return void */
-		destroy: function() {
-			this.handleEvents( 'remove' );
+		destroy_: function() {
+			this.handleEvents_( 'remove' );
 			var wrapEl = this.el.parentNode;
 			wrapEl.parentNode.replaceChild( this.el, wrapEl );
 		},
 
 		/** @return void */
-		eventListener: function( el, action, events ) { // HTMLElement, string, array
+		eventListener_: function( el, action, events ) { // HTMLElement, string, array
 			events.forEach( function( event ) {
 				el[action + 'EventListener']( event, this.events[event] );
 			}.bind( this ));
 		},
 
 		/** @return object */
-		extend: function() { // ...object
+		extend_: function() { // ...object
 			var args = [].slice.call( arguments );
 			var result = args[0];
 			var extenders = args.slice(1);
@@ -146,7 +146,7 @@
 		},
 
 		/** @return int */
-		getIndexFromPosition: function( pageX ) { // int
+		getIndexFromPosition_: function( pageX ) { // int
 			var direction = {};
 			var widgetWidth = this.widgetEl.offsetWidth;
 			direction.ltr = Math.max( pageX - this.offsetLeft, 1 );
@@ -158,7 +158,7 @@
 		},
 
 		/** @return object */
-		getOptionValues: function() {
+		getOptionValues_: function() {
 			var el = this.el;
 			var unorderedValues = {};
 			var orderedValues = {};
@@ -173,36 +173,36 @@
 		},
 
 		/** @return int */
-		getSelectedValue: function() {
+		getSelectedValue_: function() {
 			return parseInt( this.el.options[Math.max( this.el.selectedIndex, 0 )].value ) || 0;
 		},
 
 		/** @return void */
-		handleEvents: function( action ) { // string
+		handleEvents_: function( action ) { // string
 			var formEl = this.el.closest( 'form' );
-			this.eventListener( this.el, action, ['change', 'keydown'] );
-			this.eventListener( this.widgetEl, action, ['click', 'mouseenter', 'mouseleave'] );
+			this.eventListener_( this.el, action, ['change', 'keydown'] );
+			this.eventListener_( this.widgetEl, action, ['click', 'mouseenter', 'mouseleave'] );
 			if( formEl ) {
-				this.eventListener( formEl, action, ['reset'] );
+				this.eventListener_( formEl, action, ['reset'] );
 			}
 		},
 
 		/** @return void */
-		initEvents: function() {
+		initEvents_: function() {
 			this.events = {
-				change: this.onChange.bind( this ),
-				click: this.onClick.bind( this ),
-				keydown: this.onKeydown.bind( this ),
-				mouseenter: this.onMouseenter.bind( this ),
-				mouseleave: this.onMouseleave.bind( this ),
-				mousemove: this.onMousemove.bind( this ),
-				reset: this.onReset.bind( this ),
+				change: this.onChange_.bind( this ),
+				click: this.onClick_.bind( this ),
+				keydown: this.onKeydown_.bind( this ),
+				mouseenter: this.onMouseenter_.bind( this ),
+				mouseleave: this.onMouseleave_.bind( this ),
+				mousemove: this.onMousemove_.bind( this ),
+				reset: this.onReset_.bind( this ),
 			};
 		},
 
 		/** @return void */
-		insertSpanEl: function( el, attributes, after ) { // HTMLElement, object, bool
-			var newEl = this.createSpanEl( attributes );
+		insertSpanEl_: function( el, attributes, after ) { // HTMLElement, object, bool
+			var newEl = this.createSpanEl_( attributes );
 			el.parentNode.insertBefore( newEl, after === true ? el.nextSibling : el );
 			return newEl;
 		},
@@ -213,83 +213,83 @@
 		},
 
 		/** @return void */
-		onChange: function() {
-			this.changeTo( this.getSelectedValue() );
+		onChange_: function() {
+			this.changeTo_( this.getSelectedValue_() );
 		},
 
 		/** @return void */
-		onClick: function( ev ) { // MouseEvent
-			var index = this.getIndexFromPosition( ev.pageX );
-			if( this.current !== 0 && parseFloat( this.selected ) === index && this.options.clearable ) {
-				return this.onReset();
+		onClick_: function( ev ) { // MouseEvent
+			var index = this.getIndexFromPosition_( ev.pageX );
+			if( this.current !== 0 && parseFloat( this.selected ) === index && this.options_.clearable ) {
+				return this.onReset_();
 			}
-			this.setValue( index );
-			if( typeof this.options.onClick === 'function' ) {
-				this.options.onClick.call( this, this.el );
+			this.setValue_( index );
+			if( typeof this.options_.onClick === 'function' ) {
+				this.options_.onClick.call( this, this.el );
 			}
 		},
 
 		/** @return void */
-		onKeydown: function( ev ) { // KeyboardEvent
+		onKeydown_: function( ev ) { // KeyboardEvent
 			if( ['ArrowLeft', 'ArrowRight'].indexOf( ev.key ) === -1 )return;
 			var increment = ev.key === 'ArrowLeft' ? -1 : 1;
 			if( this.direction === 'rtl' ) {
 				increment *= -1;
 			}
-			this.setValue( Math.min( Math.max( this.getSelectedValue() + increment, 0 ), this.stars ));
+			this.setValue_( Math.min( Math.max( this.getSelectedValue_() + increment, 0 ), this.stars ));
 		},
 
 		/** @return void */
-		onMouseenter: function() {
+		onMouseenter_: function() {
 			var rect = this.widgetEl.getBoundingClientRect();
 			this.offsetLeft = rect.left + document.body.scrollLeft;
 			this.widgetEl.addEventListener( 'mousemove', this.events.mousemove );
 		},
 
 		/** @return void */
-		onMouseleave: function() {
+		onMouseleave_: function() {
 			this.widgetEl.removeEventListener( 'mousemove', this.events.mousemove );
-			this.changeTo( this.selected );
+			this.changeTo_( this.selected );
 		},
 
 		/** @return void */
-		onMousemove: function( ev ) { // MouseEvent
-			this.changeTo( this.getIndexFromPosition( ev.pageX ));
+		onMousemove_: function( ev ) { // MouseEvent
+			this.changeTo_( this.getIndexFromPosition_( ev.pageX ));
 		},
 
 		/** @return void */
-		onReset: function() {
+		onReset_: function() {
 			var originallySelected = this.el.querySelector( '[selected]' );
 			var value = originallySelected ? originallySelected.value : '';
 			this.el.value = value;
 			this.selected = parseInt( value ) || 0;
-			this.changeTo( value );
+			this.changeTo_( value );
 		},
 
 		/** @return void */
-		rebuild: function() {
 			if( this.el.parentNode.classList.contains( 'gl-star-rating' )) {
-				this.destroy();
+		rebuild_: function() {
+				this.destroy_();
 			}
-			this.init();
+			this.init_();
 		},
 
 		/** @return void */
-		setDirection: function() {
+		setDirection_: function() {
 			var wrapEl = this.el.parentNode;
 			this.direction = window.getComputedStyle( wrapEl, null ).getPropertyValue( 'direction' );
 			wrapEl.classList.add( 'gl-star-rating-' + this.direction );
 		},
 
 		/** @return void */
-		setValue: function( index ) {
+		setValue_: function( index ) {
 			this.el.value = index;
 			this.selected = index;
-			this.changeTo( index );
+			this.changeTo_( index );
 		},
 
 		/** @return void */
-		setStarCount: function() {
+		setStarCount_: function() {
 			var el = this.el;
 			this.stars = 0;
 			for( var i = 0; i < el.length; i++ ) {
@@ -303,9 +303,9 @@
 		},
 
 		/** @return void */
-		wrapEl: function() {
-			var wrapEl = this.insertSpanEl( this.el, {
 				class: 'gl-star-rating',
+		wrapEl_: function() {
+			var wrapEl = this.insertSpanEl_( this.el, {
 				'data-star-rating': '',
 			});
 			wrapEl.appendChild( this.el );
