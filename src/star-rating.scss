@@ -1,6 +1,6 @@
 /*!
  * Star Rating
- * @version: 2.1.1
+ * @version: 2.2.0
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/geminilabs/star-rating.js
  * @license: MIT
@@ -9,6 +9,7 @@
 $star-rating: () !default;
 
 $star-rating-defaults: (
+    base-classname : 'gl-star-rating',
     base-display   : block,
     base-height    : 26px,
     font-size      : 0.8em,
@@ -25,12 +26,13 @@ $star-rating-defaults: (
 	@return map-get(map-merge($star-rating-defaults, $star-rating), $value);
 }
 
-.gl-star-rating[data-star-rating] {
+
+.#{sr(base-classname)}[data-star-rating] {
 	position: relative;
 	display: sr(base-display);
 }
 
-.gl-star-rating[data-star-rating] > select {
+.#{sr(base-classname)}[data-star-rating] > select {
 	overflow: hidden;
 	position: absolute !important;
 	top: 0;
@@ -41,15 +43,15 @@ $star-rating-defaults: (
 	white-space: nowrap;
 }
 
-.gl-star-rating-ltr[data-star-rating] > select {
+.#{sr(base-classname)}-ltr[data-star-rating] > select {
 	left: 0;
 }
 
-.gl-star-rating-rtl[data-star-rating] > select {
+.#{sr(base-classname)}-rtl[data-star-rating] > select {
 	right: 0;
 }
 
-.gl-star-rating[data-star-rating] > select:focus + .gl-star-rating-stars::before {
+.#{sr(base-classname)}[data-star-rating] > select:focus + .#{sr(base-classname)}-stars::before {
 	opacity: 0.5;
 	display: block;
 	position: absolute;
@@ -60,7 +62,7 @@ $star-rating-defaults: (
 	pointer-events: none;
 }
 
-.gl-star-rating-stars {
+.#{sr(base-classname)}-stars {
 	position: relative;
 	display: inline-block;
 	height: sr(base-height);
@@ -68,7 +70,7 @@ $star-rating-defaults: (
 	cursor: pointer;
 }
 
-.gl-star-rating-stars > span {
+.#{sr(base-classname)}-stars > span {
 	display: inline-block;
 	width: sr(star-size);
 	height: sr(star-size);
@@ -81,27 +83,27 @@ $star-rating-defaults: (
 	}
 }
 
-.gl-star-rating-rtl[data-star-rating] .gl-star-rating-stars > span {
+.#{sr(base-classname)}-rtl[data-star-rating] .#{sr(base-classname)}-stars > span {
 	margin: 0 0 0 sr(star-size)/6;
 	&:last-of-type {
 		margin-left: 0;
 	}
 }
 
-.gl-star-rating-stars.s10 > span:nth-child(1),
-.gl-star-rating-stars.s20 > span:nth-child(-1n+2),
-.gl-star-rating-stars.s30 > span:nth-child(-1n+3),
-.gl-star-rating-stars.s40 > span:nth-child(-1n+4),
-.gl-star-rating-stars.s50 > span:nth-child(-1n+5),
-.gl-star-rating-stars.s60 > span:nth-child(-1n+6),
-.gl-star-rating-stars.s70 > span:nth-child(-1n+7),
-.gl-star-rating-stars.s80 > span:nth-child(-1n+8),
-.gl-star-rating-stars.s90 > span:nth-child(-1n+9),
-.gl-star-rating-stars.s100 > span {
+.#{sr(base-classname)}-stars.s10 > span:nth-child(1),
+.#{sr(base-classname)}-stars.s20 > span:nth-child(-1n+2),
+.#{sr(base-classname)}-stars.s30 > span:nth-child(-1n+3),
+.#{sr(base-classname)}-stars.s40 > span:nth-child(-1n+4),
+.#{sr(base-classname)}-stars.s50 > span:nth-child(-1n+5),
+.#{sr(base-classname)}-stars.s60 > span:nth-child(-1n+6),
+.#{sr(base-classname)}-stars.s70 > span:nth-child(-1n+7),
+.#{sr(base-classname)}-stars.s80 > span:nth-child(-1n+8),
+.#{sr(base-classname)}-stars.s90 > span:nth-child(-1n+9),
+.#{sr(base-classname)}-stars.s100 > span {
 	background-image: url( sr(star-filled) );
 }
 
-.gl-star-rating-text {
+.#{sr(base-classname)}-text {
 	display: inline-block;
 	position: relative;
 	height: sr(base-height);
@@ -128,7 +130,7 @@ $star-rating-defaults: (
 	}
 }
 
-.gl-star-rating-rtl[data-star-rating] .gl-star-rating-text {
+.#{sr(base-classname)}-rtl[data-star-rating] .#{sr(base-classname)}-text {
 	padding: 0 sr(star-size)/4 0 sr(star-size)/2;
 	margin: 0 sr(star-size)/2 0 0;
 
