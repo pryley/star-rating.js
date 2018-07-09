@@ -164,7 +164,7 @@
 			var unorderedValues = {};
 			var orderedValues = {};
 			for( var i = 0; i < el.length; i++ ) {
-				if( el[i].value === '' )continue;
+				if( this.isValueEmpty_( el[i] ))continue;
 				unorderedValues[el[i].value] = el[i].text;
 			}
 			Object.keys( unorderedValues ).sort().forEach( function( key ) {
@@ -209,8 +209,8 @@
 		},
 
 		/** @return bool */
-		isCloneable: function( obj ) { // mixed
-			return Array.isArray( obj ) || {}.toString.call( obj ) == '[object Object]';
+		isValueEmpty_: function( el ) { // HTMLElement
+			return el.getAttribute( 'value' ) === null || el.value === '';
 		},
 
 		/** @return void */
@@ -294,7 +294,7 @@
 			var el = this.el;
 			this.stars = 0;
 			for( var i = 0; i < el.length; i++ ) {
-				if( el[i].value === '' )continue;
+				if( this.isValueEmpty_( el[i] ))continue;
 				if( isNaN( parseFloat( el[i].value )) || !isFinite( el[i].value )) {
 					this.stars = 0;
 					return;
