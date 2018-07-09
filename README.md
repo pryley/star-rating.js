@@ -160,6 +160,7 @@ All changes should be committed to the files in `src/`.
 
 - Added a `classname` option
 - Added a `$star-rating[base-classname]` SCSS option
+- Added touch events
 - Fixed detection of an unset option value
 - Optimised the minified output
 - Removed unused code

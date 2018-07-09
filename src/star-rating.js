@@ -182,7 +182,10 @@
 		handleEvents_: function( action ) { // string
 			var formEl = this.el.closest( 'form' );
 			this.eventListener_( this.el, action, ['change', 'keydown'] );
-			this.eventListener_( this.widgetEl, action, ['click', 'mouseenter', 'mouseleave'] );
+			this.eventListener_( this.widgetEl, action, [
+				'mousedown', 'mouseleave', 'mousemove', 'mouseover',
+				'touchend', 'touchmove', 'touchstart',
+			]);
 			if( formEl ) {
 				this.eventListener_( formEl, action, ['reset'] );
 			}
@@ -192,12 +195,15 @@
 		initEvents_: function() {
 			this.events = {
 				change: this.onChange_.bind( this ),
-				click: this.onClick_.bind( this ),
 				keydown: this.onKeydown_.bind( this ),
-				mouseenter: this.onMouseenter_.bind( this ),
+				mousedown: this.onMousedown_.bind( this ),
 				mouseleave: this.onMouseleave_.bind( this ),
 				mousemove: this.onMousemove_.bind( this ),
+				mouseover: this.onMouseover_.bind( this ),
 				reset: this.onReset_.bind( this ),
+				touchend: this.onMousedown_.bind( this ),
+				touchmove: this.onMousemove_.bind( this ),
+				touchstart: this.onMouseover_.bind( this ),
 			};
 		},
 
@@ -219,7 +225,18 @@
 		},
 
 		/** @return void */
-		onClick_: function( ev ) { // MouseEvent
+		onKeydown_: function( ev ) { // KeyboardEvent
+			if( ['ArrowLeft', 'ArrowRight'].indexOf( ev.key ) === -1 )return;
+			var increment = ev.key === 'ArrowLeft' ? -1 : 1;
+			if( this.direction === 'rtl' ) {
+				increment *= -1;
+			}
+			this.setValue_( Math.min( Math.max( this.getSelectedValue_() + increment, 0 ), this.stars ));
+		},
+
+		/** @return void */
+		onMousedown_: function( ev ) { // MouseEvent|TouchEvent
+			ev.preventDefault();
 			var index = this.getIndexFromPosition_( ev.pageX );
 			if( this.current !== 0 && parseFloat( this.selected ) === index && this.options_.clearable ) {
 				return this.onReset_();
@@ -231,31 +248,22 @@
 		},
 
 		/** @return void */
-		onKeydown_: function( ev ) { // KeyboardEvent
-			if( ['ArrowLeft', 'ArrowRight'].indexOf( ev.key ) === -1 )return;
-			var increment = ev.key === 'ArrowLeft' ? -1 : 1;
-			if( this.direction === 'rtl' ) {
-				increment *= -1;
-			}
-			this.setValue_( Math.min( Math.max( this.getSelectedValue_() + increment, 0 ), this.stars ));
-		},
-
-		/** @return void */
-		onMouseenter_: function() {
-			var rect = this.widgetEl.getBoundingClientRect();
-			this.offsetLeft = rect.left + document.body.scrollLeft;
-			this.widgetEl.addEventListener( 'mousemove', this.events.mousemove );
-		},
-
-		/** @return void */
-		onMouseleave_: function() {
-			this.widgetEl.removeEventListener( 'mousemove', this.events.mousemove );
+		onMouseleave_: function( ev ) { // MouseEvent
+			ev.preventDefault();
 			this.changeTo_( this.selected );
 		},
 
 		/** @return void */
-		onMousemove_: function( ev ) { // MouseEvent
+		onMousemove_: function( ev ) { // MouseEvent|TouchEvent
+			ev.preventDefault();
 			this.changeTo_( this.getIndexFromPosition_( ev.pageX ));
+		},
+
+		/** @return void */
+		onMouseover_: function( ev ) { // MouseEvent|TouchEvent
+			ev.preventDefault();
+			var rect = this.widgetEl.getBoundingClientRect();
+			this.offsetLeft = rect.left + document.body.scrollLeft;
 		},
 
 		/** @return void */
