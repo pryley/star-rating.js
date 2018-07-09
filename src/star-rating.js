@@ -46,6 +46,7 @@
 	Widget.prototype = {
 
 		defaults: {
+			classname: 'gl-star-rating',
 			clearable: true,
 			initialText: 'Select a Rating',
 			maxStars: 10,
@@ -65,18 +66,18 @@
 		},
 
 		/** @return void */
-				class: 'gl-star-rating-text',
 		buildLabelEl_: function() {
 			if( !this.options_.showText )return;
 			this.textEl = this.insertSpanEl_( this.widgetEl, {
+				class: this.options_.classname + '-text',
 			}, true );
 		},
 
 		/** @return void */
-				class: 'gl-star-rating-stars',
 		buildWidgetEl_: function() {
 			var values = this.getOptionValues_();
 			var widgetEl = this.insertSpanEl_( this.el, {
+				class: this.options_.classname + '-stars',
 			}, true );
 			for( var key in values ) {
 				if( !values.hasOwnProperty( key ))continue;
@@ -267,8 +268,8 @@
 		},
 
 		/** @return void */
-			if( this.el.parentNode.classList.contains( 'gl-star-rating' )) {
 		rebuild_: function() {
+			if( this.el.parentNode.classList.contains( this.options_.classname )) {
 				this.destroy_();
 			}
 			this.init_();
@@ -278,7 +279,7 @@
 		setDirection_: function() {
 			var wrapEl = this.el.parentNode;
 			this.direction = window.getComputedStyle( wrapEl, null ).getPropertyValue( 'direction' );
-			wrapEl.classList.add( 'gl-star-rating-' + this.direction );
+			wrapEl.classList.add( this.options_.classname + '-' + this.direction );
 		},
 
 		/** @return void */
@@ -303,9 +304,9 @@
 		},
 
 		/** @return void */
-				class: 'gl-star-rating',
 		wrapEl_: function() {
 			var wrapEl = this.insertSpanEl_( this.el, {
+				class: this.options_.classname,
 				'data-star-rating': '',
 			});
 			wrapEl.appendChild( this.el );
