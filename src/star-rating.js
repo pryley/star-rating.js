@@ -1,6 +1,6 @@
 /*!
  * Star Rating
- * @version: 2.2.0
+ * @version: 2.2.1
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/geminilabs/star-rating.js
  * @license: MIT
@@ -147,8 +147,9 @@
 		},
 
 		/** @return int */
-		getIndexFromPosition_: function( pageX ) { // int
+		getIndexFromEvent_: function( ev ) { // MouseEvent|TouchEvent
 			var direction = {};
+			var pageX = ev.pageX || ev.changedTouches[0].pageX;
 			var widgetWidth = this.widgetEl.offsetWidth;
 			direction.ltr = Math.max( pageX - this.offsetLeft, 1 );
 			direction.rtl = widgetWidth - direction.ltr;
@@ -237,7 +238,7 @@
 		/** @return void */
 		onMousedown_: function( ev ) { // MouseEvent|TouchEvent
 			ev.preventDefault();
-			var index = this.getIndexFromPosition_( ev.pageX );
+			var index = this.getIndexFromEvent_( ev );
 			if( this.current !== 0 && parseFloat( this.selected ) === index && this.options_.clearable ) {
 				return this.onReset_();
 			}
@@ -256,7 +257,7 @@
 		/** @return void */
 		onMousemove_: function( ev ) { // MouseEvent|TouchEvent
 			ev.preventDefault();
-			this.changeTo_( this.getIndexFromPosition_( ev.pageX ));
+			this.changeTo_( this.getIndexFromEvent_( ev ));
 		},
 
 		/** @return void */

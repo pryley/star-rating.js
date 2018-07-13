@@ -156,6 +156,9 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v2.2.1 - [2018-07-13]`
+- Fixed touch events on Android devices
+
 `v2.2.0 - [2018-07-09]`
 
 - Added a `classname` option
