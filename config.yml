@@ -3,6 +3,7 @@ bump:
   - package.json
   - src/star-rating.js
   - src/star-rating.scss
+  - index.html
 dest: dist/
 watch:
   html: index.html

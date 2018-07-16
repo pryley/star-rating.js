@@ -1,6 +1,6 @@
 /*!
  * Star Rating
- * @version: 2.2.1
+ * @version: 2.2.2
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/geminilabs/star-rating.js
  * @license: MIT
@@ -93,7 +93,7 @@
 
 		/** @return void */
 		changeTo_: function( index ) { // int
-			if( index < 0 || index === '' ) {
+			if( index < 0 || isNaN( index )) {
 				index = 0;
 			}
 			if( index > this.stars ) {
@@ -102,7 +102,7 @@
 			this.widgetEl.classList.remove( 's' + ( 10 * this.current ));
 			this.widgetEl.classList.add( 's' + ( 10 * index ));
 			if( this.options_.showText ) {
-				this.textEl.textContent = index < 1 ? this.options_.initialText : this.widgetEl.childNodes[index - 1].dataset.text;
+				this.textEl.textContent = index < 1 ? this.options_.initialText : this.widgetEl.childNodes[index - 1].getAttribute( 'data-text' );
 			}
 			this.current = index;
 		},
@@ -181,15 +181,18 @@
 
 		/** @return void */
 		handleEvents_: function( action ) { // string
-			var formEl = this.el.closest( 'form' );
+			var formEl = this.el;
+			while( formEl.tagName !== 'FORM' && formEl.nodeType === 1 ) {
+				formEl = formEl.parentNode;
+			}
+			if( formEl.tagName === 'FORM' ) {
+				this.eventListener_( formEl, action, ['reset'] );
+			}
 			this.eventListener_( this.el, action, ['change', 'keydown'] );
 			this.eventListener_( this.widgetEl, action, [
 				'mousedown', 'mouseleave', 'mousemove', 'mouseover',
 				'touchend', 'touchmove', 'touchstart',
 			]);
-			if( formEl ) {
-				this.eventListener_( formEl, action, ['reset'] );
-			}
 		},
 
 		/** @return void */

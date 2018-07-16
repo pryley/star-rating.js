@@ -148,13 +148,16 @@ $star-rating: (
 ## Compatibility
 
 - All modern browsers
-- IE 10+
+- IE 11+
 
 ## Contributing
 
 All changes should be committed to the files in `src/`.
 
 ## Changelog
+
+`v2.2.2 - [2018-07-16]`
+- Fixed IE 11+ compatibility
 
 `v2.2.1 - [2018-07-13]`
 - Fixed touch events on Android devices

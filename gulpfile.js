@@ -23,7 +23,7 @@ gulp.task('bump', function(cb) {
     });
     pump([
         gulp.src(config.bump, {base: '.'}),
-        bump({type: type, keys: ['version']}),
+        bump({type: type, keys: ['version','ver=']}),
         gulp.dest('.'),
     ], cb);
 });
