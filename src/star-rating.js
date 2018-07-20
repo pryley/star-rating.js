@@ -1,6 +1,6 @@
 /*!
  * Star Rating
- * @version: 2.2.2
+ * @version: 2.3.0
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/geminilabs/star-rating.js
  * @license: MIT

@@ -123,6 +123,7 @@ $star-rating-defaults: (
     base-height    : 26px,
     font-size      : 0.8em,
     font-weight    : 600,
+    parent         : '',
     star-empty     : '../img/star-empty.svg',
     star-filled    : '../img/star-filled.svg',
     star-half      : '../img/star-half.svg',
@@ -145,6 +146,20 @@ $star-rating: (
 @import "../../node_modules/star-rating.js/src/star-rating"
 ```
 
+### How to change CSS style priority
+
+Sometimes an existing stylesheet rules will override the default CSS styles for Star Ratings. To solve this problem, you can specify a "parent" option in the `$star-rating` map variable. This option value should be a high priority/specificity property such as an id attribute or similar.
+
+In the following example, all Star Rating css rules will begin with `[id^=stars]` which targets any id attributes that begin with "stars" (i.e. `#stars-1`):
+
+```sass
+$star-rating: (
+    parent: '[id^=stars]',
+);
+```
+
+The CSS rule `.gl-star-rating { ... }` now becomes `[id^=stars] .gl-star-rating { ... }`.
+
 ## Compatibility
 
 - All modern browsers
@@ -155,6 +170,9 @@ $star-rating: (
 All changes should be committed to the files in `src/`.
 
 ## Changelog
+
+`v2.3.0 - [2018-07-20]`
+- Added a `$star-rating[parent]` SCSS option
 
 `v2.2.2 - [2018-07-16]`
 - Fixed IE 11+ compatibility

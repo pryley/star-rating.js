@@ -28,7 +28,7 @@
 			<p>For production, use the files from the <code>dist/</code> folder.</p>
 		</section>
 
-		<section class="section">
+		<section class="section" id="section-1">
 			<h2>Demo</h2>
 			<form class="form-1">
 				<label for="glsr-ltr">Left to Right</label>
@@ -168,6 +168,7 @@ $ gulp</code></pre></div>
     base-height    : 26px,
     font-size      : 0.8em,
     font-weight    : 600,
+    parent         : '',
     star-empty     : '../img/star-empty.svg',
     star-filled    : '../img/star-filled.svg',
     star-half      : '../img/star-half.svg',
@@ -182,6 +183,13 @@ $ gulp</code></pre></div>
     star-size  : 30px,
 );
 @import "../../node_modules/star-rating.js/src/star-rating"</code></pre>
+			<h3>How to change CSS style priority</h3>
+			<p>Sometimes an existing stylesheet rules will override the default CSS styles for Star Ratings. To solve this problem, you can specify a "parent" option in the <code>$star-rating</code> map variable. This option value should be a high priority/specificity property such as an id attribute or similar.</p>
+			<p>In the following example, all Star Rating css rules will begin with <code>[id^=stars]</code> which targets any id attributes that begin with "stars" (i.e. <code>#stars-1</code>):</p>
+			<pre><code>$star-rating: (
+    parent: '[id^=stars]',
+);</code></pre>
+			<p>The CSS rule <code>.gl-star-rating { ... }</code> now becomes <code>[id^=stars] .gl-star-rating { ... }</code>.
 		</section>
 
 		<section class="section">
@@ -203,7 +211,7 @@ $ gulp</code></pre></div>
 		<p>This project is maintained by <a href="https://github.com/geminilabs">Gemini Labs</a></p>
 	</footer>
 
-	<script src="src/star-rating.js?ver=2.2.2"></script>
+	<script src="src/star-rating.js?ver=2.2.3"></script>
 	<script>
 		var destroyed = false;
 		var starratings = new StarRating( '.star-rating', {
