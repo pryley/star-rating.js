@@ -171,6 +171,9 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v2.3.1 - [2018-07-22]`
+- CSS improvements
+
 `v2.3.0 - [2018-07-20]`
 - Added a `$star-rating[parent]` SCSS option
 

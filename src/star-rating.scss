@@ -1,6 +1,6 @@
 /*!
  * Star Rating
- * @version: 2.3.0
+ * @version: 2.3.1
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/geminilabs/star-rating.js
  * @license: MIT
@@ -34,6 +34,7 @@ $star-rating-defaults: (
 
 #{sr(parent)} .#{sr(base-classname)}[data-star-rating] > select {
 	overflow: hidden;
+	visibility: visible !important;
 	position: absolute !important;
 	top: 0;
 	width: 1px;
@@ -41,6 +42,11 @@ $star-rating-defaults: (
 	clip: rect(1px, 1px, 1px, 1px); // IE/Edge
 	clip-path: circle(1px at 0 0); // Modern
 	white-space: nowrap;
+}
+
+#{sr(parent)} .#{sr(base-classname)}[data-star-rating] > select::before,
+#{sr(parent)} .#{sr(base-classname)}[data-star-rating] > select::after {
+	display: none !important;
 }
 
 #{sr(parent)} .#{sr(base-classname)}-ltr[data-star-rating] > select {
