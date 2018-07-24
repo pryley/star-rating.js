@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Star Rating by Gemini Labs</title>
 	<meta name="keywords" content="starrating star-rating star rating">
-	<meta name="description" content="A zero-dependency plugin that transforms a SELECT with numerical-range values (i.e. 1-5) into a dynamic star rating element.">
+	<meta name="description" content="A zero-dependency library that transforms a SELECT with numerical-range values (i.e. 1-5) into a dynamic star rating element.">
 	<meta name="author" content="Paul Ryley">
 	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' type='text/css'>
 	<link rel="stylesheet" href="demo/styles.css">
@@ -14,7 +14,7 @@
 <body>
 	<header class="page-header">
 		<h1 class="project-name">star-rating.js</h1>
-		<h2 class="project-tagline">A zero-dependency plugin that transforms a SELECT with numerical-range values (i.e. 1-5) into a dynamic star rating element.</h2>
+		<h2 class="project-tagline">A zero-dependency library that transforms a SELECT with numerical-range values (i.e. 1-5) into a dynamic star rating element.</h2>
 		<a class="button medium" href="https://github.com/geminilabs/star-rating.js">View on GitHub</a>
 		<a class="button medium" href="https://github.com/geminilabs/star-rating.js/zipball/master">Download .zip</a>
 		<a class="button medium" href="https://github.com/geminilabs/star-rating.js/tarball/master">Download .tar.gz</a>
@@ -78,7 +78,7 @@
 
 		<section class="section">
 			<h2>Installation</h2>
-			<p>Use one of the following methods to add the plugin to your project:</p>
+			<p>Use one of the following methods to add the Star Rating library to your project:</p>
 			<ul>
 				<li><a href="https://github.com/geminilabs/star-rating.js/zipball/master">Download ZIP</a></li>
 				<li><code>yarn add star-rating.js</code></li>
@@ -89,7 +89,7 @@
 
 		<section class="section">
 			<h2>Usage</h2>
-			<p>Load the <code>dist/star-rating.css</code> and <code>dist/star-rating.min.js</code> files somewhere on your page and then trigger the plugin as follows:</p>
+			<p>Load the <code>dist/star-rating.css</code> and <code>dist/star-rating.min.js</code> files somewhere on your page and then trigger the Star Ratie Star Rating library as follows:</p>
 			<div class="highlight highlight-Javascript"><pre class="alt"><code>var starRatingControls = new StarRating( '.star-rating' );</code></pre></div>
 			<p>To rebuild all star rating controls (e.g. after form fields have changed with ajax):</p>
 			<div class="highlight highlight-Javascript"><pre class="alt"><code>starRatingControls.rebuild();</code></pre></div>
@@ -115,7 +115,6 @@
     clearable: true,
     initialText: "Select a Rating",
     maxStars: 10,
-    onClick: null,
     showText: true,
 }</code></pre></div>
 			<h4>classname</h4>
@@ -137,14 +136,6 @@
 			<blockquote>
 				<p>Type: <code>Integer</code></p>
 				<p>Determines the maximum number of stars allowed in a star rating.</p>
-			</blockquote>
-			<h4>onClick</h4>
-			<blockquote>
-				<p>Type: <code>Function</code></p>
-				<p>This is triggered after you click on a star. The function argument is the SELECT HTMLElement.</p>
-				<div class="highlight highlight-Javascript"><pre><code>onClick: function( selectEl ) {
-    // do something
-},</code></pre></div>
 			</blockquote>
 			<h4>showText</h4>
 			<blockquote>
@@ -196,8 +187,8 @@ $ gulp</code></pre></div>
 			<h2>Compatibility</h2>
 			<ul>
 				<li>All modern browsers</li>
-				<li>IE 11+</li>
 			</ul>
+			<p>If you need to use the Star Rating library in a unsupported browser (i.e. Internet Explorer), use the <a href="https://polyfill.io">Polyfill service</a>.
 		</section>
 
 		<section class="section">
@@ -211,7 +202,7 @@ $ gulp</code></pre></div>
 		<p>This project is maintained by <a href="https://github.com/geminilabs">Gemini Labs</a></p>
 	</footer>
 
-	<script src="src/star-rating.js?ver=2.3.1"></script>
+	<script src="src/star-rating.js?ver=3.0.0"></script>
 	<script>
 		var destroyed = false;
 		var starratings = new StarRating( '.star-rating', {

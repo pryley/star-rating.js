@@ -3,13 +3,13 @@
 [![npm version](https://badge.fury.io/js/star-rating.js.svg)](https://badge.fury.io/js/star-rating.js)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/geminilabs/star-rating.js/blob/master/LICENSE)
 
-A zero-dependency plugin that transforms a select with numerical-range values (i.e. 1-5) into a dynamic star rating element.
+A zero-dependency library that transforms a select with numerical-range values (i.e. 1-5) into a dynamic star rating element.
 
 For production, use the files from the `dist/` folder.
 
 ## Installation
 
-Use one of the following methods to add the plugin to your project:
+Use one of the following methods to add the Star Rating library to your project:
 
 - [Download ZIP](https://github.com/geminilabs/star-rating.js/zipball/master)
 - `yarn add star-rating.js`
@@ -58,7 +58,6 @@ Here are the default options
     clearable: true,
     initialText: "Select a Rating",
     maxStars: 10,
-    onClick: null,
     showText: true,
 }
 ```
@@ -86,12 +85,6 @@ Determines the initial text when no value is selected. This has no effect if `sh
 Type: `Integer`
 
 Determines the maximum number of stars allowed in a star rating.
-
-### onClick:
-
-Type: `Function`
-
-This is triggered after you click on a star. The function argument is the select HTMLElement.
 
 ### showText:
 
@@ -163,13 +156,18 @@ The CSS rule `.gl-star-rating { ... }` now becomes `[id^=stars] .gl-star-rating 
 ## Compatibility
 
 - All modern browsers
-- IE 11+
+
+If you need to use the Star Rating library in a unsupported browser (i.e. Internet Explorer), use the [Polyfill service](https://polyfill.io).
 
 ## Contributing
 
 All changes should be committed to the files in `src/`.
 
 ## Changelog
+
+`v3.0.0 - [2018-07-24]`
+- Dropped support for Internet Explorer (use polyfill.io, specifically: Element.prototype.closest, Element.prototype.dataset, Event)
+- Removed the `onClick` option (listen for the `change` event instead)
 
 `v2.3.1 - [2018-07-22]`
 - CSS improvements
@@ -204,7 +202,7 @@ All changes should be committed to the files in `src/`.
 
 `v2.0.0 - [2018-05-02]`
 
-- Major rewrite of plugin
+- Major rewrite of library
 - Added support for loading as a module
 - Added support for RTL
 - Removed jQuery plugin
@@ -233,7 +231,7 @@ All changes should be committed to the files in `src/`.
 
 `v1.2.0 - [2016-10-09]`
 
-- Removed plugin dependencies
+- Removed dependencies
 - Fixed HTML5 “required” attribute validation
 
 `v1.1.0 - [2016-10-06]`

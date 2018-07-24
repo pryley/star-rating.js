@@ -1,13 +1,11 @@
 /*!
  * Star Rating
- * @version: 2.3.1
+ * @version: 3.0.0
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/geminilabs/star-rating.js
  * @license: MIT
  */
-
-/** global: define */
-
+/** global: define, Event */
 ;(function( window, document, undefined ) {
 
 	"use strict";
@@ -37,7 +35,7 @@
 	/** @return void */
 	var Widget = function( el, options ) { // HTMLElement, object|null
 		this.el = el;
-		this.options_ = this.extend_( {}, this.defaults, options || {}, JSON.parse( el.getAttribute( 'data-options' )));
+		this.options_ = this.extend_( {}, this.defaults_, options || {}, JSON.parse( el.getAttribute( 'data-options' )));
 		this.setStarCount_();
 		if( this.stars < 1 || this.stars > this.options_.maxStars )return;
 		this.init_();
@@ -45,12 +43,11 @@
 
 	Widget.prototype = {
 
-		defaults: {
+		defaults_: {
 			classname: 'gl-star-rating',
 			clearable: true,
 			initialText: 'Select a Rating',
 			maxStars: 10,
-			onClick: null,
 			showText: true,
 		},
 
@@ -80,7 +77,6 @@
 				class: this.options_.classname + '-stars',
 			}, true );
 			for( var key in values ) {
-				if( !values.hasOwnProperty( key ))continue;
 				var newEl = this.createSpanEl_({
 					'data-value': key,
 					'data-text': values[key],
@@ -102,7 +98,7 @@
 			this.widgetEl.classList.remove( 's' + ( 10 * this.current ));
 			this.widgetEl.classList.add( 's' + ( 10 * index ));
 			if( this.options_.showText ) {
-				this.textEl.textContent = index < 1 ? this.options_.initialText : this.widgetEl.childNodes[index - 1].getAttribute( 'data-text' );
+				this.textEl.textContent = index < 1 ? this.options_.initialText : this.widgetEl.childNodes[index - 1].dataset.text;
 			}
 			this.current = index;
 		},
@@ -112,7 +108,6 @@
 			var el = document.createElement( 'span' );
 			attributes = attributes || {};
 			for( var key in attributes ) {
-				if( !attributes.hasOwnProperty( key ))continue;
 				el.setAttribute( key, attributes[key] );
 			}
 			return el;
@@ -181,10 +176,7 @@
 
 		/** @return void */
 		handleEvents_: function( action ) { // string
-			var formEl = this.el;
-			while( formEl.tagName !== 'FORM' && formEl.nodeType === 1 ) {
-				formEl = formEl.parentNode;
-			}
+			var formEl = this.el.closest( 'form' );
 			if( formEl.tagName === 'FORM' ) {
 				this.eventListener_( formEl, action, ['reset'] );
 			}
@@ -200,14 +192,14 @@
 			this.events = {
 				change: this.onChange_.bind( this ),
 				keydown: this.onKeydown_.bind( this ),
-				mousedown: this.onMousedown_.bind( this ),
-				mouseleave: this.onMouseleave_.bind( this ),
-				mousemove: this.onMousemove_.bind( this ),
-				mouseover: this.onMouseover_.bind( this ),
+				mousedown: this.onPointerdown_.bind( this ),
+				mouseleave: this.onPointerleave_.bind( this ),
+				mousemove: this.onPointermove_.bind( this ),
+				mouseover: this.onPointerover_.bind( this ),
 				reset: this.onReset_.bind( this ),
-				touchend: this.onMousedown_.bind( this ),
-				touchmove: this.onMousemove_.bind( this ),
-				touchstart: this.onMouseover_.bind( this ),
+				touchend: this.onPointerdown_.bind( this ),
+				touchmove: this.onPointermove_.bind( this ),
+				touchstart: this.onPointerover_.bind( this ),
 			};
 		},
 
@@ -230,41 +222,40 @@
 
 		/** @return void */
 		onKeydown_: function( ev ) { // KeyboardEvent
-			if( ['ArrowLeft', 'ArrowRight'].indexOf( ev.key ) === -1 )return;
+			if( !~['ArrowLeft', 'ArrowRight'].indexOf( ev.key ))return;
 			var increment = ev.key === 'ArrowLeft' ? -1 : 1;
 			if( this.direction === 'rtl' ) {
 				increment *= -1;
 			}
 			this.setValue_( Math.min( Math.max( this.getSelectedValue_() + increment, 0 ), this.stars ));
+			this.triggerChangeEvent_();
 		},
 
 		/** @return void */
-		onMousedown_: function( ev ) { // MouseEvent|TouchEvent
+		onPointerdown_: function( ev ) { // MouseEvent|TouchEvent
 			ev.preventDefault();
 			var index = this.getIndexFromEvent_( ev );
 			if( this.current !== 0 && parseFloat( this.selected ) === index && this.options_.clearable ) {
 				return this.onReset_();
 			}
 			this.setValue_( index );
-			if( typeof this.options_.onClick === 'function' ) {
-				this.options_.onClick.call( this, this.el );
-			}
+			this.triggerChangeEvent_();
 		},
 
 		/** @return void */
-		onMouseleave_: function( ev ) { // MouseEvent
+		onPointerleave_: function( ev ) { // MouseEvent
 			ev.preventDefault();
 			this.changeTo_( this.selected );
 		},
 
 		/** @return void */
-		onMousemove_: function( ev ) { // MouseEvent|TouchEvent
+		onPointermove_: function( ev ) { // MouseEvent|TouchEvent
 			ev.preventDefault();
 			this.changeTo_( this.getIndexFromEvent_( ev ));
 		},
 
 		/** @return void */
-		onMouseover_: function( ev ) { // MouseEvent|TouchEvent
+		onPointerover_: function( ev ) { // MouseEvent|TouchEvent
 			ev.preventDefault();
 			var rect = this.widgetEl.getBoundingClientRect();
 			this.offsetLeft = rect.left + document.body.scrollLeft;
@@ -277,6 +268,7 @@
 			this.el.value = value;
 			this.selected = parseInt( value ) || 0;
 			this.changeTo_( value );
+			this.triggerChangeEvent_();
 		},
 
 		/** @return void */
@@ -296,8 +288,7 @@
 
 		/** @return void */
 		setValue_: function( index ) {
-			this.el.value = index;
-			this.selected = index;
+			this.el.value = this.selected = index;
 			this.changeTo_( index );
 		},
 
@@ -313,6 +304,11 @@
 				}
 				this.stars++;
 			}
+		},
+
+		/** @return void */
+		triggerChangeEvent_: function() {
+			this.el.dispatchEvent( new Event( 'change' ));
 		},
 
 		/** @return void */
