@@ -160,9 +160,9 @@ $ gulp</code></pre></div>
     font-size      : 0.8em,
     font-weight    : 600,
     parent         : '',
-    star-empty     : '../img/star-empty.svg',
-    star-filled    : '../img/star-filled.svg',
-    star-half      : '../img/star-half.svg',
+    star-empty     : url(../img/star-empty.svg),
+    star-full      : url(../img/star-full.svg),
+    star-half      : url(../img/star-half.svg),
     star-size      : 24px,
     text-background: #1a1a1a,
     text-color     : #fff,
@@ -202,7 +202,7 @@ $ gulp</code></pre></div>
 		<p>This project is maintained by <a href="https://github.com/geminilabs">Gemini Labs</a></p>
 	</footer>
 
-	<script src="src/star-rating.js?ver=3.0.0"></script>
+	<script src="src/star-rating.js?ver=3.1.0"></script>
 	<script>
 		var destroyed = false;
 		var starratings = new StarRating( '.star-rating', {

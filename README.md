@@ -117,9 +117,9 @@ $star-rating-defaults: (
     font-size      : 0.8em,
     font-weight    : 600,
     parent         : '',
-    star-empty     : '../img/star-empty.svg',
-    star-filled    : '../img/star-filled.svg',
-    star-half      : '../img/star-half.svg',
+    star-empty     : url(../img/star-empty.svg),
+    star-full      : url(../img/star-full.svg),
+    star-half      : url(../img/star-half.svg),
     star-size      : 24px,
     text-background: #1a1a1a,
     text-color     : #fff,
@@ -164,6 +164,10 @@ If you need to use the Star Rating library in a unsupported browser (i.e. Intern
 All changes should be committed to the files in `src/`.
 
 ## Changelog
+
+`v3.1.0 - [2018-07-24]`
+- Changed the `star-filled` SCSS map option to `star-full`
+- Changed the `star-empty`, `star-full`, and `star-half` SCSS map options to `url(...)`. This allows one to use `none` as the value of `background-image`.
 
 `v3.0.0 - [2018-07-24]`
 - Dropped support for Internet Explorer (use polyfill.io, specifically: Element.prototype.closest, Element.prototype.dataset, Event)

@@ -1,6 +1,6 @@
 /*!
  * Star Rating
- * @version: 3.0.0
+ * @version: 3.1.0
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/geminilabs/star-rating.js
  * @license: MIT
@@ -15,9 +15,9 @@ $star-rating-defaults: (
     font-size      : 0.8em,
     font-weight    : 600,
     parent         : '',
-    star-empty     : '../img/star-empty.svg',
-    star-filled    : '../img/star-filled.svg',
-    star-half      : '../img/star-half.svg',
+    star-empty     : url(../img/star-empty.svg),
+    star-full      : url(../img/star-full.svg),
+    star-half      : url(../img/star-half.svg),
     star-size      : 24px,
     text-background: #1a1a1a,
     text-color     : #fff,
@@ -82,7 +82,7 @@ $star-rating-defaults: (
 	height: sr(star-size);
 	background-size: sr(star-size);
 	background-repeat: no-repeat;
-	background-image: url( sr(star-empty) );
+	background-image: sr(star-empty);
 	margin: 0 sr(star-size)/6 0 0;
 	&:last-of-type {
 		margin-right: 0;
@@ -106,7 +106,7 @@ $star-rating-defaults: (
 #{sr(parent)} .#{sr(base-classname)}-stars.s80 > span:nth-child(-1n+8),
 #{sr(parent)} .#{sr(base-classname)}-stars.s90 > span:nth-child(-1n+9),
 #{sr(parent)} .#{sr(base-classname)}-stars.s100 > span {
-	background-image: url( sr(star-filled) );
+	background-image: sr(star-full);
 }
 
 #{sr(parent)} .#{sr(base-classname)}-text {
