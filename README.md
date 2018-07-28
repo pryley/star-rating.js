@@ -165,6 +165,10 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v3.1.1 - [2018-07-27]`
+- Provided an un-minified CSS file in /dist
+- Removed the change event trigger from the reset event
+
 `v3.1.0 - [2018-07-24]`
 - Changed the `star-filled` SCSS map option to `star-full`
 - Changed the `star-empty`, `star-full`, and `star-half` SCSS map options to `url(...)`. This allows one to use `none` as the value of `background-image`.

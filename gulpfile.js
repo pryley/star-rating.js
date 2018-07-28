@@ -28,6 +28,18 @@ gulp.task('bump', function(cb) {
     ], cb);
 });
 
+gulp.task('css', function(cb) {
+    pump([
+        gulp.src(config.watch.css),
+        cssnano({
+            minifyFontValues: false,
+            zindex: false,
+        }),
+        rename({suffix: '.min'}),
+        gulp.dest(config.dest),
+    ], cb);
+});
+
 gulp.task('js', function(cb) {
     pump([
         gulp.src(config.watch.js),
@@ -58,10 +70,6 @@ gulp.task('scss', function(cb) {
             outputStyle: 'expanded',
         }).on('error', sass.logError),
         autoprefixer(),
-        cssnano({
-            minifyFontValues: false,
-            zindex: false,
-        }),
         rename(function(path) {
             path.dirname = path.dirname.replace('src','dist');
             path.dirname = path.dirname.replace('scss','css');
@@ -76,8 +84,8 @@ gulp.task('watch', function() {
         server: {baseDir: '.'},
     });
     gulp.watch(config.watch.js, gulp.parallel('jshint','js'));
-    gulp.watch(config.watch.scss, gulp.series('scss'));
+    gulp.watch(config.watch.scss, gulp.series('scss','css'));
     gulp.watch(config.watch.html).on('change', browserSync.reload);
 });
 
-gulp.task('default', gulp.parallel('scss','jshint','js'));
+gulp.task('default', gulp.parallel(gulp.series('scss','css'),'jshint','js'));

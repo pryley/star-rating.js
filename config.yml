@@ -6,6 +6,9 @@ bump:
   - index.html
 dest: dist/
 watch:
+  css:
+    - dist/*.css
+    - "!dist/*.min.css"
   html: index.html
   js: src/star-rating.js
   scss:

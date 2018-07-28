@@ -1,6 +1,6 @@
 /*!
  * Star Rating
- * @version: 3.1.0
+ * @version: 3.1.1
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/geminilabs/star-rating.js
  * @license: MIT
@@ -236,7 +236,9 @@
 			ev.preventDefault();
 			var index = this.getIndexFromEvent_( ev );
 			if( this.current !== 0 && parseFloat( this.selected ) === index && this.options_.clearable ) {
-				return this.onReset_();
+				this.onReset_();
+				this.triggerChangeEvent_();
+				return;
 			}
 			this.setValue_( index );
 			this.triggerChangeEvent_();
@@ -268,7 +270,6 @@
 			this.el.value = value;
 			this.selected = parseInt( value ) || 0;
 			this.changeTo_( value );
-			this.triggerChangeEvent_();
 		},
 
 		/** @return void */
