@@ -165,6 +165,9 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v3.1.2 - [2019-01-07]`
+- Fixed issue that allowed multiple star-rating transformations on the same SELECT element
+
 `v3.1.1 - [2018-07-27]`
 - Provided an un-minified CSS file in /dist
 - Removed the change event trigger from the reset event

@@ -1,6 +1,6 @@
 /*!
  * Star Rating
- * @version: 3.1.1
+ * @version: 3.1.2
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/geminilabs/star-rating.js
  * @license: MIT
@@ -9,6 +9,8 @@
 ;(function( window, document, undefined ) {
 
 	"use strict";
+
+	var handle = 'star-rating';
 
 	/** @return object */
 	var Plugin = function( selector, options ) { // string|object, object
@@ -25,7 +27,7 @@
 		};
 		this.widgets = [];
 		for( var i = 0; i < this.selects.length; i++ ) {
-			if( this.selects[i].tagName !== 'SELECT' )continue;
+			if( this.selects[i].tagName !== 'SELECT' || this.selects[i][handle] )continue;
 			var widget = new Widget( this.selects[i], options );
 			if( widget.direction === undefined )continue;
 			this.widgets.push( widget );
@@ -60,6 +62,7 @@
 			this.setDirection_();
 			this.setValue_( this.current );
 			this.handleEvents_( 'add' );
+			this.el[handle] = true;
 		},
 
 		/** @return void */
@@ -118,6 +121,7 @@
 			this.handleEvents_( 'remove' );
 			var wrapEl = this.el.parentNode;
 			wrapEl.parentNode.replaceChild( this.el, wrapEl );
+			delete this.el[handle];
 		},
 
 		/** @return void */
