@@ -165,6 +165,9 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v3.1.3 - [2019-01-27]`
+- Fixed issue when used outside of a FORM
+
 `v3.1.2 - [2019-01-07]`
 - Fixed issue that allowed multiple star-rating transformations on the same SELECT element
 

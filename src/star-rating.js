@@ -1,6 +1,6 @@
 /*!
  * Star Rating
- * @version: 3.1.2
+ * @version: 3.1.3
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/geminilabs/star-rating.js
  * @license: MIT
@@ -181,7 +181,7 @@
 		/** @return void */
 		handleEvents_: function( action ) { // string
 			var formEl = this.el.closest( 'form' );
-			if( formEl.tagName === 'FORM' ) {
+			if( formEl && formEl.tagName === 'FORM' ) {
 				this.eventListener_( formEl, action, ['reset'] );
 			}
 			this.eventListener_( this.el, action, ['change', 'keydown'] );
