@@ -1,8 +1,8 @@
 {
   "name": "star-rating.js",
   "description": "This zero-dependency library transforms a SELECT into a dynamic star rating element.",
-  "version": "3.1.3",
-  "homepage": "https://github.com/geminilabs/star-rating.js",
+  "version": "3.1.4",
+  "homepage": "https://github.com/pryley/star-rating.js",
   "authors": [
     "Paul Ryley <paul@geminilabs.io>"
   ],
@@ -13,7 +13,8 @@
   "keywords": [
     "starrating",
     "star-rating",
-    "geminilabs"
+    "geminilabs",
+    "pryley"
   ],
   "license": "MIT",
   "ignore": [

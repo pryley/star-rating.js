@@ -1,7 +1,7 @@
 # star-rating.js
 
 [![npm version](https://badge.fury.io/js/star-rating.js.svg)](https://badge.fury.io/js/star-rating.js)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/geminilabs/star-rating.js/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/pryley/star-rating.js/blob/master/LICENSE)
 
 A zero-dependency library that transforms a select with numerical-range values (i.e. 1-5) into a dynamic star rating element.
 
@@ -11,7 +11,7 @@ For production, use the files from the `dist/` folder.
 
 Use one of the following methods to add the Star Rating library to your project:
 
-- [Download ZIP](https://github.com/geminilabs/star-rating.js/zipball/master)
+- [Download ZIP](https://github.com/pryley/star-rating.js/zipball/master)
 - `yarn add star-rating.js`
 - `npm install star-rating.js`
 - `bower install star-rating.js`
@@ -164,6 +164,9 @@ If you need to use the Star Rating library in a unsupported browser (i.e. Intern
 All changes should be committed to the files in `src/`.
 
 ## Changelog
+
+`v3.1.4 - [2019-01-28]`
+- Updated package URL
 
 `v3.1.3 - [2019-01-27]`
 - Fixed issue when used outside of a FORM

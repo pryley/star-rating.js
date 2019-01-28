@@ -1,19 +1,19 @@
 {
   "name": "star-rating.js",
   "description": "This zero-dependency library transforms a SELECT into a dynamic star rating element.",
-  "version": "3.1.3",
+  "version": "3.1.4",
   "author": {
     "name": "Paul Ryley",
     "email": "paul@geminilabs.io",
     "url": "http://geminilabs.io"
   },
-  "homepage": "https://github.com/geminilabs/star-rating.js",
+  "homepage": "https://github.com/pryley/star-rating.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/geminilabs/star-rating.js.git"
+    "url": "https://github.com/pryley/star-rating.js.git"
   },
   "bugs": {
-    "url": "https://github.com/geminilabs/star-rating.js/issues"
+    "url": "https://github.com/pryley/star-rating.js/issues"
   },
   "license": "MIT",
   "devDependencies": {
@@ -28,7 +28,7 @@
     "gulp-uglify": "^3.0.1",
     "jshint": "^2.9.7",
     "jshint-stylish": "^2.2.1",
-    "nolie": "github:geminilabs/nolie.css#develop",
+    "nolie": "github:pryley/nolie.css#develop",
     "pump": "^3.0.0",
     "sass-module-importer": "^1.4.0",
     "yamljs": "^0.3.0",
