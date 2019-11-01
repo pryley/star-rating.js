@@ -1,6 +1,6 @@
 /*!
  * Star Rating
- * @version: 3.1.4
+ * @version: 3.1.5
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/pryley/star-rating.js
  * @license: MIT
@@ -13,8 +13,15 @@
 	var handle = 'star-rating';
 
 	/** @return object */
-	var Plugin = function( selector, options ) { // string|object, object
-		this.selects = {}.toString.call( selector ) === '[object String]' ? document.querySelectorAll( selector ) : [selector];
+	var Plugin = function( selector, options ) { // string|object|NodeList, object
+		var selectorType = {}.toString.call(selector);
+		if ('[object String]' === selectorType) {
+			this.selects = document.querySelectorAll(selector);
+		} else if ('[object NodeList]' === selectorType) {
+			this.selects = selector;
+		} else {
+			this.selects = [selector];
+		}
 		this.destroy = function() {
 			this.widgets.forEach( function( widget ) {
 				widget.destroy_();

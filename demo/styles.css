@@ -31,12 +31,10 @@ html {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   box-sizing: border-box;
-  -webkit-font-feature-settings: 'liga' 1, 'dlig' 1, 'kern' 1;
-          font-feature-settings: 'liga' 1, 'dlig' 1, 'kern' 1;
+  font-feature-settings: 'liga' 1, 'dlig' 1, 'kern' 1;
   -webkit-font-kerning: normal;
           font-kerning: normal;
-  -webkit-font-variant-ligatures: common-ligatures;
-          font-variant-ligatures: common-ligatures;
+  font-variant-ligatures: common-ligatures;
   text-rendering: optimizeLegibility;
 }
 
@@ -853,6 +851,7 @@ pre code {
   color: #fff;
   background-color: #e91e63;
   border-color: #e91e63;
+  -webkit-transition: color 0.125s ease-in-out, background-color 0.125s ease-in-out, border-color 0.125s ease-in-out;
   transition: color 0.125s ease-in-out, background-color 0.125s ease-in-out, border-color 0.125s ease-in-out;
   text-shadow: 0 -1px 0 rgba(173, 20, 87, 0.5);
 }

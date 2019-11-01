@@ -165,6 +165,9 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v3.1.5 - [2019-11-01]`
+- Added ability to use a NodeList as a selector
+
 `v3.1.4 - [2019-01-28]`
 - Updated package URL
 
