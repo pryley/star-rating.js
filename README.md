@@ -165,6 +165,9 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v3.1.7 - [2020-06-29]`
+- Fixed clearable option
+
 `v3.1.6 - [2020-06-29]`
 - Support disabled SELECT
 

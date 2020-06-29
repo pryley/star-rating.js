@@ -1,7 +1,7 @@
 {
   "name": "star-rating.js",
   "description": "This zero-dependency library transforms a SELECT into a dynamic star rating element.",
-  "version": "3.1.6",
+  "version": "3.1.7",
   "author": {
     "name": "Paul Ryley",
     "email": "paul@geminilabs.io",
