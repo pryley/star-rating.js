@@ -165,11 +165,9 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
-`v3.1.7 - [2020-06-29]`
+`v3.1.8 - [2020-06-29]`
 - Fixed clearable option
-
-`v3.1.6 - [2020-06-29]`
-- Support disabled SELECT
+- Fixed events on disabled SELECT
 
 `v3.1.5 - [2019-11-01]`
 - Added ability to use a NodeList as a selector

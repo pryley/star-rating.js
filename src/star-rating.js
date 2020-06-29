@@ -1,6 +1,6 @@
 /*!
  * Star Rating
- * @version: 3.1.7
+ * @version: 3.1.8
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/pryley/star-rating.js
  * @license: MIT
@@ -191,7 +191,7 @@
 			if( formEl && formEl.tagName === 'FORM' ) {
 				this.eventListener_( formEl, action, ['reset'] );
 			}
-			if( this.el.disabled )return;
+			if( 'add' === action && this.el.disabled )return;
 			this.eventListener_( this.el, action, ['change', 'keydown'] );
 			this.eventListener_( this.widgetEl, action, [
 				'mousedown', 'mouseleave', 'mousemove', 'mouseover',
