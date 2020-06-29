@@ -76,6 +76,10 @@ $star-rating-defaults: (
 	cursor: pointer;
 }
 
+#{sr(parent)} select[disabled] + .#{sr(base-classname)}-stars {
+	cursor: default;
+}
+
 #{sr(parent)} .#{sr(base-classname)}-stars > span {
 	display: inline-block;
 	width: sr(star-size);

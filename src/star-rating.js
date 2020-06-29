@@ -191,6 +191,7 @@
 			if( formEl && formEl.tagName === 'FORM' ) {
 				this.eventListener_( formEl, action, ['reset'] );
 			}
+			if( this.el.disabled )return;
 			this.eventListener_( this.el, action, ['change', 'keydown'] );
 			this.eventListener_( this.widgetEl, action, [
 				'mousedown', 'mouseleave', 'mousemove', 'mouseover',

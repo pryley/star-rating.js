@@ -602,6 +602,10 @@ input[type=checkbox] + label {
   cursor: pointer;
 }
 
+select[disabled] + .gl-star-rating-stars {
+  cursor: default;
+}
+
 .gl-star-rating-stars > span {
   display: inline-block;
   width: 24px;
