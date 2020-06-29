@@ -248,9 +248,7 @@
 			ev.preventDefault();
 			var index = this.getIndexFromEvent_( ev );
 			if( this.current !== 0 && parseFloat( this.selected ) === index && this.options_.clearable ) {
-				this.onReset_();
-				this.triggerChangeEvent_();
-				return;
+				index = 0;
 			}
 			this.setValue_( index );
 			this.triggerChangeEvent_();
