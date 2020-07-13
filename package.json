@@ -1,7 +1,7 @@
 {
   "name": "star-rating.js",
   "description": "This zero-dependency library transforms a SELECT into a dynamic star rating element.",
-  "version": "3.1.8",
+  "version": "3.2.0",
   "author": {
     "name": "Paul Ryley",
     "email": "paul@geminilabs.io",
@@ -32,7 +32,7 @@
     "pump": "^3.0.0",
     "sass-module-importer": "^1.4.0",
     "yamljs": "^0.3.0",
-    "yargs": "^15.3.1"
+    "yargs": "^15.4.1"
   },
   "scripts": {
     "build": "./node_modules/gulp/bin/gulp.js default --production",

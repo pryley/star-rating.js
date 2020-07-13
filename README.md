@@ -165,6 +165,9 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v3.2.0 - [2020-07-13]`
+- Cleanup stale DOM if needed before initializing
+
 `v3.1.8 - [2020-06-29]`
 - Fixed clearable option
 - Fixed events on disabled SELECT
