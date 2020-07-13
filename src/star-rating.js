@@ -1,6 +1,6 @@
 /*!
  * Star Rating
- * @version: 3.1.8
+ * @version: 3.2.0
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/pryley/star-rating.js
  * @license: MIT
@@ -47,7 +47,7 @@
 		this.options_ = this.extend_( {}, this.defaults_, options || {}, JSON.parse( el.getAttribute( 'data-options' )));
 		this.setStarCount_();
 		if( this.stars < 1 || this.stars > this.options_.maxStars )return;
-		this.init_();
+		this.rebuild_();
 	};
 
 	Widget.prototype = {
@@ -134,7 +134,9 @@
 		/** @return void */
 		eventListener_: function( el, action, events ) { // HTMLElement, string, array
 			events.forEach( function( event ) {
-				el[action + 'EventListener']( event, this.events[event] );
+				if (this.events) {
+					el[action + 'EventListener']( event, this.events[event] );
+				}
 			}.bind( this ));
 		},
 
