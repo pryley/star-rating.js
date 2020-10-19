@@ -165,8 +165,8 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
-`v3.3.0 - [2020-10-18]`
-- Make event listeners passive
+`v3.4.0 - [2020-10-18]`
+- Specify passive:false on event listeners to suppress Chrome warnings
 
 `v3.2.0 - [2020-07-13]`
 - Cleanup stale DOM if needed before initializing

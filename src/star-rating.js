@@ -1,6 +1,6 @@
 /*!
  * Star Rating
- * @version: 3.3.0
+ * @version: 3.4.0
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/pryley/star-rating.js
  * @license: MIT
@@ -132,18 +132,10 @@
         },
 
         /** @return void */
-        eventListener_: function (el, action, events) { // HTMLElement, string, array
+        eventListener_: function (el, action, events, options) { // HTMLElement, string, array
+            options = options || false;
             events.forEach(function (event) {
                 if (this.events) {
-                    var options = false;
-                    try {
-                        var opts = Object.defineProperty({}, 'passive', {
-                            get: function () {
-                                options = { passive: true };
-                            }
-                        });
-                        window.addEventListener('test', null, opts);
-                    } catch (e) {}
                     el[action + 'EventListener'](event, this.events[event], options);
                 }
             }.bind(this));
@@ -161,6 +153,20 @@
                 }
             });
             return result;
+        },
+
+        /** @return false|object */
+        getEventOptions_: function () { // string
+            var eventOptions = false;
+            try {
+                var opts = Object.defineProperty({}, 'passive', {
+                    get: function () {
+                        eventOptions = { passive: false };
+                    }
+                });
+                window.addEventListener('test', null, opts);
+            } catch (e) {}
+            return eventOptions;
         },
 
         /** @return int */
@@ -207,7 +213,7 @@
             this.eventListener_(this.widgetEl, action, [
                 'mousedown', 'mouseleave', 'mousemove', 'mouseover',
                 'touchend', 'touchmove', 'touchstart',
-            ]);
+            ], this.getEventOptions_());
         },
 
         /** @return void */
