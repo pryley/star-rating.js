@@ -1,0 +1,141 @@
+/*!
+ * Star Rating
+ * @version: 4.0.0
+ * @author: Paul Ryley (http://geminilabs.io)
+ * @url: https://github.com/pryley/star-rating.js
+ * @license: MIT
+ */
+
+:root {
+    --gl-star-color: #fdd835;
+    --gl-star-size: 24px;
+    --gl-tooltip-background-color: #212121;
+    --gl-tooltip-border-radius: 3px;
+    --gl-tooltip-color: #fff;
+    --gl-tooltip-font-size: 0.875rem;
+    --gl-tooltip-font-weight: 400;
+    --gl-tooltip-line-height: 1;
+    --gl-tooltip-margin: 12px;
+    --gl-tooltip-padding: 6px 12px;
+    --gl-tooltip-size: 6px;
+}
+
+.gl-star-rating > select {
+    clip-path: circle(1px at 0 0) !important;
+    clip: rect(1px, 1px, 1px, 1px) !important;
+    height: 1px !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    top: 0 !important;
+    visibility: visible !important;
+    white-space: nowrap !important;
+    width: 1px !important;
+}
+.gl-star-rating > select::before,
+.gl-star-rating > select::after {
+    display: none !important;
+}
+.gl-star-rating--ltr > select {
+    left: 0 !important;
+}
+.gl-star-rating--rtl > select {
+    right: 0 !important;
+}
+.gl-star-rating {
+    align-items: center;
+    display: flex;
+    position: relative;
+}
+.gl-star-rating--stars {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    position: relative;
+}
+.gl-star-rating > select:focus + .gl-star-rating--stars span:first-child::before {
+    box-shadow: 0 0 0 3px -moz-mac-focusring;
+    box-shadow: 0 0 0 3px -webkit-focus-ring-color;
+    box-shadow: 0 0 0 3px Highlight;
+    content: '';
+    display: block;
+    height: 100%;
+    outline: 1px solid transparent;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+}
+select[disabled] + .gl-star-rating--stars {
+    cursor: default;
+}
+.gl-star-rating--stars > span {
+    display: flex;
+    height: var(--gl-star-size);
+    margin: 0;
+    width: var(--gl-star-size);
+}
+.gl-star-rating--stars[aria-label]::before,
+.gl-star-rating--stars[aria-label]::after {
+    backface-visibility: hidden;
+    bottom: auto;
+    box-sizing: border-box;
+    left: 100%;
+    position: absolute;
+    top: 50%;
+    transform-origin: top;
+    transform: translate3d(0,-50%,0);
+    white-space: nowrap;
+    z-index: 10;
+}
+.gl-star-rating--stars[aria-label]::before {
+    background-size: 100% auto !important;
+    background: url(data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2212px%22%20height%3D%2236px%22%3E%3Cpath%20fill%3D%22rgba%2817,%2017,%2017,%200.9%29%22%20transform%3D%22rotate%2890%206%206%29%22%20d%3D%22M2.658,0.000%20C-13.615,0.000%2050.938,0.000%2034.662,0.000%20C28.662,0.000%2023.035,12.002%2018.660,12.002%20C14.285,12.002%208.594,0.000%202.658,0.000%20Z%22/%3E%3C/svg%3E) no-repeat;
+    content: '';
+    height: 18px;
+    margin-bottom: 0;
+    margin-left: 6px;
+    width: 6px;
+}
+.gl-star-rating--stars[aria-label]::after {
+    background: rgba(17,17,17,.9);
+    border-radius: 4px;
+    color: #fff;
+    content: attr(aria-label);
+    font-size: 14px;
+    font-weight: normal;
+    margin-left: 12px;
+    padding: .5em 1em;
+    text-transform: none;
+}
+.gl-star-rating--rtl .gl-star-rating--stars[aria-label]::before,
+.gl-star-rating--rtl .gl-star-rating--stars[aria-label]::after {
+    left: auto;
+    right: 100%;
+}
+.gl-star-rating--rtl .gl-star-rating--stars[aria-label]::before {
+    background: url(data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2212px%22%20height%3D%2236px%22%3E%3Cpath%20fill%3D%22rgba%2817,%2017,%2017,%200.9%29%22%20transform%3D%22rotate%28-90%2018%2018%29%22%20d%3D%22M2.658,0.000%20C-13.615,0.000%2050.938,0.000%2034.662,0.000%20C28.662,0.000%2023.035,12.002%2018.660,12.002%20C14.285,12.002%208.594,0.000%202.658,0.000%20Z%22/%3E%3C/svg%3E) no-repeat;
+    margin-left: 0;
+    margin-right: 6px;
+}
+.gl-star-rating--rtl .gl-star-rating--stars[aria-label]::after {
+    margin-left: 0;
+    margin-right: 12px;
+}
+
+.gl-star-rating svg {
+    height: 100%;
+    width: 100%;
+}
+.gl-star-rating .gl-star-half {
+    fill: none;
+    stroke: none;
+}
+.gl-star-rating .gl-star-full {
+    stroke: var(--gl-star-color);
+    fill: none;
+    transition: fill 0.15s ease-in-out, stroke 0.15s ease-in-out;
+}
+.gl-star-rating .gl-active .gl-star-full {
+    fill: var(--gl-star-color);
+}
