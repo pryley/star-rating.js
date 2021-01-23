@@ -32,8 +32,8 @@ export class Widget {
     build () { // ():void
         this.destroy();
         this.buildWidget();
+        this.changeIndexTo((this.indexSelected = this.selected()), true); // set the initial value
         this.handleEvents('add');
-        this.selectValue(this.selected()); // this goes last to trigger the change event
     }
 
     buildWidget () { // ():void
