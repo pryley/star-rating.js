@@ -169,6 +169,10 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v4.0.1 - [2021-01-22]`
+
+- Fixed the change event for disabled SELECT elements
+
 `v4.0.0 - [2021-01-22]`
 
 - Code has been rewritten as an ES6 module and optimised

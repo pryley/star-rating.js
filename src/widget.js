@@ -93,8 +93,9 @@ export class Widget {
         if (formEl && formEl.tagName === 'FORM') {
             this.eventListener(formEl, action, ['reset']);
         }
+        this.eventListener(this.el, action, ['change']); // always trigger the change event, even when SELECT is disabled
         if ('add' === action && this.el.disabled) return;
-        this.eventListener(this.el, action, ['change', 'keydown']);
+        this.eventListener(this.el, action, ['keydown']);
         this.eventListener(this.widgetEl, action, ['mousedown', 'mouseleave', 'mousemove', 'touchend', 'touchmove'],
             supportsPassiveEvents ? { passive: false } : false
         );
