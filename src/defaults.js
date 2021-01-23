@@ -6,6 +6,6 @@ export const defaults = {
     },
     clearable: true,
     maxStars: 10,
-    stars: () => {},
+    stars: null,
     tooltip: 'Select a Rating',
 };

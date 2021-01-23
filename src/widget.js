@@ -1,5 +1,5 @@
 import { addRemoveClass, createSpanEl, inRange, insertSpanEl, isEmpty, values } from './helpers'
-import { supportsPassiveEvents } from 'detect-it';
+import { supportsPassiveEvents } from 'detect-it'
 
 export class Widget {
     constructor (el, props) { // (HTMLElement, object):void
@@ -45,6 +45,8 @@ export class Widget {
             const el = createSpanEl({ 'data-index': index, 'data-value': item.value });
             if ('function' === typeof this.props.stars) {
                 this.props.stars.call(this, el, item, index);
+            } else {
+                parentEl.classList.add('gl-compat'); // @v3 compat
             }
             [].forEach.call(el.children, el => el.style.pointerEvents = 'none');
             widgetEl.innerHTML += el.outerHTML;
@@ -61,6 +63,8 @@ export class Widget {
                 addRemoveClass(el, i <= index, this.props.classNames.active);
                 addRemoveClass(el, i === this.indexSelected, this.props.classNames.selected);
             });
+            this.widgetEl.classList.remove('s' + (10 * (this.indexActive + 1))); // @v3 compat
+            this.widgetEl.classList.add('s' + (10 * (index + 1))); // @v3 compat
             if (this.props.tooltip) {
                 const label = index < 0 ? this.props.tooltip : this.values[index].text;
                 this.widgetEl.setAttribute('aria-label', label);
@@ -97,8 +101,8 @@ export class Widget {
     }
 
     indexFromEvent (ev) { // (MouseEvent|TouchEvent):void
-        const event = ev.touches?.[0] || ev.changedTouches?.[0] || ev;
-        const el = document.elementFromPoint(event.clientX, event.clientY);
+        const origin = ev.touches?.[0] || ev.changedTouches?.[0] || ev;
+        const el = document.elementFromPoint(origin.clientX, origin.clientY);
         return parseInt(el.dataset.index || -1, 10);
     }
 

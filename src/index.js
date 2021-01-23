@@ -1,4 +1,4 @@
-/*!
+/**!
  * Star Rating
  * @version: 4.0.0
  * @author: Paul Ryley (http://geminilabs.io)

@@ -1,226 +1,251 @@
 <!doctype html>
 <html lang="en-us">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Star Rating by pryley</title>
-	<meta name="keywords" content="starrating star-rating star rating">
-	<meta name="description" content="A zero-dependency library that transforms a SELECT with numerical-range values (i.e. 1-5) into a dynamic star rating element.">
-	<meta name="author" content="Paul Ryley">
-	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' type='text/css'>
-	<link rel="stylesheet" href="demo/styles.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Star Rating by pryley</title>
+    <meta name="keywords" content="starrating star-rating star rating">
+    <meta name="description" content="A zero-dependency ES6 module that transforms a SELECT with numerical-range values (i.e. 1-5) into a dynamic star rating element.">
+    <meta name="author" content="Paul Ryley">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.0.0/modern-normalize.min.css" integrity="sha512-ISS7cAi1PEhQ8jnbJpJZMd29NlhNj4AWYyLOSp2CE/CsHxTCu+r+t0D2yoJudVrd0/8fTVPUVDzY5Tvli75u/g==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="dist/star-rating.css">
+    <link rel="stylesheet" href="demo/styles.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" />
 </head>
 <body>
-	<header class="page-header">
-		<h1 class="project-name">star-rating.js</h1>
-		<h2 class="project-tagline">A zero-dependency library that transforms a SELECT with numerical-range values (i.e. 1-5) into a dynamic star rating element.</h2>
-		<a class="button medium" href="https://github.com/pryley/star-rating.js">View on GitHub</a>
-		<a class="button medium" href="https://github.com/pryley/star-rating.js/zipball/master">Download .zip</a>
-		<a class="button medium" href="https://github.com/pryley/star-rating.js/tarball/master">Download .tar.gz</a>
-	</header>
+    <header class="page-header">
+        <h1 class="project-name">star-rating.js</h1>
+        <h2 class="project-tagline">A zero-dependency ES6 module that transforms a SELECT with numerical-range values (i.e. 1-5) into a dynamic star rating element.</h2>
+        <a class="button medium" href="https://github.com/pryley/star-rating.js">View on GitHub</a>
+        <a class="button medium" href="https://github.com/pryley/star-rating.js/zipball/master">Download .zip</a>
+        <a class="button medium" href="https://github.com/pryley/star-rating.js/tarball/master">Download .tar.gz</a>
+    </header>
 
-	<main class="main-content">
+    <main class="main-content">
 
-		<section class="section">
-			<a class="badge" href="https://badge.fury.io/js/star-rating.js"><img src="https://badge.fury.io/js/star-rating.js.svg" alt="npm version" height="18"></a>
-			<a class="badge" href="https://github.com/pryley/star-rating.js/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" height="18"></a>
-			<p>For production, use the files from the <code>dist/</code> folder.</p>
-		</section>
+        <section class="section">
+            <a class="badge" href="https://badge.fury.io/js/star-rating.js"><img src="https://badge.fury.io/js/star-rating.js.svg" alt="npm version" height="18"></a>
+            <a class="badge" href="https://github.com/pryley/star-rating.js/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" height="18"></a>
+        </section>
 
-		<section class="section" id="section-1">
-			<h2>Demo</h2>
-			<form class="form-1">
-				<label for="glsr-ltr">Left to Right</label>
-				<div class="form-field">
-					<select id="glsr-ltr" class="star-rating">
-						<option value="">Select a rating</option>
-						<option value="5">Fantastic</option>
-						<option value="4">Great</option>
-						<option value="3">Good</option>
-						<option value="2">Poor</option>
-						<option value="1">Terrible</option>
-					</select>
-				</div>
-				<label for="glsr-rtl">Right to Left</label>
-				<div class="form-field" style="direction: rtl;">
-					<select id="glsr-rtl" class="star-rating">
-						<option value="">Select a rating</option>
-						<option value="5">Fantastic</option>
-						<option value="4">Great</option>
-						<option value="3">Good</option>
-						<option value="2">Poor</option>
-						<option value="1">Terrible</option>
-					</select>
-				</div>
-				<label for="glsr-custom-options">Using the "data-options" attribute to hide the tooltip and prevent the control from being cleared</label>
-				<div class="form-field">
-					<select id="glsr-custom-options" class="star-rating" data-options='{"clearable":false, "showText":false}'>
-						<option value="">Select a rating</option>
-						<option value="10">10</option>
-						<option value="9">9</option>
-						<option value="8">8</option>
-						<option value="7">7</option>
-						<option value="6">6</option>
-						<option value="5" selected>5</option>
-						<option value="4">4</option>
-						<option value="3">3</option>
-						<option value="2">2</option>
-						<option value="1">1</option>
-					</select>
-				</div>
-				<div class="button-group">
-					<button type="button" class="button large toggle-star-rating">Toggle Star Rating</button>
-					<button type="reset" class="button large secondary">Reset form</button>
-				</div>
-			</form>
-		</section>
+        <section class="section" id="section-1">
+            <h2>Demo</h2>
+            <form class="form-1">
+                <label for="glsr-ltr">Left to Right</label>
+                <div class="form-field">
+                    <select id="glsr-ltr" class="star-rating">
+                        <option value="">Select a rating</option>
+                        <option value="5">Fantastic</option>
+                        <option value="4">Great</option>
+                        <option value="3">Good</option>
+                        <option value="2">Poor</option>
+                        <option value="1">Terrible</option>
+                    </select>
+                </div>
+                <label for="glsr-rtl">Right to Left</label>
+                <div class="form-field" style="direction: rtl;">
+                    <select id="glsr-rtl" class="star-rating-old">
+                        <option value="">Select a rating</option>
+                        <option value="5">Fantastic</option>
+                        <option value="4">Great</option>
+                        <option value="3">Good</option>
+                        <option value="2">Poor</option>
+                        <option value="1">Terrible</option>
+                    </select>
+                </div>
+                <label for="glsr-custom-options">Using the "data-options" attribute to hide the tooltip and prevent the control from being cleared</label>
+                <div class="form-field">
+                    <select id="glsr-custom-options" class="star-rating" data-options='{"clearable":false, "tooltip":false}'>
+                        <option value="">Select a rating</option>
+                        <option value="10">10</option>
+                        <option value="9">9</option>
+                        <option value="8">8</option>
+                        <option value="7">7</option>
+                        <option value="6">6</option>
+                        <option value="5" selected>5</option>
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button type="button" class="button large toggle-star-rating">Toggle Star Rating</button>
+                    <button type="reset" class="button large secondary">Reset form</button>
+                </div>
+            </form>
+        </section>
 
-		<section class="section">
-			<h2>Installation</h2>
-			<p>Use one of the following methods to add the Star Rating library to your project:</p>
-			<ul>
-				<li><a href="https://github.com/pryley/star-rating.js/zipball/master">Download ZIP</a></li>
-				<li><code>yarn add star-rating.js</code></li>
-				<li><code>npm install star-rating.js</code></li>
-				<li><code>bower install star-rating.js</code></li>
-			</ul>
-		</section>
+        <section class="section">
+            <h2>Installation</h2>
+            <p><pre><code class="language-bash">npm i star-rating.js</code></pre></p>
+        </section>
 
-		<section class="section">
-			<h2>Usage</h2>
-			<p>Load the <code>dist/star-rating.css</code> and <code>dist/star-rating.min.js</code> files somewhere on your page and then trigger the Star Ratie Star Rating library as follows:</p>
-			<div class="highlight highlight-Javascript"><pre class="alt"><code>var starRatingControls = new StarRating( '.star-rating' );</code></pre></div>
-			<p>To rebuild all star rating controls (e.g. after form fields have changed with ajax):</p>
-			<div class="highlight highlight-Javascript"><pre class="alt"><code>starRatingControls.rebuild();</code></pre></div>
-			<p>To fully remove all star rating controls, including all attached Event Listeners:</p>
-			<div class="highlight highlight-Javascript"><pre class="alt"><code>starRatingControls.destroy();</code></pre></div>
-			<h3>HTML markup</h3>
-			<p>Your SELECT option fields must have numerical values.</p>
-			<div class="highlight highlight-Html"><pre class="alt"><code>&lt;select class="star-rating"&gt;
+        <section class="section">
+            <h2>Usage</h2>
+            <p>Your SELECT option fields must have numerical values.</p>
+            <p><pre><code class="language-html">&lt;link href="css/star-rating.css" rel="stylesheet"&gt;
+
+&lt;select class="star-rating"&gt;
     &lt;option value=""&gt;Select a rating&lt;/option&gt;
     &lt;option value="5"&gt;Excellent&lt;/option&gt;
     &lt;option value="4"&gt;Very Good&lt;/option&gt;
     &lt;option value="3"&gt;Average&lt;/option&gt;
     &lt;option value="2"&gt;Poor&lt;/option&gt;
     &lt;option value="1"&gt;Terrible&lt;/option&gt;
-&lt;/select&gt;</code></pre></div>
-		</section>
+&lt;/select&gt;
 
-		<section class="section">
-			<h2>Options</h2>
-			<h3>Default options</h3>
-			<div class="highlight highlight-Javascript"><pre><code>{
-    classname: "gl-star-rating",
+&lt;script src="js/star-rating.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+    var stars = new StarRating('.star-rating');
+&lt;/script&gt;</code></pre></p>
+            <p>To rebuild all star rating controls (e.g. after form fields have changed with ajax):</p>
+            <p><pre><code class="language-js">stars.rebuild();</code></pre></p>
+            <p>To fully remove all star rating controls, including all attached Event Listeners:</p>
+            <p><pre><code class="language-js">stars.destroy();</code></pre></p>
+        </section>
+
+        <section class="section">
+            <h2>Options</h2>
+            <p>These are the default options:</p>
+            <p><pre><code class="language-js">{
+    classNames: {
+        active: "gl-active",
+        base: "gl-star-rating",
+        selected: "gl-selected",
+    },
     clearable: true,
-    initialText: "Select a Rating",
     maxStars: 10,
-    showText: true,
-}</code></pre></div>
-			<h4>classname</h4>
-			<blockquote>
-				<p>Type: <code>String</code></p>
-				<p>Determines the classname to use of the rendered star-rating HTMLElement. If you change this, make sure you also change the SCSS <code>$star-rating[base-classname]</code> map variable to match.</p>
-			</blockquote>
-			<h4>clearable</h4>
-			<blockquote>
-				<p>Type: <code>Boolean</code></p>
-				<p>Determines whether the star rating can be cleared by clicking on an already pre-selected star.</p>
-			</blockquote>
-			<h4>initialText</h4>
-			<blockquote>
-				<p>Type: <code>String</code></p>
-				<p>Determines the initial text when no value is selected. This has no effect if `showText` is set to false.</p>
-			</blockquote>
-			<h4>maxStars</h4>
-			<blockquote>
-				<p>Type: <code>Integer</code></p>
-				<p>Determines the maximum number of stars allowed in a star rating.</p>
-			</blockquote>
-			<h4>showText</h4>
-			<blockquote>
-				<p>Type: <code>Boolean</code></p>
-				<p>Determines whether or not the rating text is shown.</p>
-			</blockquote>
-		</section>
+    stars: null,
+    tooltip: 'Select a Rating',
+}</code></pre></p>
+            <h4>className.active</h4>
+            <blockquote>
+                <p>Type: <code>String</code></p>
+                <p>The classname to use for the active (hovered or value <= of the selected value) state of a star.</p>
+            </blockquote>
+            <h4>className.base</h4>
+            <blockquote>
+                <p>Type: <code>String</code></p>
+                <p>The classname to use for the base element that wraps the star rating.</p>
+            </blockquote>
+            <h4>className.selected</h4>
+            <blockquote>
+                <p>Type: <code>String</code></p>
+                <p>The classname to use for the selected state of a star.</p>
+            </blockquote>
+            <h4>clearable</h4>
+            <blockquote>
+                <p>Type: <code>Boolean</code></p>
+                <p>Whether or not the star rating can be cleared by clicking on an already selected star.</p>
+            </blockquote>
+            <h4>maxStars</h4>
+            <blockquote>
+                <p>Type: <code>Integer</code></p>
+                <p>The maximum number of stars allowed in a star rating.</p>
+            </blockquote>
+            <h4>stars</h4>
+            <blockquote>
+                <p>Type: <code>Function</code></p>
+                <p>This can be used to add a SVG image to each value instead of using a background image for the stars.</p>
+            </blockquote>
+            <h4>tooltip</h4>
+            <blockquote>
+                <p>Type: <code>False|String</code></p>
+                <p>The placeholder text for the rating tooltip, or <code>false</code> to disable the tooltip.</p>
+            </blockquote>
+        </section>
 
-		<section class="section">
-			<h2>Build</h2>
-			<p>star-rating.js uses <a href="https://www.npmjs.com/get-npm">npm</a> or <a href="https://yarnpkg.com/">yarn</a> to manage package dependencies and <a href="http://gulpjs.com/">gulp</a> to build from <code>src/</code>.</p>
-			<div class="highlight highlight-Bash"><pre><code>$ yarn
-$ gulp</code></pre></div>
-			<p>The compiled files will be saved in the <code>dist/</code> folder.</p>
-			<h3>Style Customization</h3>
-			<p><a href="http://sass-lang.com/">Sass</a> is used to build the stylesheet so you can <code>@import</code> the <code>src/star-rating.scss</code> file to compile it directly into your Sass project.</p>
-			<p>Following are the default sass values for Star Rating, they are contained in a map variable.</p>
-			<pre><code>$star-rating-defaults: (
-    base-classname : 'gl-star-rating',
-    base-display   : block,
-    base-height    : 26px,
-    font-size      : 0.8em,
-    font-weight    : 600,
-    parent         : '',
-    star-empty     : url(../img/star-empty.svg),
-    star-full      : url(../img/star-full.svg),
-    star-half      : url(../img/star-half.svg),
-    star-size      : 24px,
-    text-background: #1a1a1a,
-    text-color     : #fff,
-);</code></pre>
-			<p>To override any values with your own, simply create a new <code>$star-rating</code> map variable and include only the values you wish to change.</p>
-			<p><strong>Important:</strong> Make sure you define <code>$star-rating</code> before you import the <code>src/star-rating.scss</code> file:</p>
-			<pre><code>$star-rating: (
-    base-height: 32px,
-    star-size  : 30px,
-);
-@import "../../node_modules/star-rating.js/src/star-rating"</code></pre>
-			<h3>How to change CSS style priority</h3>
-			<p>Sometimes an existing stylesheet rules will override the default CSS styles for Star Ratings. To solve this problem, you can specify a "parent" option in the <code>$star-rating</code> map variable. This option value should be a high priority/specificity property such as an id attribute or similar.</p>
-			<p>In the following example, all Star Rating css rules will begin with <code>[id^=stars]</code> which targets any id attributes that begin with "stars" (i.e. <code>#stars-1</code>):</p>
-			<pre><code>$star-rating: (
-    parent: '[id^=stars]',
-);</code></pre>
-			<p>The CSS rule <code>.gl-star-rating { ... }</code> now becomes <code>[id^=stars] .gl-star-rating { ... }</code>.
-		</section>
+        <section class="section">
+            <h2>Build</h2>
+            <p><pre><code class="language-bash">npm run build</code></pre></p>
+            <p>The compiled files will be saved in the <code>dist/</code> folder.</p>
+            <h3>Style Customization</h3>
+            <p>Following are the default CSS variable values for Star Rating:</p>
+            <pre><code class="language-css">:root {
+    --gl-star-color: #fdd835;                     /* if using SVG images */
+    --gl-star-color-inactive: #dcdce6;            /* if using SVG images */
+    --gl-star-empty: url(../img/star-empty.svg);  /* if using background images */
+    --gl-star-full: url(../img/star-full.svg);    /* if using background images */
+    --gl-star-size: 24px;
+    --gl-tooltip-border-radius: 4px;
+    --gl-tooltip-font-size: 0.875rem;
+    --gl-tooltip-font-weight: 400;
+    --gl-tooltip-line-height: 1;
+    --gl-tooltip-margin: 12px;
+    --gl-tooltip-padding: .5em 1em;
+    --gl-tooltip-size: 6px;
+}</code></pre>
+            <p>To override any values with your own, simply import the CSS file into your project, then enter new CSS variable values after the import.</p>
+            <p><pre><code class="language-css">@import 'star-rating';
 
-		<section class="section">
-			<h2>Compatibility</h2>
-			<ul>
-				<li>All modern browsers</li>
-			</ul>
-			<p>If you need to use the Star Rating library in a unsupported browser (i.e. Internet Explorer), use the <a href="https://polyfill.io">Polyfill service</a>.
-		</section>
+:root {
+    --gl-star-size: 32px;
+}</code></pre></p>
+            <h3>How to change CSS style priority</h3>
+            <p>Sometimes an existing stylesheet rules will override the default CSS styles for Star Ratings. To solve this problem, you can use the <a href="https://github.com/topaxi/postcss-selector-namespace">postcss-selector-namespace</a> plugin in your PostCSS build on the CSS file before combining with your main stylesheet. This namespace value should be a high priority/specificity property such as an id attribute or similar.</p>
+        </section>
 
-		<section class="section">
-			<h2>License</h2>
-			<p><a href="https://github.com/pryley/star-rating.js/blob/master/LICENSE">MIT</a></p>
-		</section>
+        <section class="section">
+            <h2>Compatibility</h2>
+            <ul>
+                <li>All modern browsers</li>
+            </ul>
+            <p>If you need to use the Star Rating library in a unsupported browser (i.e. Internet Explorer), use the <a href="https://polyfill.io">Polyfill service</a>.
+        </section>
 
-	</main>
+        <section class="section">
+            <h2>License</h2>
+            <p><a href="https://github.com/pryley/star-rating.js/blob/master/LICENSE">MIT</a></p>
+        </section>
 
-	<footer class="page-footer">
-		<p>This project is maintained by <a href="https://github.com/pryley">Paul Ryley</a></p>
-	</footer>
+    </main>
 
-	<script src="src/star-rating.js?ver=3.4.0"></script>
-	<script>
-		var destroyed = false;
-		var starratings = new StarRating( '.star-rating', {
-			onClick: function( el ) {
-				console.log( 'Selected: ' + el[el.selectedIndex].text );
-			},
-		});
-		document.querySelector( '.toggle-star-rating' ).addEventListener( 'click', function() {
-			if( !destroyed ) {
-				starratings.destroy();
-				destroyed = true;
-			}
-			else {
-				starratings.rebuild();
-				destroyed = false;
-			}
-		});
-	</script>
+    <footer class="page-footer">
+        <p>This project is maintained by <a href="https://github.com/pryley">Paul Ryley</a></p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js" integrity="sha512-YBk7HhgDZvBxmtOfUdvX0z8IH2d10Hp3aEygaMNhtF8fSOvBZ16D/1bXZTJV6ndk/L/DlXxYStP8jrF77v2MIg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha512-zc7WDnCM3aom2EziyDIRAtQg1mVXLdILE09Bo+aE1xk0AM2c2cVLfSW9NrxE5tKTX44WBY0Z2HClZ05ur9vB6A==" crossorigin="anonymous"></script>
+    <script src="dist/star-rating.js?ver=4.0.0"></script>
+    <script>
+        var destroyed = false;
+        var svg = {
+            emote: [
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="gl-emote"><circle class="gl-emote-bg" fill="#FFA98D" cx="12" cy="12" r="10"/><path fill="#393939" d="M12 14.6c1.48 0 2.9.38 4.15 1.1a.8.8 0 01-.79 1.39 6.76 6.76 0 00-6.72 0 .8.8 0 11-.8-1.4A8.36 8.36 0 0112 14.6zm4.6-6.25a1.62 1.62 0 01.58 1.51 1.6 1.6 0 11-2.92-1.13c.2-.04.25-.05.45-.08.21-.04.76-.11 1.12-.18.37-.07.46-.08.77-.12zm-9.2 0c.31.04.4.05.77.12.36.07.9.14 1.12.18.2.03.24.04.45.08a1.6 1.6 0 11-2.34-.38z"/></svg>',
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="gl-emote"><circle class="gl-emote-bg" fill="#FFC385" cx="12" cy="12" r="10"/><path fill="#393939" d="M12 14.8c1.48 0 3.08.28 3.97.75a.8.8 0 11-.74 1.41A8.28 8.28 0 0012 16.4a9.7 9.7 0 00-3.33.61.8.8 0 11-.54-1.5c1.35-.48 2.56-.71 3.87-.71zM15.7 8c.25.31.28.34.51.64.24.3.25.3.43.52.18.23.27.33.56.7A1.6 1.6 0 1115.7 8zM8.32 8a1.6 1.6 0 011.21 2.73 1.6 1.6 0 01-2.7-.87c.28-.37.37-.47.55-.7.18-.22.2-.23.43-.52.23-.3.26-.33.51-.64z"/></svg>',
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="gl-emote"><circle class="gl-emote-bg" fill="#FFD885" cx="12" cy="12" r="10"/><path fill="#393939" d="M15.33 15.2a.8.8 0 01.7.66.85.85 0 01-.68.94h-6.2c-.24 0-.67-.26-.76-.7-.1-.38.17-.81.6-.9zm.35-7.2a1.6 1.6 0 011.5 1.86A1.6 1.6 0 1115.68 8zM8.32 8a1.6 1.6 0 011.21 2.73A1.6 1.6 0 118.33 8z"/></svg>',
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="gl-emote"><circle class="gl-emote-bg" fill="#FFD885" cx="12" cy="12" r="10"/><path fill="#393939" d="M15.45 15.06a.8.8 0 11.8 1.38 8.36 8.36 0 01-8.5 0 .8.8 0 11.8-1.38 6.76 6.76 0 006.9 0zM15.68 8a1.6 1.6 0 011.5 1.86A1.6 1.6 0 1115.68 8zM8.32 8a1.6 1.6 0 011.21 2.73A1.6 1.6 0 118.33 8z"/></svg>',
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="gl-emote"><circle class="gl-emote-bg" fill="#FFD885" cx="12" cy="12" r="10"/><path fill="#393939" d="M16.8 14.4c.32 0 .59.2.72.45.12.25.11.56-.08.82a6.78 6.78 0 01-10.88 0 .78.78 0 01-.05-.87c.14-.23.37-.4.7-.4zM15.67 8a1.6 1.6 0 011.5 1.86A1.6 1.6 0 1115.68 8zM8.32 8a1.6 1.6 0 011.21 2.73A1.6 1.6 0 118.33 8z"/></svg>',
+            ],
+            stars: {
+                square: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect class="gl-star-full" width="19" height="19" x="2.5" y="2.5"/><polygon fill="#FFF" points="12 5.375 13.646 10.417 19 10.417 14.665 13.556 16.313 18.625 11.995 15.476 7.688 18.583 9.333 13.542 5 10.417 10.354 10.417"/></svg>',
+            }
+        };
+        var starrating = new StarRating('.star-rating', {
+            stars: function (el, item, index) {
+                if (this.values.length > 5) {
+                    el.innerHTML = svg.stars.square;
+                } else {
+                    el.innerHTML = svg.emote[index];
+                }
+            },
+        });
+        var starratingOld = new StarRating('.star-rating-old');
+        document.querySelector('.toggle-star-rating').addEventListener('click', function () {
+            if (!destroyed) {
+                starrating.destroy();
+                starratingOld.destroy();
+                destroyed = true;
+            } else {
+                starrating.rebuild();
+                starratingOld.rebuild();
+                destroyed = false;
+            }
+        });
+    </script>
 
 </body>
 </html>

@@ -9,14 +9,13 @@ For production, use the files from the `dist/` folder.
 
 ## Installation
 
-Use one of the following methods to add the Star Rating library to your project:
-
-- [Download ZIP](https://github.com/pryley/star-rating.js/zipball/master)
-- `yarn add star-rating.js`
-- `npm install star-rating.js`
-- `bower install star-rating.js`
+```js
+npm i star-rating.js
+```
 
 ## Usage
+
+Your SELECT option fields must have numerical values.
 
 ```html
 <link href="css/star-rating.css" rel="stylesheet">
@@ -32,20 +31,20 @@ Use one of the following methods to add the Star Rating library to your project:
 
 <script src="js/star-rating.min.js"></script>
 <script>
-    var starRatingControls = new StarRating( '.star-rating' );
+    var stars = new StarRating('.star-rating');
 </script>
 ```
 
 To rebuild all star rating controls (e.g. after form fields have changed with ajax):
 
 ```js
-starRatingControls.rebuild();
+stars.rebuild();
 ```
 
 To fully remove all star rating controls, including all attached Event Listeners:
 
 ```js
-starRatingControls.destroy();
+stars.destroy();
 ```
 
 ## Options
@@ -54,25 +53,41 @@ Here are the default options
 
 ```js
 {
-    classname: "gl-star-rating",
+    classNames: {
+        active: 'gl-active',
+        base: 'gl-star-rating',
+        selected: 'gl-selected',
+    },
     clearable: true,
-    initialText: "Select a Rating",
     maxStars: 10,
-    showText: true,
+    stars: null,
+    tooltip: 'Select a Rating',
 }
 ```
 
-### classname:
+### classNames.active
 
 Type: `String`
 
-Determines the classname to use of the rendered star-rating HTMLElement. If you change this, make sure you also change the SCSS `$star-rating[base-classname]` map variable to match.
+The classname to use for the active (hovered or value <= of the selected value) state of a star.
 
-### clearable:
+### classNames.base
+
+Type: `String`
+
+The classname to use for the base element that wraps the star rating.
+
+### classNames.selected
+
+Type: `String`
+
+The classname to use for the selected state of a star.
+
+### clearable
 
 Type: `Boolean`
 
-Determines whether the star rating can be cleared by clicking on an already pre-selected star.
+Whether or not the star rating can be cleared by clicking on an already selected star.
 
 ### initialText:
 
@@ -84,74 +99,63 @@ Determines the initial text when no value is selected. This has no effect if `sh
 
 Type: `Integer`
 
-Determines the maximum number of stars allowed in a star rating.
+The maximum number of stars allowed in a star rating.
 
-### showText:
+### stars:
 
-Type: `Boolean`
+Type: `Function`
 
-Determines whether or not the rating text is shown.
+This can be used to add a SVG image to each value instead of using a background image for the stars.
+
+### tooltip:
+
+Type: `String|False`
+
+The placeholder text for the rating tooltip, or `false` to disable the tooltip.
 
 ## Build
 
-Star Rating uses [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/) to manage package dependencies and [gulp](http://gulpjs.com/) to build from `src/`.
-
 ```sh
-yarn
-gulp
+npm install
+npm run build
 ```
 
 The compiled files will be saved in the `dist/` folder.
 
 ### Style Customization
 
-Sass is used to build the stylesheet so you can `@import` the `src/star-rating.scss` file to compile it directly into your Sass project.
+Following are the default CSS variable values for Star Rating:
 
-Following are the default sass values for Star Rating, they are contained in a map variable.
-
-```sass
-$star-rating-defaults: (
-    base-classname : 'gl-star-rating',
-    base-display   : block,
-    base-height    : 26px,
-    font-size      : 0.8em,
-    font-weight    : 600,
-    parent         : '',
-    star-empty     : url(../img/star-empty.svg),
-    star-full      : url(../img/star-full.svg),
-    star-half      : url(../img/star-half.svg),
-    star-size      : 24px,
-    text-background: #1a1a1a,
-    text-color     : #fff,
-);
+```css
+:root {
+    --gl-star-color: #fdd835;                     /* if using SVG images */
+    --gl-star-color-inactive: #dcdce6;            /* if using SVG images */
+    --gl-star-empty: url(../img/star-empty.svg);  /* if using background images */
+    --gl-star-full: url(../img/star-full.svg);    /* if using background images */
+    --gl-star-size: 24px;
+    --gl-tooltip-border-radius: 4px;
+    --gl-tooltip-font-size: 0.875rem;
+    --gl-tooltip-font-weight: 400;
+    --gl-tooltip-line-height: 1;
+    --gl-tooltip-margin: 12px;
+    --gl-tooltip-padding: .5em 1em;
+    --gl-tooltip-size: 6px;
+}
 ```
 
-To override any values with your own, simply create a new `$star-rating` map variable and include only the values you wish to change.
+To override any values with your own, simply import the CSS file into your project, then enter new CSS variable values after the import.
 
-Important: Make sure you define `$star-rating` before you import the `src/star-rating.scss` file:
+```css
+@import 'star-rating';
 
-```sass
-$star-rating: (
-    base-height: 32px,
-    star-size  : 30px,
-);
-
-@import "../../node_modules/star-rating.js/src/star-rating"
+:root {
+    --gl-star-size: 32px;
+}
 ```
 
 ### How to change CSS style priority
 
-Sometimes an existing stylesheet rules will override the default CSS styles for Star Ratings. To solve this problem, you can specify a "parent" option in the `$star-rating` map variable. This option value should be a high priority/specificity property such as an id attribute or similar.
-
-In the following example, all Star Rating css rules will begin with `[id^=stars]` which targets any id attributes that begin with "stars" (i.e. `#stars-1`):
-
-```sass
-$star-rating: (
-    parent: '[id^=stars]',
-);
-```
-
-The CSS rule `.gl-star-rating { ... }` now becomes `[id^=stars] .gl-star-rating { ... }`.
+Sometimes an existing stylesheet rules will override the default CSS styles for Star Ratings. To solve this problem, you can use the [postcss-selector-namespace](https://github.com/topaxi/postcss-selector-namespace) plugin in your PostCSS build on the CSS file before combining with your main stylesheet. This namespace value should be a high priority/specificity property such as an id attribute or similar.
 
 ## Compatibility
 
@@ -165,7 +169,18 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v4.0.0 - [2021-01-22]`
+
+- Code has been rewritten as an ES6 module and optimised
+- Added requestAnimationFrame to the pointer move events
+- Added the `stars` option which allows you to use custom SVG images for each star
+- Replaced the `classname` option with the `classNames` option
+- Replaced the `initialText` with the `tooltip` option
+- Replaced gulp with rollup for the build
+- Replaced SASS with PostCSS
+
 `v3.4.0 - [2020-10-18]`
+
 - Specify passive:false on event listeners to suppress Chrome warnings
 
 `v3.2.0 - [2020-07-13]`
