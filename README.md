@@ -89,12 +89,6 @@ Type: `Boolean`
 
 Whether or not the star rating can be cleared by clicking on an already selected star.
 
-### initialText:
-
-Type: `String`
-
-Determines the initial text when no value is selected. This has no effect if `showText` is set to false.
-
 ### maxStars:
 
 Type: `Integer`
@@ -168,6 +162,11 @@ If you need to use the Star Rating library in a unsupported browser (i.e. Intern
 All changes should be committed to the files in `src/`.
 
 ## Changelog
+
+`v4.0.2 - [2021-01-23]`
+
+- Fixed compatibility mode (when `'function' !== typeof options.stars`)
+- Removed trigger of change event after init as this could trigger unwanted validation
 
 `v4.0.1 - [2021-01-22]`
 
