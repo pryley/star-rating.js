@@ -45,8 +45,6 @@ export class Widget {
             const el = createSpanEl({ 'data-index': index, 'data-value': item.value });
             if ('function' === typeof this.props.stars) {
                 this.props.stars.call(this, el, item, index);
-            } else {
-                parentEl.classList.add('gl-compat'); // @v3 compat
             }
             [].forEach.call(el.children, el => el.style.pointerEvents = 'none');
             widgetEl.innerHTML += el.outerHTML;
@@ -63,8 +61,10 @@ export class Widget {
                 addRemoveClass(el, i <= index, this.props.classNames.active);
                 addRemoveClass(el, i === this.indexSelected, this.props.classNames.selected);
             });
-            this.widgetEl.classList.remove('s' + (10 * (this.indexActive + 1))); // @v3 compat
-            this.widgetEl.classList.add('s' + (10 * (index + 1))); // @v3 compat
+            if ('function' !== typeof this.props.stars) { // @v3 compat
+                this.widgetEl.classList.remove('s' + (10 * (this.indexActive + 1)));
+                this.widgetEl.classList.add('s' + (10 * (index + 1)));
+            }
             if (this.props.tooltip) {
                 const label = index < 0 ? this.props.tooltip : this.values[index].text;
                 this.widgetEl.setAttribute('aria-label', label);

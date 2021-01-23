@@ -105,7 +105,7 @@ The maximum number of stars allowed in a star rating.
 
 Type: `Function`
 
-This can be used to add a SVG image to each value instead of using a background image for the stars.
+This can be used to add a SVG image to each star value instead of using the background images in the CSS.
 
 ### tooltip:
 

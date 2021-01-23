@@ -1,6 +1,6 @@
 /**
  * Star Rating
- * @version: 4.0.1
+ * @version: 4.0.2
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/pryley/star-rating.js
  * @license: MIT
@@ -142,21 +142,21 @@
 }
 
 /* Compatibilty with v3 */
-.gl-star-rating.gl-compat .gl-star-rating--stars > span {
+.gl-star-rating .gl-star-rating--stars[class*=" s"] > span {
     background-image: var(--gl-star-empty);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 90%;
 }
-.gl-star-rating.gl-compat .gl-star-rating--stars.s10 > span:nth-child(1),
-.gl-star-rating.gl-compat .gl-star-rating--stars.s20 > span:nth-child(-1n+2),
-.gl-star-rating.gl-compat .gl-star-rating--stars.s30 > span:nth-child(-1n+3),
-.gl-star-rating.gl-compat .gl-star-rating--stars.s40 > span:nth-child(-1n+4),
-.gl-star-rating.gl-compat .gl-star-rating--stars.s50 > span:nth-child(-1n+5),
-.gl-star-rating.gl-compat .gl-star-rating--stars.s60 > span:nth-child(-1n+6),
-.gl-star-rating.gl-compat .gl-star-rating--stars.s70 > span:nth-child(-1n+7),
-.gl-star-rating.gl-compat .gl-star-rating--stars.s80 > span:nth-child(-1n+8),
-.gl-star-rating.gl-compat .gl-star-rating--stars.s90 > span:nth-child(-1n+9),
-.gl-star-rating.gl-compat .gl-star-rating--stars.s100 > span {
+.gl-star-rating .gl-star-rating--stars.s10 > span:nth-child(1),
+.gl-star-rating .gl-star-rating--stars.s20 > span:nth-child(-1n+2),
+.gl-star-rating .gl-star-rating--stars.s30 > span:nth-child(-1n+3),
+.gl-star-rating .gl-star-rating--stars.s40 > span:nth-child(-1n+4),
+.gl-star-rating .gl-star-rating--stars.s50 > span:nth-child(-1n+5),
+.gl-star-rating .gl-star-rating--stars.s60 > span:nth-child(-1n+6),
+.gl-star-rating .gl-star-rating--stars.s70 > span:nth-child(-1n+7),
+.gl-star-rating .gl-star-rating--stars.s80 > span:nth-child(-1n+8),
+.gl-star-rating .gl-star-rating--stars.s90 > span:nth-child(-1n+9),
+.gl-star-rating .gl-star-rating--stars.s100 > span {
     background-image: var(--gl-star-full);
 }
