@@ -116,6 +116,8 @@ npm run build
 
 The compiled files will be saved in the `dist/` folder.
 
+**Note:** If importing this into your project, you will need to add [@babel/plugin-proposal-optional-chaining](https://www.npmjs.com/package/@babel/plugin-proposal-optional-chaining) to your babel config.
+
 ### Style Customization
 
 Following are the default CSS variable values for Star Rating:
@@ -162,6 +164,10 @@ If you need to use the Star Rating library in a unsupported browser (i.e. Intern
 All changes should be committed to the files in `src/`.
 
 ## Changelog
+
+`v4.0.3 - [2021-01-29]`
+
+- Fixed rollup config to support optional-chaining in babel
 
 `v4.0.2 - [2021-01-23]`
 

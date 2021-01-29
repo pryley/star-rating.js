@@ -19,7 +19,11 @@ export default [
       filesize(),
       babel({
         babelHelpers: 'bundled',
-        presets: ['@babel/preset-env'],
+        presets: [
+          ['@babel/preset-env', {
+            include: ['@babel/plugin-proposal-optional-chaining'],
+          }],
+        ],
       }),
       production && terser(),
     ]

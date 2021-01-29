@@ -162,6 +162,7 @@
             <h2>Build</h2>
             <p><pre><code class="language-bash">npm run build</code></pre></p>
             <p>The compiled files will be saved in the <code>dist/</code> folder.</p>
+            <p><strong>Note:</strong> If importing this into your project, you will need to add <a href="https://www.npmjs.com/package/@babel/plugin-proposal-optional-chaining">@babel/plugin-proposal-optional-chaining</a> to your babel config.</p>
             <h3>Style Customization</h3>
             <p>Following are the default CSS variable values for Star Rating:</p>
             <pre><code class="language-css">:root {
@@ -209,7 +210,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js" integrity="sha512-YBk7HhgDZvBxmtOfUdvX0z8IH2d10Hp3aEygaMNhtF8fSOvBZ16D/1bXZTJV6ndk/L/DlXxYStP8jrF77v2MIg==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha512-zc7WDnCM3aom2EziyDIRAtQg1mVXLdILE09Bo+aE1xk0AM2c2cVLfSW9NrxE5tKTX44WBY0Z2HClZ05ur9vB6A==" crossorigin="anonymous"></script>
-    <script src="dist/star-rating.js?ver=4.0.2"></script>
+    <script src="dist/star-rating.js?ver=4.0.3"></script>
     <script>
         var destroyed = false;
         var svg = {
