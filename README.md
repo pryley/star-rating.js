@@ -165,6 +165,10 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v4.0.4 - [2021-02-02]`
+
+- Export a babel-transpiled commonjs module
+
 `v4.0.3 - [2021-01-29]`
 
 - Fixed rollup config to support optional-chaining in babel

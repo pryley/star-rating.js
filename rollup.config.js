@@ -10,6 +10,26 @@ export default [
   {
     input: 'src/index.js',
     output: {
+      file: 'index.js',
+      format: 'cjs',
+    },
+    plugins: [
+      resolve(),
+      filesize(),
+      babel({
+        babelHelpers: 'bundled',
+        presets: [
+          ['@babel/preset-env', {
+            include: ['@babel/plugin-proposal-optional-chaining'],
+          }],
+        ],
+      }),
+      terser(),
+    ]
+  },
+  {
+    input: 'src/index.js',
+    output: {
       name: 'StarRating',
       file: 'dist/star-rating.js',
       format: 'iife',
