@@ -32,7 +32,7 @@ export class Widget {
     build () { // ():void
         this.destroy();
         this.buildWidget();
-        this.changeIndexTo((this.indexSelected = this.selected()), true); // set the initial value
+        this.selectValue((this.indexSelected = this.selected()), false); // set the initial value but do not trigger change event
         this.handleEvents('add');
     }
 
@@ -121,7 +121,7 @@ export class Widget {
         const maxIndex = this.values.length - 1;
         const minIndex = -1;
         const index = Math.min(Math.max(this.selected() + increment, minIndex), maxIndex);
-        this.selectValue(index);
+        this.selectValue(index, true); // trigger change event
     }
 
     onPointerDown (ev) { // (MouseEvent|TouchEvent):void
@@ -131,7 +131,7 @@ export class Widget {
         if (this.props.clearable && index === this.indexSelected) {
             index = -1; // remove the value
         }
-        this.selectValue(index);
+        this.selectValue(index, true); // trigger change event
     }
 
     onPointerLeave (ev) { // (MouseEvent):void
@@ -149,17 +149,20 @@ export class Widget {
     }
 
     onReset () { // ():void
-        const index = this.el.querySelector('[selected]')?.index;
-        this.selectValue(this.values.findIndex(val => val.index === index));
+        this.selectValue(this.el.querySelector('[selected]')?.index || -1, false); // do not trigger change event
     }
 
     selected () { // ():int
         return this.values.findIndex(val => val.value === +this.el.value); // get the selected span index
     }
 
-    selectValue (index) { // (int):void
+    selectValue (index, triggerChangeEvent) { // (int, bool):void
         this.el.value = this.values[index]?.value || ''; // first set the value
         this.indexSelected = this.selected(); // get the actual index from the selected value
-        this.el.dispatchEvent(new Event('change'));
+        if (false === triggerChangeEvent) {
+            this.changeIndexTo(this.selected(), true);
+        } else {
+            this.el.dispatchEvent(new Event('change'));
+        }
     }
 }

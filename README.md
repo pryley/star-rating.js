@@ -165,6 +165,10 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v4.0.5 - [2021-02-03]`
+
+- Fixed an invalid change event from being triggered by the reset event
+
 `v4.0.4 - [2021-02-02]`
 
 - Export a babel-transpiled commonjs module
