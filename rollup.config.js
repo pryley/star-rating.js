@@ -24,7 +24,7 @@ export default [
           }],
         ],
       }),
-      // terser(),
+      terser(),
     ]
   },
   {
@@ -45,7 +45,7 @@ export default [
           }],
         ],
       }),
-      // production && terser(),
+      production && terser(),
     ]
   },
   {

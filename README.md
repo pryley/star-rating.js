@@ -159,6 +159,10 @@ Sometimes an existing stylesheet rules will override the default CSS styles for 
 
 If you need to use the Star Rating library in a unsupported browser (i.e. Internet Explorer), use the [Polyfill service](https://polyfill.io).
 
+## Tips
+
+1. If your star rating has a label field, add the `pointer-events: none;` style to it to prevent the focus event from triggering on touch devices.
+
 ## Contributing
 
 All changes should be committed to the files in `src/`.
@@ -167,7 +171,7 @@ All changes should be committed to the files in `src/`.
 
 `v4.0.6 - [2021-02-05]`
 
-- Fixed touchend event from triggering a focus
+- Remove the focus from being triggered entirely as it caused to many problems on ios and I don't have time to fix it
 
 `v4.0.5 - [2021-02-03]`
 

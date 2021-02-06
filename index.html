@@ -33,7 +33,7 @@
         <section class="section" id="section-1">
             <h2>Demo</h2>
             <form class="form-1">
-                <label for="glsr-ltr">Left to Right</label>
+                <label for="glsr-ltr" style="pointer-events: none;">Left to Right</label>
                 <div class="form-field">
                     <select id="glsr-ltr" class="star-rating">
                         <option value="">Select a rating</option>
@@ -44,7 +44,7 @@
                         <option value="1">Terrible</option>
                     </select>
                 </div>
-                <label for="glsr-rtl">Right to Left</label>
+                <label for="glsr-rtl" style="pointer-events: none;">Right to Left</label>
                 <div class="form-field" style="direction: rtl;">
                     <select id="glsr-rtl" class="star-rating-old">
                         <option value="">Select a rating</option>
@@ -55,7 +55,7 @@
                         <option value="1">Terrible</option>
                     </select>
                 </div>
-                <label for="glsr-custom-options">Using the "data-options" attribute to hide the tooltip and prevent the control from being cleared</label>
+                <label for="glsr-custom-options"s tyle="pointer-events: none;">Using the "data-options" attribute to hide the tooltip and prevent the control from being cleared</label>
                 <div class="form-field">
                     <select id="glsr-custom-options" class="star-rating" data-options='{"clearable":false, "tooltip":false}'>
                         <option value="">Select a rating</option>
@@ -190,6 +190,13 @@
         </section>
 
         <section class="section">
+            <h2>Tips</h2>
+            <ol>
+                <li>If your star rating has a label field, add the <code class="language-css">pointer-events: none;</code> style to it to prevent the focus event from triggering on touch devices.</li>
+            </ol>
+        </section>
+
+        <section class="section">
             <h2>Compatibility</h2>
             <ul>
                 <li>All modern browsers</li>
@@ -210,7 +217,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js" integrity="sha512-YBk7HhgDZvBxmtOfUdvX0z8IH2d10Hp3aEygaMNhtF8fSOvBZ16D/1bXZTJV6ndk/L/DlXxYStP8jrF77v2MIg==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha512-zc7WDnCM3aom2EziyDIRAtQg1mVXLdILE09Bo+aE1xk0AM2c2cVLfSW9NrxE5tKTX44WBY0Z2HClZ05ur9vB6A==" crossorigin="anonymous"></script>
-    <script src="dist/star-rating.js?ver=4.0.7"></script>
+    <script src="dist/star-rating.js?ver=4.0.6"></script>
     <script>
         var destroyed = false;
         var svg = {
