@@ -126,7 +126,9 @@ export class Widget {
 
     onPointerDown (ev) { // (MouseEvent|TouchEvent):void
         ev.preventDefault();
-        this.el.focus(); // highlight the rating field
+        if ('mousedown' === ev.type) {
+            this.el.focus(); // highlight the rating field
+        }
         let index = this.indexFromEvent(ev);
         if (this.props.clearable && index === this.indexSelected) {
             index = -1; // remove the value
