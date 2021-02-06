@@ -1,6 +1,6 @@
 /**
  * Star Rating
- * @version: 4.0.5
+ * @version: 4.0.7
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/pryley/star-rating.js
  * @license: MIT
@@ -28,6 +28,7 @@
     margin: 0 !important;
     overflow: hidden !important;
     padding: 0 !important;
+    pointer-events: none;
     position: absolute !important;
     top: 0 !important;
     visibility: visible !important;

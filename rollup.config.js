@@ -24,7 +24,7 @@ export default [
           }],
         ],
       }),
-      terser(),
+      // terser(),
     ]
   },
   {
@@ -45,7 +45,7 @@ export default [
           }],
         ],
       }),
-      production && terser(),
+      // production && terser(),
     ]
   },
   {
@@ -58,6 +58,9 @@ export default [
       postcss({
         extract: true,
         minimize: production,
+        plugins: [
+          // require('postcss-custom-properties')({preserve: false}),
+        ],
       }),
     ]
   },

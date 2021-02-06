@@ -165,6 +165,10 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v4.0.6 - [2021-02-05]`
+
+- Fixed touchend event from triggering a focus
+
 `v4.0.5 - [2021-02-03]`
 
 - Fixed an invalid change event from being triggered by the reset event
