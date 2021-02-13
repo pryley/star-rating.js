@@ -117,7 +117,7 @@ export class Widget {
     indexFromEvent (ev) { // (MouseEvent|TouchEvent):void
         const origin = ev.touches?.[0] || ev.changedTouches?.[0] || ev;
         const el = document.elementFromPoint(origin.clientX, origin.clientY);
-        return parseInt(el.dataset.index || -1, 10);
+        return [].slice.call(el.parentNode.children).indexOf(el);
     }
 
     onChange () { // ():void
