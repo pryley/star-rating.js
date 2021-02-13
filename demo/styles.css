@@ -615,7 +615,7 @@ select {
 .gl-star-rating .gl-emote-bg {
   transition: fill 0.15s ease-in-out;
 }
-.gl-star-rating [data-index]:not(.gl-active) .gl-emote-bg {
+.gl-star-rating [data-value]:not(.gl-active) .gl-emote-bg {
   fill: #DCDCE6;
 }
 

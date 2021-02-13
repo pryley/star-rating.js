@@ -196,6 +196,10 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v4.1.0 - [2021-02-13]`
+
+- Added the `prebuilt` option
+
 `v4.0.6 - [2021-02-05]`
 
 - Remove the focus from being triggered entirely as it caused to many problems on ios and I don't have time to fix it
