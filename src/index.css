@@ -1,6 +1,6 @@
 /**
  * Star Rating
- * @version: 4.0.6
+ * @version: 4.1.0
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/pryley/star-rating.js
  * @license: MIT
@@ -21,7 +21,7 @@
     --gl-tooltip-size: 6px;
 }
 
-.gl-star-rating > select {
+[data-star-rating] > select {
     appearance:  none;
     clip-path: circle(1px at 0 0) !important;
     clip: rect(1px, 1px, 1px, 1px) !important;
@@ -36,28 +36,31 @@
     white-space: nowrap !important;
     width: 1px !important;
 }
-.gl-star-rating > select::before,
-.gl-star-rating > select::after {
+[data-star-rating] > select::before,
+[data-star-rating] > select::after {
     display: none !important;
 }
-.gl-star-rating.gl-star-rating--ltr > select {
+[data-star-rating].gl-star-rating--ltr > select {
     left: 0 !important;
 }
-.gl-star-rating.gl-star-rating--rtl > select {
+[data-star-rating].gl-star-rating--rtl > select {
     right: 0 !important;
 }
-.gl-star-rating {
+[data-star-rating] {
     align-items: center;
     display: flex;
     position: relative;
 }
-.gl-star-rating .gl-star-rating--stars {
+.gl-star-rating:not([data-star-rating]) .gl-star-rating--stars {
+    display: none;
+}
+[data-star-rating] .gl-star-rating--stars {
     align-items: center;
     cursor: pointer;
     display: flex;
     position: relative;
 }
-.gl-star-rating > select:focus + .gl-star-rating--stars span:first-child::before {
+[data-star-rating] > select:focus + .gl-star-rating--stars span:first-child::before {
     box-shadow: 0 0 0 3px -moz-mac-focusring;
     box-shadow: 0 0 0 3px -webkit-focus-ring-color;
     box-shadow: 0 0 0 3px Highlight;
@@ -68,17 +71,17 @@
     position: absolute;
     width: 100%;
 }
-.gl-star-rating select[disabled] + .gl-star-rating--stars {
+[data-star-rating] select[disabled] + .gl-star-rating--stars {
     cursor: default;
 }
-.gl-star-rating .gl-star-rating--stars > span {
+[data-star-rating] .gl-star-rating--stars > span {
     display: flex;
     height: var(--gl-star-size);
     margin: 0;
     width: var(--gl-star-size);
 }
-.gl-star-rating .gl-star-rating--stars[aria-label]::before,
-.gl-star-rating .gl-star-rating--stars[aria-label]::after {
+[data-star-rating] .gl-star-rating--stars[aria-label]::before,
+[data-star-rating] .gl-star-rating--stars[aria-label]::after {
     backface-visibility: hidden;
     bottom: auto;
     box-sizing: border-box;
@@ -90,7 +93,7 @@
     white-space: nowrap;
     z-index: 10;
 }
-.gl-star-rating .gl-star-rating--stars[aria-label]::before {
+[data-star-rating] .gl-star-rating--stars[aria-label]::before {
     background-size: 100% auto !important;
     background: url(data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2212px%22%20height%3D%2236px%22%3E%3Cpath%20fill%3D%22rgba%2817,%2017,%2017,%200.9%29%22%20transform%3D%22rotate%2890%206%206%29%22%20d%3D%22M2.658,0.000%20C-13.615,0.000%2050.938,0.000%2034.662,0.000%20C28.662,0.000%2023.035,12.002%2018.660,12.002%20C14.285,12.002%208.594,0.000%202.658,0.000%20Z%22/%3E%3C/svg%3E) no-repeat;
     content: '';
@@ -99,7 +102,7 @@
     margin-left: var(--gl-tooltip-size);
     width: var(--gl-tooltip-size);
 }
-.gl-star-rating .gl-star-rating--stars[aria-label]::after {
+[data-star-rating] .gl-star-rating--stars[aria-label]::after {
     background: rgba(17,17,17,.9);
     border-radius: var(--gl-tooltip-border-radius);
     color: #fff;
@@ -110,54 +113,54 @@
     padding: var(--gl-tooltip-padding);
     text-transform: none;
 }
-.gl-star-rating.gl-star-rating--rtl .gl-star-rating--stars[aria-label]::before,
-.gl-star-rating.gl-star-rating--rtl .gl-star-rating--stars[aria-label]::after {
+[data-star-rating].gl-star-rating--rtl .gl-star-rating--stars[aria-label]::before,
+[data-star-rating].gl-star-rating--rtl .gl-star-rating--stars[aria-label]::after {
     left: auto;
     right: 100%;
 }
-.gl-star-rating.gl-star-rating--rtl .gl-star-rating--stars[aria-label]::before {
+[data-star-rating].gl-star-rating--rtl .gl-star-rating--stars[aria-label]::before {
     background: url(data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2212px%22%20height%3D%2236px%22%3E%3Cpath%20fill%3D%22rgba%2817,%2017,%2017,%200.9%29%22%20transform%3D%22rotate%28-90%2018%2018%29%22%20d%3D%22M2.658,0.000%20C-13.615,0.000%2050.938,0.000%2034.662,0.000%20C28.662,0.000%2023.035,12.002%2018.660,12.002%20C14.285,12.002%208.594,0.000%202.658,0.000%20Z%22/%3E%3C/svg%3E) no-repeat;
     margin-left: 0;
     margin-right: var(--gl-tooltip-size);
 }
-.gl-star-rating.gl-star-rating--rtl .gl-star-rating--stars[aria-label]::after {
+[data-star-rating].gl-star-rating--rtl .gl-star-rating--stars[aria-label]::after {
     margin-left: 0;
     margin-right: var(--gl-tooltip-margin);
 }
-.gl-star-rating svg {
+[data-star-rating] svg {
     height: 100%;
     width: 100%;
 }
-.gl-star-rating .gl-star-half {
+[data-star-rating] .gl-star-half {
     fill: none;
     stroke: none;
 }
-.gl-star-rating .gl-star-full {
+[data-star-rating] .gl-star-full {
     fill: var(--gl-star-color-inactive);
     stroke: var(--gl-star-color-inactive);
     transition: fill 0.15s ease-in-out, stroke 0.15s ease-in-out;
 }
-.gl-star-rating .gl-active .gl-star-full {
+[data-star-rating] .gl-active .gl-star-full {
     fill: var(--gl-star-color);
     stroke: var(--gl-star-color);
 }
 
 /* Compatibilty with v3 */
-.gl-star-rating .gl-star-rating--stars[class*=" s"] > span {
+[data-star-rating] .gl-star-rating--stars[class*=" s"] > span {
     background-image: var(--gl-star-empty);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 90%;
 }
-.gl-star-rating .gl-star-rating--stars.s10 > span:nth-child(1),
-.gl-star-rating .gl-star-rating--stars.s20 > span:nth-child(-1n+2),
-.gl-star-rating .gl-star-rating--stars.s30 > span:nth-child(-1n+3),
-.gl-star-rating .gl-star-rating--stars.s40 > span:nth-child(-1n+4),
-.gl-star-rating .gl-star-rating--stars.s50 > span:nth-child(-1n+5),
-.gl-star-rating .gl-star-rating--stars.s60 > span:nth-child(-1n+6),
-.gl-star-rating .gl-star-rating--stars.s70 > span:nth-child(-1n+7),
-.gl-star-rating .gl-star-rating--stars.s80 > span:nth-child(-1n+8),
-.gl-star-rating .gl-star-rating--stars.s90 > span:nth-child(-1n+9),
-.gl-star-rating .gl-star-rating--stars.s100 > span {
+[data-star-rating] .gl-star-rating--stars.s10 > span:nth-child(1),
+[data-star-rating] .gl-star-rating--stars.s20 > span:nth-child(-1n+2),
+[data-star-rating] .gl-star-rating--stars.s30 > span:nth-child(-1n+3),
+[data-star-rating] .gl-star-rating--stars.s40 > span:nth-child(-1n+4),
+[data-star-rating] .gl-star-rating--stars.s50 > span:nth-child(-1n+5),
+[data-star-rating] .gl-star-rating--stars.s60 > span:nth-child(-1n+6),
+[data-star-rating] .gl-star-rating--stars.s70 > span:nth-child(-1n+7),
+[data-star-rating] .gl-star-rating--stars.s80 > span:nth-child(-1n+8),
+[data-star-rating] .gl-star-rating--stars.s90 > span:nth-child(-1n+9),
+[data-star-rating] .gl-star-rating--stars.s100 > span {
     background-image: var(--gl-star-full);
 }

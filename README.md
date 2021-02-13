@@ -60,6 +60,7 @@ Here are the default options
     },
     clearable: true,
     maxStars: 10,
+    prebuilt: false,
     stars: null,
     tooltip: 'Select a Rating',
 }
@@ -94,6 +95,32 @@ Whether or not the star rating can be cleared by clicking on an already selected
 Type: `Integer`
 
 The maximum number of stars allowed in a star rating.
+
+### prebuilt:
+
+Type: `Boolean`
+
+If this option is `true`, only the event listeners will be added and no DOM manipulation will take place. You will need to ensure that the DOM looks something like this:
+
+```html
+<span class="gl-star-rating">
+    <select>
+        <option value="">Select a rating</option>
+        <option value="5">5 Stars</option>
+        <option value="4">4 Stars</option>
+        <option value="3">3 Stars</option>
+        <option value="2">2 Stars</option>
+        <option value="1">1 Star</option>
+    </select>
+    <span class="gl-star-rating--stars">
+        <span data-value="1"></span>
+        <span data-value="2"></span>
+        <span data-value="3"></span>
+        <span data-value="4"></span>
+        <span data-value="5"></span>
+    </span>
+</span>
+```
 
 ### stars:
 

@@ -21,7 +21,7 @@ class StarRating {
     buildWidgets(selector, props) { // (HTMLSelectElement|NodeList|string, object):void
         this.queryElements(selector).forEach(el => {
             const options = merge(defaults, props, JSON.parse(el.getAttribute('data-options')));
-            if ('SELECT' === el.tagName && !el.parentNode.classList.contains(options.classNames.base)) {
+            if ('SELECT' === el.tagName && (options.prebuilt || !el.parentNode.classList.contains(options.classNames.base))) {
                 this.widgets.push(new Widget(el, options));
             }
         });

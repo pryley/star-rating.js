@@ -37,27 +37,34 @@ export class Widget {
     }
 
     buildWidget () { // ():void
-        const parentEl = insertSpanEl(this.el, false, { class: this.props.classNames.base });
-        parentEl.appendChild(this.el);
+        let parentEl, widgetEl
+        if (this.props.prebuilt) {
+            parentEl = this.el.parentNode
+            widgetEl = parentEl.querySelector('.' + this.props.classNames.base + '--stars')
+        } else {
+            parentEl = insertSpanEl(this.el, false, { class: this.props.classNames.base });
+            parentEl.appendChild(this.el);
+            widgetEl = insertSpanEl(this.el, true, { class: this.props.classNames.base + '--stars' });
+            this.values.forEach((item, index) => {
+                const el = createSpanEl({ 'data-index': index, 'data-value': item.value });
+                if ('function' === typeof this.props.stars) {
+                    this.props.stars.call(this, el, item, index);
+                }
+                [].forEach.call(el.children, el => el.style.pointerEvents = 'none');
+                widgetEl.innerHTML += el.outerHTML;
+            })
+        }
+        parentEl.dataset.starRating = '';
         parentEl.classList.add(this.props.classNames.base + '--' + this.direction);
-        const widgetEl = insertSpanEl(this.el, true, { class: this.props.classNames.base + '--stars' });
-        this.values.forEach((item, index) => {
-            const el = createSpanEl({ 'data-index': index, 'data-value': item.value });
-            if ('function' === typeof this.props.stars) {
-                this.props.stars.call(this, el, item, index);
-            }
-            [].forEach.call(el.children, el => el.style.pointerEvents = 'none');
-            widgetEl.innerHTML += el.outerHTML;
-        })
         if (this.props.tooltip) {
             widgetEl.setAttribute('role', 'tooltip');
         }
-        this.widgetEl = widgetEl;
+        this.widgetEl = widgetEl
     }
 
     changeIndexTo (index, force) { // (int):void
         if (this.indexActive !== index || force) {
-            this.widgetEl.childNodes.forEach((el, i) => { // i starts at zero
+            [].forEach.call(this.widgetEl.children, (el, i) => { // i starts at zero
                 addRemoveClass(el, i <= index, this.props.classNames.active);
                 addRemoveClass(el, i === this.indexSelected, this.props.classNames.selected);
             });
@@ -77,10 +84,16 @@ export class Widget {
     destroy () { // ():void
         this.indexActive = null; // the active span index
         this.indexSelected = this.selected(); // the selected span index
-        const wrapEl = this.el.parentNode;
-        if (wrapEl.classList.contains(this.props.classNames.base)) {
+        const parentEl = this.el.parentNode;
+        if (parentEl.classList.contains(this.props.classNames.base)) {
+            if (this.props.prebuilt) {
+                this.widgetEl = parentEl.querySelector('.' + this.props.classNames.base + '--stars')
+                parentEl.classList.remove(this.props.classNames.base + '--' + this.direction);
+                delete parentEl.dataset.starRating
+            } else {
+                parentEl.parentNode.replaceChild(this.el, parentEl);
+            }
             this.handleEvents('remove');
-            wrapEl.parentNode.replaceChild(this.el, wrapEl);
         }
     }
 
