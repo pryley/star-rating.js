@@ -196,6 +196,10 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v4.1.1 - [2021-02-14]`
+
+- Removed v3 compatibility mode when using the `prebuilt` option
+
 `v4.1.0 - [2021-02-13]`
 
 - Added the `prebuilt` option
