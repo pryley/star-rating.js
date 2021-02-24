@@ -22,6 +22,9 @@ export class Widget {
         this.ticking = false;
         this.values = values(el);
         this.widgetEl = null;
+        if (this.el.widget) {
+            this.el.widget.destroy(); // remove any stale event listeners
+        }
         if (inRange(this.values.length, 1, this.props.maxStars)) {
             this.build();
         } else {
@@ -34,6 +37,7 @@ export class Widget {
         this.buildWidget();
         this.selectValue((this.indexSelected = this.selected()), false); // set the initial value but do not trigger change event
         this.handleEvents('add');
+        this.el.widget = this; // store a reference to this widget on the SELECT so that we can remove stale event listeners
     }
 
     buildWidget () { // ():void
@@ -95,6 +99,7 @@ export class Widget {
             }
             this.handleEvents('remove');
         }
+        delete this.el.widget // remove the widget reference
     }
 
     eventListener (el, action, events, items) { // (HTMLElement, string, array, object):void

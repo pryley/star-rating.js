@@ -21,7 +21,10 @@ class StarRating {
     buildWidgets(selector, props) { // (HTMLSelectElement|NodeList|string, object):void
         this.queryElements(selector).forEach(el => {
             const options = merge(defaults, props, JSON.parse(el.getAttribute('data-options')));
-            if ('SELECT' === el.tagName && (options.prebuilt || !el.parentNode.classList.contains(options.classNames.base))) {
+            if ('SELECT' === el.tagName && !el.widget) { // check for an existing Widget reference
+                if (!options.prebuilt && el.parentNode.classList.contains(options.classNames.base)) {
+                    this.unwrap(el);
+                }
                 this.widgets.push(new Widget(el, options));
             }
         });
@@ -46,6 +49,13 @@ class StarRating {
 
     rebuild () { // ():void
         this.widgets.forEach(widget => widget.build());
+    }
+
+    unwrap (el) {
+        const removeEl = el.parentNode;
+        const parentEl = removeEl.parentNode;
+        parentEl.insertBefore(el, removeEl);
+        parentEl.removeChild(removeEl);
     }
 }
 
