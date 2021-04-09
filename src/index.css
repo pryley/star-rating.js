@@ -68,6 +68,7 @@
     display: block;
     height: 100%;
     outline: 1px solid transparent;
+    pointer-events: none;
     position: absolute;
     width: 100%;
 }
