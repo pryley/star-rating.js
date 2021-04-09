@@ -1,7 +1,7 @@
 {
   "name": "star-rating.js",
   "description": "This zero-dependency ES6 module transforms a SELECT into a dynamic star rating element.",
-  "version": "4.1.2",
+  "version": "4.1.3",
   "author": {
     "name": "Paul Ryley",
     "email": "paul@geminilabs.io",

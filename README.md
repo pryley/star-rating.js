@@ -196,6 +196,14 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v4.1.3 - [2021-04-09]`
+
+- Fixed focus state with pointer events
+
+`v4.1.2 - [2021-02-24]`
+
+- Fixed error when initialising more than once
+
 `v4.1.1 - [2021-02-14]`
 
 - Removed v3 compatibility mode when using the `prebuilt` option
