@@ -167,11 +167,12 @@ export class Widget {
     }
 
     onReset () { // ():void
-        this.selectValue(this.el.querySelector('[selected]')?.index || -1, false); // do not trigger change event
+        const index = this.valueIndex(this.el.querySelector('[selected]')?.value)
+        this.selectValue(index || -1, false); // do not trigger change event
     }
 
     selected () { // ():int
-        return this.values.findIndex(val => val.value === +this.el.value); // get the selected span index
+        return this.valueIndex(this.el.value); // get the selected span index
     }
 
     selectValue (index, triggerChangeEvent) { // (int, bool):void
@@ -182,5 +183,9 @@ export class Widget {
         } else {
             this.el.dispatchEvent(new Event('change'));
         }
+    }
+
+    valueIndex (value) {
+        return this.values.findIndex(val => val.value === +value);
     }
 }
