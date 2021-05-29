@@ -196,6 +196,10 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v4.1.4 - [2021-05-29]`
+
+- Fixed selected index on reset
+
 `v4.1.3 - [2021-04-09]`
 
 - Fixed focus state with pointer events
