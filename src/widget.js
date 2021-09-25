@@ -72,6 +72,7 @@ export class Widget {
                 addRemoveClass(el, i <= index, this.props.classNames.active);
                 addRemoveClass(el, i === this.indexSelected, this.props.classNames.selected);
             });
+            this.widgetEl.setAttribute('data-rating', index + 1);
             if ('function' !== typeof this.props.stars && !this.props.prebuilt) { // @v3 compat
                 this.widgetEl.classList.remove('s' + (10 * (this.indexActive + 1)));
                 this.widgetEl.classList.add('s' + (10 * (index + 1)));
