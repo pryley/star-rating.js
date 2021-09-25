@@ -196,6 +196,10 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v4.1.5 - [2021-09-25]`
+
+- Added a data-rating attribute on the widget which holds the transient/selected rating
+
 `v4.1.4 - [2021-05-29]`
 
 - Fixed selected index on reset
