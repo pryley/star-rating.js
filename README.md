@@ -196,6 +196,10 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v4.2.0 - [2022-03-24]`
+
+- Perform a complete teardown on destroy allowing a rebuild from the selector in a new DOM
+
 `v4.1.5 - [2021-09-25]`
 
 - Added a data-rating attribute on the widget which holds the transient/selected rating

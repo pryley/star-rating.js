@@ -13,14 +13,16 @@ import { Widget } from './widget'
 class StarRating {
     constructor (selector, props) { // (HTMLSelectElement|NodeList|string, object):void
         this.destroy = this.destroy.bind(this);
-        this.rebuild = this.rebuild.bind(this);
+        this.props = props;
+        this.rebuild = this.build.bind(this);
+        this.selector = selector;
         this.widgets = [];
-        this.buildWidgets(selector, props);
+        this.build();
     }
 
-    buildWidgets(selector, props) { // (HTMLSelectElement|NodeList|string, object):void
-        this.queryElements(selector).forEach(el => {
-            const options = merge(defaults, props, JSON.parse(el.getAttribute('data-options')));
+    build() { // (HTMLSelectElement|NodeList|string, object):void
+        this.queryElements(this.selector).forEach(el => {
+            const options = merge(defaults, this.props, JSON.parse(el.getAttribute('data-options')));
             if ('SELECT' === el.tagName && !el.widget) { // check for an existing Widget reference
                 if (!options.prebuilt && el.parentNode.classList.contains(options.classNames.base)) {
                     this.unwrap(el);
@@ -32,6 +34,7 @@ class StarRating {
 
     destroy () { // ():void
         this.widgets.forEach(widget => widget.destroy());
+        this.widgets = [];
     }
 
     queryElements (selector) { // (HTMLSelectElement|NodeList|string):array
@@ -48,7 +51,8 @@ class StarRating {
     }
 
     rebuild () { // ():void
-        this.widgets.forEach(widget => widget.build());
+        this.destroy();
+        this.build();
     }
 
     unwrap (el) {

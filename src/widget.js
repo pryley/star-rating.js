@@ -78,7 +78,7 @@ export class Widget {
                 this.widgetEl.classList.add('s' + (10 * (index + 1)));
             }
             if (this.props.tooltip) {
-                const label = index < 0 ? this.props.tooltip : this.values[index].text;
+                const label = index < 0 ? this.props.tooltip : this.values[index]?.text;
                 this.widgetEl.setAttribute('aria-label', label);
             }
             this.indexActive = index;
