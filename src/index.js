@@ -1,6 +1,6 @@
 /**!
  * Star Rating
- * @version: 4.1.5
+ * @version: 4.2.1
  * @author: Paul Ryley (http://geminilabs.io)
  * @url: https://github.com/pryley/star-rating.js
  * @license: MIT
@@ -51,8 +51,11 @@ class StarRating {
     }
 
     rebuild () { // ():void
-        this.destroy();
-        this.build();
+        try { // hack to avoid race condition
+            this.destroy();
+        } finally {
+            this.build();
+        }
     }
 
     unwrap (el) {
