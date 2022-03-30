@@ -196,6 +196,10 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v4.2.2 - [2022-03-30]`
+
+- Fixed rebuild function
+
 `v4.2.0 - [2022-03-24]`
 
 - Perform a complete teardown on destroy allowing a rebuild from the selector in a new DOM
