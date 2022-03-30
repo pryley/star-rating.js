@@ -14,7 +14,7 @@ class StarRating {
     constructor (selector, props) { // (HTMLSelectElement|NodeList|string, object):void
         this.destroy = this.destroy.bind(this);
         this.props = props;
-        this.rebuild = this.build.bind(this);
+        this.rebuild = this.rebuild.bind(this);
         this.selector = selector;
         this.widgets = [];
         this.build();
