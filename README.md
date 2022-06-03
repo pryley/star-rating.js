@@ -196,6 +196,10 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v4.2.3 - [2022-06-03]`
+
+- Disabled pointer-events on tooltip
+
 `v4.2.2 - [2022-03-30]`
 
 - Fixed rebuild function
