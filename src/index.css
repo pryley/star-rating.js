@@ -87,6 +87,7 @@
     bottom: auto;
     box-sizing: border-box;
     left: 100%;
+    pointer-events: none;
     position: absolute;
     top: 50%;
     transform-origin: top;
