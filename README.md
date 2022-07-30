@@ -196,6 +196,10 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v4.2.5 - [2022-07-30]`
+
+- Fixed active index when stars have gaps between them
+
 `v4.2.3 - [2022-06-03]`
 
 - Disabled pointer-events on tooltip
