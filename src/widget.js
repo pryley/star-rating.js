@@ -123,7 +123,10 @@ export class Widget {
     indexFromEvent (ev) { // (MouseEvent|TouchEvent):void
         const origin = ev.touches?.[0] || ev.changedTouches?.[0] || ev;
         const el = document.elementFromPoint(origin.clientX, origin.clientY);
-        return [].slice.call(el.parentNode.children).indexOf(el);
+        if (el.parentNode === this.widgetEl) {
+            return [].slice.call(el.parentNode.children).indexOf(el);
+        }
+        return this.indexActive;
     }
 
     onChange () { // ():void
