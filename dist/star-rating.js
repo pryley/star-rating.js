@@ -1,3 +1,10 @@
+/**!
+ * Star Rating
+ * @version: 4.2.6
+ * @author: Paul Ryley (http://geminilabs.io)
+ * @url: https://github.com/pryley/star-rating.js
+ * @license: MIT
+ */
 var StarRating = (function () {
   'use strict';
 

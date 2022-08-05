@@ -196,6 +196,11 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
+`v4.2.6 - [2022-08-05]`
+
+- Fixed left/right keydown events
+- Optimised CSS
+
 `v4.2.5 - [2022-07-30]`
 
 - Fixed active index when stars have gaps between them
