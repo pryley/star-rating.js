@@ -196,8 +196,9 @@ All changes should be committed to the files in `src/`.
 
 ## Changelog
 
-`v4.2.6 - [2022-08-05]`
+`v4.3.0 - [2022-08-05]`
 
+- Added module and exports fields to package.json
 - Fixed left/right keydown events
 - Optimised CSS
 
