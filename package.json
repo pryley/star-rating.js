@@ -29,6 +29,8 @@
     "jshint": "^2.11.1",
     "postcss-custom-properties": "^11.0.0",
     "postcss-hexrgba": "^2.0.1",
+    "postcss-import": "^14.1.0",
+    "postcss-preset-env": "^7.7.2",
     "postcss-selector-namespace": "github:pryley/postcss-selector-namespace#v3.0.2-beta",
     "pump": "^3.0.0",
     "rollup": "^2.36.1",
@@ -38,11 +40,27 @@
     "yargs": "^15.4.1"
   },
   "scripts": {
-    "build": "NODE_ENV=production rollup -c",
-    "watch": "rollup -cw"
+    "build": "NODE_ENV=production npx rollup -c",
+    "watch": "npx rollup -cw"
   },
-  "main": "index.js",
+  "main": "dist/star-rating.cjs.js",
+  "module": "dist/star-rating.esm.js",
   "style": "src/index.css",
+  "files": [
+    "dist",
+    "img",
+    "src"
+  ],
+  "exports": {
+    ".": {
+      "require": "./dist/star-rating.cjs.js",
+      "import": "./dist/star-rating.esm.js",
+      "default": "./dist/star-rating.esm.js"
+    },
+    "./css": "./dist/star-rating.min.css",
+    "./dist/": "./dist/",
+    "./package.json": "./package.json"
+  },
   "dependencies": {
     "detect-it": "^4.0.0"
   }

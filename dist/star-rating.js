@@ -1,1 +1,483 @@
-var StarRating=function(){"use strict";function e(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function t(e,t){for(var i=0;i<t.length;i++){var s=t[i];s.enumerable=s.enumerable||!1,s.configurable=!0,"value"in s&&(s.writable=!0),Object.defineProperty(e,s.key,s)}}function i(e,i,s){return i&&t(e.prototype,i),s&&t(e,s),e}var s={classNames:{active:"gl-active",base:"gl-star-rating",selected:"gl-selected"},clearable:!0,maxStars:10,prebuilt:!1,stars:null,tooltip:"Select a Rating"},n=function(e,t,i){e.classList[t?"add":"remove"](i)},a=function(e){var t=document.createElement("span");for(var i in e=e||{})t.setAttribute(i,e[i]);return t},l=function(e,t,i){var s=a(i);return e.parentNode.insertBefore(s,t?e.nextSibling:e),s},r=function e(){for(var t=arguments.length,i=new Array(t),s=0;s<t;s++)i[s]=arguments[s];var n={};return i.forEach((function(t){Object.keys(t||{}).forEach((function(s){if(void 0!==i[0][s]){var a=t[s];"Object"!==o(a)||"Object"!==o(n[s])?n[s]=a:n[s]=e(n[s],a)}}))})),n},o=function(e){return{}.toString.call(e).slice(8,-1)},h=function(){function t(i,s){var n,a,l;e(this,t),this.direction=window.getComputedStyle(i,null).getPropertyValue("direction"),this.el=i,this.events={change:this.onChange.bind(this),keydown:this.onKeyDown.bind(this),mousedown:this.onPointerDown.bind(this),mouseleave:this.onPointerLeave.bind(this),mousemove:this.onPointerMove.bind(this),reset:this.onReset.bind(this),touchend:this.onPointerDown.bind(this),touchmove:this.onPointerMove.bind(this)},this.indexActive=null,this.indexSelected=null,this.props=s,this.tick=null,this.ticking=!1,this.values=function(e){var t=[];return[].forEach.call(e.options,(function(e){var i=parseInt(e.value,10)||0;i>0&&t.push({index:e.index,text:e.text,value:i})})),t.sort((function(e,t){return e.value-t.value}))}(i),this.widgetEl=null,this.el.widget&&this.el.widget.destroy(),n=this.values.length,a=1,l=this.props.maxStars,/^\d+$/.test(n)&&a<=n&&n<=l?this.build():this.destroy()}return i(t,[{key:"build",value:function(){this.destroy(),this.buildWidget(),this.selectValue(this.indexSelected=this.selected(),!1),this.handleEvents("add"),this.el.widget=this}},{key:"buildWidget",value:function(){var e,t,i=this;this.props.prebuilt?(e=this.el.parentNode,t=e.querySelector("."+this.props.classNames.base+"--stars")):((e=l(this.el,!1,{class:this.props.classNames.base})).appendChild(this.el),t=l(this.el,!0,{class:this.props.classNames.base+"--stars"}),this.values.forEach((function(e,s){var n=a({"data-index":s,"data-value":e.value});"function"==typeof i.props.stars&&i.props.stars.call(i,n,e,s),[].forEach.call(n.children,(function(e){return e.style.pointerEvents="none"})),t.innerHTML+=n.outerHTML}))),e.dataset.starRating="",e.classList.add(this.props.classNames.base+"--"+this.direction),this.props.tooltip&&t.setAttribute("role","tooltip"),this.widgetEl=t}},{key:"changeIndexTo",value:function(e,t){var i=this;if(this.indexActive!==e||t){if([].forEach.call(this.widgetEl.children,(function(t,s){n(t,s<=e,i.props.classNames.active),n(t,s===i.indexSelected,i.props.classNames.selected)})),this.widgetEl.setAttribute("data-rating",e+1),"function"==typeof this.props.stars||this.props.prebuilt||(this.widgetEl.classList.remove("s"+10*(this.indexActive+1)),this.widgetEl.classList.add("s"+10*(e+1))),this.props.tooltip){var s,a=e<0?this.props.tooltip:null===(s=this.values[e])||void 0===s?void 0:s.text;this.widgetEl.setAttribute("aria-label",a)}this.indexActive=e}this.ticking=!1}},{key:"destroy",value:function(){this.indexActive=null,this.indexSelected=this.selected();var e=this.el.parentNode;e.classList.contains(this.props.classNames.base)&&(this.props.prebuilt?(this.widgetEl=e.querySelector("."+this.props.classNames.base+"--stars"),e.classList.remove(this.props.classNames.base+"--"+this.direction),delete e.dataset.starRating):e.parentNode.replaceChild(this.el,e),this.handleEvents("remove")),delete this.el.widget}},{key:"eventListener",value:function(e,t,i,s){var n=this;i.forEach((function(i){return e[t+"EventListener"](i,n.events[i],s||!1)}))}},{key:"handleEvents",value:function(e){var t=this.el.closest("form");t&&"FORM"===t.tagName&&this.eventListener(t,e,["reset"]),this.eventListener(this.el,e,["change"]),"add"===e&&this.el.disabled||(this.eventListener(this.el,e,["keydown"]),this.eventListener(this.widgetEl,e,["mousedown","mouseleave","mousemove","touchend","touchmove"],!1))}},{key:"indexFromEvent",value:function(e){var t,i,s=(null===(t=e.touches)||void 0===t?void 0:t[0])||(null===(i=e.changedTouches)||void 0===i?void 0:i[0])||e,n=document.elementFromPoint(s.clientX,s.clientY);return n.parentNode===this.widgetEl?[].slice.call(n.parentNode.children).indexOf(n):this.indexActive}},{key:"onChange",value:function(){this.changeIndexTo(this.selected(),!0)}},{key:"onKeyDown",value:function(e){var t=e.key.slice(5);if(~["Left","Right"].indexOf(t)){var i="Left"===t?-1:1;"rtl"===this.direction&&(i*=-1);var s=this.values.length-1,n=Math.min(Math.max(this.selected()+i,-1),s);this.selectValue(n,!0)}}},{key:"onPointerDown",value:function(e){e.preventDefault();var t=this.indexFromEvent(e);this.props.clearable&&t===this.indexSelected&&(t=-1),this.selectValue(t,!0)}},{key:"onPointerLeave",value:function(e){var t=this;e.preventDefault(),cancelAnimationFrame(this.tick),requestAnimationFrame((function(){return t.changeIndexTo(t.indexSelected)}))}},{key:"onPointerMove",value:function(e){var t=this;e.preventDefault(),this.ticking||(this.tick=requestAnimationFrame((function(){return t.changeIndexTo(t.indexFromEvent(e))})),this.ticking=!0)}},{key:"onReset",value:function(){var e,t=this.valueIndex(null===(e=this.el.querySelector("[selected]"))||void 0===e?void 0:e.value);this.selectValue(t||-1,!1)}},{key:"selected",value:function(){return this.valueIndex(this.el.value)}},{key:"selectValue",value:function(e,t){var i;this.el.value=(null===(i=this.values[e])||void 0===i?void 0:i.value)||"",this.indexSelected=this.selected(),!1===t?this.changeIndexTo(this.selected(),!0):this.el.dispatchEvent(new Event("change"))}},{key:"valueIndex",value:function(e){return this.values.findIndex((function(t){return t.value===+e}))}}]),t}();return function(){function t(i,s){e(this,t),this.destroy=this.destroy.bind(this),this.props=s,this.rebuild=this.rebuild.bind(this),this.selector=i,this.widgets=[],this.build()}return i(t,[{key:"build",value:function(){var e=this;this.queryElements(this.selector).forEach((function(t){var i=r(s,e.props,JSON.parse(t.getAttribute("data-options")));"SELECT"!==t.tagName||t.widget||(!i.prebuilt&&t.parentNode.classList.contains(i.classNames.base)&&e.unwrap(t),e.widgets.push(new h(t,i)))}))}},{key:"destroy",value:function(){this.widgets.forEach((function(e){return e.destroy()})),this.widgets=[]}},{key:"queryElements",value:function(e){return"HTMLSelectElement"===o(e)?[e]:"NodeList"===o(e)?[].slice.call(e):"String"===o(e)?[].slice.call(document.querySelectorAll(e)):[]}},{key:"rebuild",value:function(){this.destroy(),this.build()}},{key:"unwrap",value:function(e){var t=e.parentNode,i=t.parentNode;i.insertBefore(e,t),i.removeChild(t)}}]),t}()}();
+var StarRating = (function () {
+  'use strict';
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
+  }
+
+  var defaults = {
+    classNames: {
+      active: 'gl-active',
+      base: 'gl-star-rating',
+      selected: 'gl-selected'
+    },
+    clearable: true,
+    maxStars: 10,
+    prebuilt: false,
+    stars: null,
+    tooltip: 'Select a Rating'
+  };
+
+  var addRemoveClass = function addRemoveClass(el, bool, className) {
+    el.classList[bool ? 'add' : 'remove'](className);
+  };
+  var createSpanEl = function createSpanEl(attributes) {
+    var el = document.createElement('span');
+    attributes = attributes || {};
+
+    for (var key in attributes) {
+      el.setAttribute(key, attributes[key]);
+    }
+
+    return el;
+  };
+  var inRange = function inRange(value, min, max) {
+    return /^\d+$/.test(value) && min <= value && value <= max;
+  };
+  var insertSpanEl = function insertSpanEl(el, after, attributes) {
+    var newEl = createSpanEl(attributes);
+    el.parentNode.insertBefore(newEl, after ? el.nextSibling : el);
+    return newEl;
+  };
+  var merge = function merge() {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    // adapted from https://github.com/firstandthird/aug
+    var results = {};
+    args.forEach(function (prop) {
+      Object.keys(prop || {}).forEach(function (propName) {
+        if (args[0][propName] === undefined) return; // restrict keys to the defaults
+
+        var propValue = prop[propName];
+
+        if (type(propValue) === 'Object' && type(results[propName]) === 'Object') {
+          results[propName] = merge(results[propName], propValue);
+          return;
+        }
+
+        results[propName] = propValue;
+      });
+    });
+    return results;
+  };
+  var type = function type(value) {
+    return {}.toString.call(value).slice(8, -1);
+  };
+  var values = function values(selectEl) {
+    var values = [];
+    [].forEach.call(selectEl.options, function (el) {
+      var value = parseInt(el.value, 10) || 0;
+
+      if (value > 0) {
+        values.push({
+          index: el.index,
+          text: el.text,
+          value: value
+        });
+      }
+    });
+    return values.sort(function (a, b) {
+      return a.value - b.value;
+    });
+  };
+
+  var Widget = /*#__PURE__*/function () {
+    function Widget(el, props) {
+      _classCallCheck(this, Widget);
+
+      // (HTMLElement, object):void
+      this.direction = window.getComputedStyle(el, null).getPropertyValue('direction');
+      this.el = el;
+      this.events = {
+        change: this.onChange.bind(this),
+        keydown: this.onKeyDown.bind(this),
+        mousedown: this.onPointerDown.bind(this),
+        mouseleave: this.onPointerLeave.bind(this),
+        mousemove: this.onPointerMove.bind(this),
+        reset: this.onReset.bind(this),
+        touchend: this.onPointerDown.bind(this),
+        touchmove: this.onPointerMove.bind(this)
+      };
+      this.indexActive = null; // the active span index
+
+      this.indexSelected = null; // the selected span index
+
+      this.props = props;
+      this.tick = null;
+      this.ticking = false;
+      this.values = values(el);
+      this.widgetEl = null;
+
+      if (this.el.widget) {
+        this.el.widget.destroy(); // remove any stale event listeners
+      }
+
+      if (inRange(this.values.length, 1, this.props.maxStars)) {
+        this.build();
+      } else {
+        this.destroy();
+      }
+    }
+
+    _createClass(Widget, [{
+      key: "build",
+      value: function build() {
+        // ():void
+        this.destroy();
+        this.buildWidget();
+        this.selectValue(this.indexSelected = this.selected(), false); // set the initial value but do not trigger change event
+
+        this.handleEvents('add');
+        this.el.widget = this; // store a reference to this widget on the SELECT so that we can remove stale event listeners
+      }
+    }, {
+      key: "buildWidget",
+      value: function buildWidget() {
+        var _this = this;
+
+        // ():void
+        var parentEl, widgetEl;
+
+        if (this.props.prebuilt) {
+          parentEl = this.el.parentNode;
+          widgetEl = parentEl.querySelector('.' + this.props.classNames.base + '--stars');
+        } else {
+          parentEl = insertSpanEl(this.el, false, {
+            "class": this.props.classNames.base
+          });
+          parentEl.appendChild(this.el);
+          widgetEl = insertSpanEl(this.el, true, {
+            "class": this.props.classNames.base + '--stars'
+          });
+          this.values.forEach(function (item, index) {
+            var el = createSpanEl({
+              'data-index': index,
+              'data-value': item.value
+            });
+
+            if ('function' === typeof _this.props.stars) {
+              _this.props.stars.call(_this, el, item, index);
+            }
+
+            [].forEach.call(el.children, function (el) {
+              return el.style.pointerEvents = 'none';
+            });
+            widgetEl.innerHTML += el.outerHTML;
+          });
+        }
+
+        parentEl.dataset.starRating = '';
+        parentEl.classList.add(this.props.classNames.base + '--' + this.direction);
+
+        if (this.props.tooltip) {
+          widgetEl.setAttribute('role', 'tooltip');
+        }
+
+        this.widgetEl = widgetEl;
+      }
+    }, {
+      key: "changeIndexTo",
+      value: function changeIndexTo(index, force) {
+        var _this2 = this;
+
+        // (int):void
+        if (this.indexActive !== index || force) {
+          [].forEach.call(this.widgetEl.children, function (el, i) {
+            // i starts at zero
+            addRemoveClass(el, i <= index, _this2.props.classNames.active);
+            addRemoveClass(el, i === _this2.indexSelected, _this2.props.classNames.selected);
+          });
+          this.widgetEl.setAttribute('data-rating', index + 1);
+
+          if ('function' !== typeof this.props.stars && !this.props.prebuilt) {
+            // @v3 compat
+            this.widgetEl.classList.remove('s' + 10 * (this.indexActive + 1));
+            this.widgetEl.classList.add('s' + 10 * (index + 1));
+          }
+
+          if (this.props.tooltip) {
+            var _this$values$index;
+
+            var label = index < 0 ? this.props.tooltip : (_this$values$index = this.values[index]) === null || _this$values$index === void 0 ? void 0 : _this$values$index.text;
+            this.widgetEl.setAttribute('aria-label', label);
+          }
+
+          this.indexActive = index;
+        }
+
+        this.ticking = false;
+      }
+    }, {
+      key: "destroy",
+      value: function destroy() {
+        // ():void
+        this.indexActive = null; // the active span index
+
+        this.indexSelected = this.selected(); // the selected span index
+
+        var parentEl = this.el.parentNode;
+
+        if (parentEl.classList.contains(this.props.classNames.base)) {
+          if (this.props.prebuilt) {
+            this.widgetEl = parentEl.querySelector('.' + this.props.classNames.base + '--stars');
+            parentEl.classList.remove(this.props.classNames.base + '--' + this.direction);
+            delete parentEl.dataset.starRating;
+          } else {
+            parentEl.parentNode.replaceChild(this.el, parentEl);
+          }
+
+          this.handleEvents('remove');
+        }
+
+        delete this.el.widget; // remove the widget reference
+      }
+    }, {
+      key: "eventListener",
+      value: function eventListener(el, action, events, items) {
+        var _this3 = this;
+
+        // (HTMLElement, string, array, object):void
+        events.forEach(function (ev) {
+          return el[action + 'EventListener'](ev, _this3.events[ev], items || false);
+        });
+      }
+    }, {
+      key: "handleEvents",
+      value: function handleEvents(action) {
+        // (string):void
+        var formEl = this.el.closest('form');
+
+        if (formEl && formEl.tagName === 'FORM') {
+          this.eventListener(formEl, action, ['reset']);
+        }
+
+        this.eventListener(this.el, action, ['change']); // always trigger the change event, even when SELECT is disabled
+
+        if ('add' === action && this.el.disabled) return;
+        this.eventListener(this.el, action, ['keydown']);
+        this.eventListener(this.widgetEl, action, ['mousedown', 'mouseleave', 'mousemove', 'touchend', 'touchmove'],  false);
+      }
+    }, {
+      key: "indexFromEvent",
+      value: function indexFromEvent(ev) {
+        var _ev$touches, _ev$changedTouches;
+
+        // (MouseEvent|TouchEvent):void
+        var origin = ((_ev$touches = ev.touches) === null || _ev$touches === void 0 ? void 0 : _ev$touches[0]) || ((_ev$changedTouches = ev.changedTouches) === null || _ev$changedTouches === void 0 ? void 0 : _ev$changedTouches[0]) || ev;
+        var el = document.elementFromPoint(origin.clientX, origin.clientY);
+
+        if (el.parentNode === this.widgetEl) {
+          return [].slice.call(el.parentNode.children).indexOf(el);
+        }
+
+        return this.indexActive;
+      }
+    }, {
+      key: "onChange",
+      value: function onChange() {
+        // ():void
+        this.changeIndexTo(this.selected(), true);
+      }
+    }, {
+      key: "onKeyDown",
+      value: function onKeyDown(ev) {
+        // (KeyboardEvent):void
+        var key = ev.key.slice(5);
+        if (!~['Left', 'Right'].indexOf(key)) return;
+        var increment = key === 'Left' ? -1 : 1;
+
+        if (this.direction === 'rtl') {
+          increment *= -1;
+        }
+
+        var maxIndex = this.values.length - 1;
+        var minIndex = -1;
+        var index = Math.min(Math.max(this.selected() + increment, minIndex), maxIndex);
+        this.selectValue(index, true); // trigger change event
+      }
+    }, {
+      key: "onPointerDown",
+      value: function onPointerDown(ev) {
+        // (MouseEvent|TouchEvent):void
+        ev.preventDefault(); // this.el.focus(); // highlight the rating field
+
+        var index = this.indexFromEvent(ev);
+
+        if (this.props.clearable && index === this.indexSelected) {
+          index = -1; // remove the value
+        }
+
+        this.selectValue(index, true); // trigger change event
+      }
+    }, {
+      key: "onPointerLeave",
+      value: function onPointerLeave(ev) {
+        var _this4 = this;
+
+        // (MouseEvent):void
+        ev.preventDefault();
+        cancelAnimationFrame(this.tick);
+        requestAnimationFrame(function () {
+          return _this4.changeIndexTo(_this4.indexSelected);
+        });
+      }
+    }, {
+      key: "onPointerMove",
+      value: function onPointerMove(ev) {
+        var _this5 = this;
+
+        // (MouseEvent|TouchEvent):void
+        ev.preventDefault();
+
+        if (!this.ticking) {
+          this.tick = requestAnimationFrame(function () {
+            return _this5.changeIndexTo(_this5.indexFromEvent(ev));
+          });
+          this.ticking = true;
+        }
+      }
+    }, {
+      key: "onReset",
+      value: function onReset() {
+        var _this$el$querySelecto;
+
+        // ():void
+        var index = this.valueIndex((_this$el$querySelecto = this.el.querySelector('[selected]')) === null || _this$el$querySelecto === void 0 ? void 0 : _this$el$querySelecto.value);
+        this.selectValue(index || -1, false); // do not trigger change event
+      }
+    }, {
+      key: "selected",
+      value: function selected() {
+        // ():int
+        return this.valueIndex(this.el.value); // get the selected span index
+      }
+    }, {
+      key: "selectValue",
+      value: function selectValue(index, triggerChangeEvent) {
+        var _this$values$index2;
+
+        // (int, bool):void
+        this.el.value = ((_this$values$index2 = this.values[index]) === null || _this$values$index2 === void 0 ? void 0 : _this$values$index2.value) || ''; // first set the value
+
+        this.indexSelected = this.selected(); // get the actual index from the selected value
+
+        if (false === triggerChangeEvent) {
+          this.changeIndexTo(this.selected(), true);
+        } else {
+          this.el.dispatchEvent(new Event('change'));
+        }
+      }
+    }, {
+      key: "valueIndex",
+      value: function valueIndex(value) {
+        return this.values.findIndex(function (val) {
+          return val.value === +value;
+        });
+      }
+    }]);
+
+    return Widget;
+  }();
+
+  var StarRating = /*#__PURE__*/function () {
+    function StarRating(selector, props) {
+      _classCallCheck(this, StarRating);
+
+      // (HTMLSelectElement|NodeList|string, object):void
+      this.destroy = this.destroy.bind(this);
+      this.props = props;
+      this.rebuild = this.rebuild.bind(this);
+      this.selector = selector;
+      this.widgets = [];
+      this.build();
+    }
+
+    _createClass(StarRating, [{
+      key: "build",
+      value: function build() {
+        var _this = this;
+
+        // (HTMLSelectElement|NodeList|string, object):void
+        this.queryElements(this.selector).forEach(function (el) {
+          var options = merge(defaults, _this.props, JSON.parse(el.getAttribute('data-options')));
+
+          if ('SELECT' === el.tagName && !el.widget) {
+            // check for an existing Widget reference
+            if (!options.prebuilt && el.parentNode.classList.contains(options.classNames.base)) {
+              _this.unwrap(el);
+            }
+
+            _this.widgets.push(new Widget(el, options));
+          }
+        });
+      }
+    }, {
+      key: "destroy",
+      value: function destroy() {
+        // ():void
+        this.widgets.forEach(function (widget) {
+          return widget.destroy();
+        });
+        this.widgets = [];
+      }
+    }, {
+      key: "queryElements",
+      value: function queryElements(selector) {
+        // (HTMLSelectElement|NodeList|string):array
+        if ('HTMLSelectElement' === type(selector)) {
+          return [selector];
+        }
+
+        if ('NodeList' === type(selector)) {
+          return [].slice.call(selector);
+        }
+
+        if ('String' === type(selector)) {
+          return [].slice.call(document.querySelectorAll(selector));
+        }
+
+        return [];
+      }
+    }, {
+      key: "rebuild",
+      value: function rebuild() {
+        // ():void
+        this.destroy();
+        this.build();
+      }
+    }, {
+      key: "unwrap",
+      value: function unwrap(el) {
+        var removeEl = el.parentNode;
+        var parentEl = removeEl.parentNode;
+        parentEl.insertBefore(el, removeEl);
+        parentEl.removeChild(removeEl);
+      }
+    }]);
+
+    return StarRating;
+  }();
+
+  return StarRating;
+
+}());

@@ -578,19 +578,8 @@ select {
   margin-left: 0;
 }
 
-
-/*!
- * Star Rating
- * @version: 4.0.0
- * @author: Paul Ryley (http://geminilabs.io)
- * @url: https://github.com/pryley/star-rating.js
- * @license: MIT
- */
-
 :root {
-    --gl-star-color: #fdd835;
     --gl-star-size: 24px;
-    --gl-tooltip-color: #fff;
 }
 
 @media screen and (min-width: 35em) {

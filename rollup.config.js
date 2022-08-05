@@ -9,10 +9,28 @@ const production = process.env.NODE_ENV === 'production';
 export default [
   {
     input: 'src/index.js',
-    output: {
-      file: 'index.js',
-      format: 'cjs',
-    },
+    output: [
+      {
+        file: 'dist/star-rating.cjs.js',
+        format: 'cjs',
+        exports: 'auto',
+      },
+      {
+        file: 'dist/star-rating.esm.js',
+        format: 'es',
+      },
+      {
+        name: 'StarRating',
+        file: 'dist/star-rating.js',
+        format: 'iife',
+      },
+      {
+        name: 'StarRating',
+        file: 'dist/star-rating.min.js',
+        format: 'iife',
+        plugins: [terser()],
+      },
+    ],
     plugins: [
       resolve(),
       filesize(),
@@ -24,28 +42,6 @@ export default [
           }],
         ],
       }),
-      terser(),
-    ]
-  },
-  {
-    input: 'src/index.js',
-    output: {
-      name: 'StarRating',
-      file: 'dist/star-rating.js',
-      format: 'iife',
-    },
-    plugins: [
-      resolve(),
-      filesize(),
-      babel({
-        babelHelpers: 'bundled',
-        presets: [
-          ['@babel/preset-env', {
-            include: ['@babel/plugin-proposal-optional-chaining'],
-          }],
-        ],
-      }),
-      production && terser(),
     ]
   },
   {
@@ -57,10 +53,32 @@ export default [
       filesize(),
       postcss({
         extract: true,
-        minimize: production,
-        plugins: [
-          // require('postcss-custom-properties')({preserve: false}),
-        ],
+      }),
+    ]
+  },
+  {
+    input: 'src/index.css',
+    output: {
+      file: 'dist/star-rating.min.css',
+    },
+    plugins: [
+      filesize(),
+      postcss({
+        extract: true,
+        minimize: true,
+      }),
+    ]
+  },
+  {
+    input: 'demo/styles.css',
+    output: {
+      file: 'demo/styles.min.css',
+    },
+    plugins: [
+      filesize(),
+      postcss({
+        extract: true,
+        minimize: true,
       }),
     ]
   },
