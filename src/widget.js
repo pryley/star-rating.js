@@ -136,6 +136,7 @@ export class Widget {
     onKeyDown (ev) { // (KeyboardEvent):void
         const key = ev.key.slice(5);
         if (!~['Left', 'Right'].indexOf(key)) return;
+        ev.preventDefault();
         let increment = key === 'Left' ? -1 : 1;
         if (this.direction === 'rtl') {
             increment *= -1;
@@ -180,7 +181,7 @@ export class Widget {
     }
 
     selectValue (index, triggerChangeEvent) { // (int, bool):void
-        this.el.value = this.values[index]?.value || ''; // first set the value
+        this.el.value = this.values[index]?.value || ''; // first set the new value
         this.indexSelected = this.selected(); // get the actual index from the selected value
         if (false === triggerChangeEvent) {
             this.changeIndexTo(this.selected(), true);

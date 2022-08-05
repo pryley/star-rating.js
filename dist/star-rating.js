@@ -304,6 +304,7 @@ var StarRating = (function () {
         // (KeyboardEvent):void
         var key = ev.key.slice(5);
         if (!~['Left', 'Right'].indexOf(key)) return;
+        ev.preventDefault();
         var increment = key === 'Left' ? -1 : 1;
 
         if (this.direction === 'rtl') {
@@ -377,7 +378,7 @@ var StarRating = (function () {
         var _this$values$index2;
 
         // (int, bool):void
-        this.el.value = ((_this$values$index2 = this.values[index]) === null || _this$values$index2 === void 0 ? void 0 : _this$values$index2.value) || ''; // first set the value
+        this.el.value = ((_this$values$index2 = this.values[index]) === null || _this$values$index2 === void 0 ? void 0 : _this$values$index2.value) || ''; // first set the new value
 
         this.indexSelected = this.selected(); // get the actual index from the selected value
 
